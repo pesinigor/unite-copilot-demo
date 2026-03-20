@@ -800,6 +800,102 @@ body.cs-mode .topbar-logo  { color: white; }
   .cs-client-row > *:nth-child(n+3) { display: none; }
   .role-toggle { display: flex; }
 }
+
+/* ═══════════════════════════════════════════════
+   CS COPILOT PAGE
+═══════════════════════════════════════════════ */
+.cscop-wrap     { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+.cscop-scroll   { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.cscop-scroll::-webkit-scrollbar { width: 4px; }
+.cscop-scroll::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
+.cscop-input-bar { padding: 12px 16px; border-top: 1px solid var(--sb-border); background: white; flex-shrink: 0; }
+.cscop-input-row { display: flex; align-items: flex-end; gap: 8px; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 12px; padding: 8px 12px; transition: border-color .15s; }
+.cscop-input-row:focus-within { border-color: var(--blue); }
+.cscop-textarea  { flex: 1; border: none; background: transparent; resize: none; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--dark); outline: none; line-height: 1.5; max-height: 100px; min-height: 20px; }
+.cscop-send-btn  { background: var(--blue); color: white; border: none; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; flex-shrink: 0; }
+.cscop-send-btn:hover { background: var(--blue-dark); }
+.cscop-send-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* CS welcome card */
+.cscop-welcome  { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); border-radius: 14px; padding: 24px; color: white; }
+.cscop-welcome-icon { font-size: 28px; margin-bottom: 10px; }
+.cscop-welcome h2   { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.cscop-welcome p    { font-size: 13px; opacity: .85; line-height: 1.5; margin-bottom: 16px; }
+.cscop-chips    { display: flex; flex-wrap: wrap; gap: 8px; }
+.cscop-chip     { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3); color: white; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: background .15s; display: flex; align-items: center; gap: 5px; font-family: 'Inter', sans-serif; }
+.cscop-chip:hover { background: rgba(255,255,255,.3); }
+
+/* CS messages */
+.cscop-msg      { display: flex; gap: 10px; align-items: flex-start; }
+.cscop-msg.user { flex-direction: row-reverse; }
+.cscop-av       { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.cscop-bubble   { max-width: 78%; background: white; border: 1px solid var(--sb-border); border-radius: 12px; padding: 12px 14px; font-size: 13px; line-height: 1.6; color: var(--dark); }
+.cscop-msg.user .cscop-bubble { background: var(--blue); color: white; border-color: transparent; }
+.cscop-typing   { display: flex; gap: 10px; align-items: center; }
+.cscop-typing .cscop-av { background: var(--blue); color: white; }
+
+/* CS draft export card */
+.cscop-export-bar { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--sb-border); flex-wrap: wrap; }
+.cscop-export-label { font-size: 11px; color: var(--gray-m); font-weight: 500; }
+.cscop-export-btn   { display: flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all .15s; border: 1.5px solid var(--sb-border); background: white; color: var(--dark); }
+.cscop-export-btn:hover { border-color: var(--blue); color: var(--blue); }
+.cscop-copy-btn  { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 7px; font-size: 11px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; border: none; background: var(--sb-bg); color: var(--gray-m); transition: all .15s; }
+.cscop-copy-btn:hover { color: var(--blue); background: var(--blue-light); }
+
+/* ═══════════════════════════════════════════════
+   CLIENT ONBOARDING MODAL
+═══════════════════════════════════════════════ */
+.onb-overlay  { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.onb-overlay.open { display: flex; }
+.onb-modal    { background: white; border-radius: 16px; width: 100%; max-width: 560px; box-shadow: 0 24px 64px rgba(0,0,0,.2); overflow: hidden; max-height: 90vh; display: flex; flex-direction: column; }
+.onb-header   { background: var(--blue); padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.onb-header-title { font-size: 15px; font-weight: 700; color: white; }
+.onb-header-sub   { font-size: 11px; color: rgba(255,255,255,.7); margin-top: 2px; }
+.onb-close    { background: rgba(255,255,255,.2); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.onb-close:hover { background: rgba(255,255,255,.35); }
+.onb-progress { display: flex; gap: 4px; padding: 14px 22px; background: var(--sb-bg); border-bottom: 1px solid var(--sb-border); flex-shrink: 0; }
+.onb-step-dot  { flex: 1; height: 4px; border-radius: 4px; background: var(--sb-border); transition: background .3s; }
+.onb-step-dot.done    { background: var(--blue); }
+.onb-step-dot.current { background: var(--blue); opacity: .5; }
+.onb-body     { padding: 22px; overflow-y: auto; flex: 1; }
+.onb-path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+.onb-path-card { border: 2px solid var(--sb-border); border-radius: 12px; padding: 20px 16px; cursor: pointer; transition: all .2s; text-align: center; }
+.onb-path-card:hover { border-color: var(--blue); box-shadow: 0 0 0 4px var(--blue-light); }
+.onb-path-icon { font-size: 28px; margin-bottom: 10px; }
+.onb-path-title { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.onb-path-sub   { font-size: 11px; color: var(--gray-m); line-height: 1.4; }
+.onb-field-group { margin-bottom: 16px; }
+.onb-label    { font-size: 11px; font-weight: 700; color: var(--gray-l); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
+.onb-input, .onb-select { width: 100%; border: 1.5px solid var(--sb-border); border-radius: 8px; padding: 9px 12px; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--dark); background: white; outline: none; transition: border-color .15s; box-sizing: border-box; }
+.onb-input:focus, .onb-select:focus { border-color: var(--blue); }
+.onb-grid2    { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.onb-footer   { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; border-top: 1px solid var(--sb-border); flex-shrink: 0; }
+.onb-btn-back { background: white; border: 1.5px solid var(--sb-border); color: var(--dark); padding: 9px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+.onb-btn-next { background: var(--blue); border: none; color: white; padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+.onb-btn-next:hover { background: var(--blue-dark); }
+.onb-entity-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.onb-entity-item { display: flex; align-items: center; gap: 8px; background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 8px; padding: 8px 12px; font-size: 12px; }
+.onb-entity-remove { margin-left: auto; background: none; border: none; cursor: pointer; color: var(--gray-l); font-size: 14px; }
+.onb-kyc-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--sb-border); }
+.onb-kyc-item:last-child { border-bottom: none; }
+.onb-kyc-check { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 700; }
+.onb-kyc-text   { flex: 1; font-size: 12px; color: var(--dark); }
+.onb-kyc-badge  { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; flex-shrink: 0; }
+.onb-kyc-badge.required { background: var(--red-light); color: var(--red); }
+.onb-kyc-badge.optional { background: var(--sb-bg); color: var(--gray-m); border: 1px solid var(--sb-border); }
+.onb-drop-zone { border: 2px dashed var(--sb-border); border-radius: 12px; padding: 40px 24px; text-align: center; transition: all .2s; cursor: pointer; }
+.onb-drop-zone:hover, .onb-drop-zone.drag-over { border-color: var(--blue); background: var(--blue-light); }
+.onb-drop-icon { font-size: 32px; margin-bottom: 10px; }
+.onb-drop-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+.onb-drop-sub   { font-size: 12px; color: var(--gray-m); }
+.onb-preview-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 14px; }
+.onb-preview-table th { background: var(--sb-bg); padding: 7px 10px; text-align: left; font-size: 10px; font-weight: 700; color: var(--gray-l); text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--sb-border); }
+.onb-preview-table td { padding: 8px 10px; border-bottom: 1px solid var(--sb-border); color: var(--dark); }
+.onb-preview-table tr:last-child td { border-bottom: none; }
+.onb-issue-badge { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: #FEF3C7; color: #92400E; }
+.onb-processing { text-align: center; padding: 30px; }
+.onb-processing-bar { height: 6px; background: var(--sb-border); border-radius: 6px; overflow: hidden; margin: 14px 0; }
+.onb-processing-fill { height: 100%; background: var(--blue); border-radius: 6px; transition: width 0.4s ease; }
 </style>
 </head>
 <body>
@@ -859,6 +955,9 @@ body.cs-mode .topbar-logo  { color: white; }
         <div id="cs-nav-group" style="display:none;">
           <div class="nav-divider"></div>
           <div class="nav-section-label">CS Portal</div>
+          <div class="nav-item" id="nav-cs-copilot" onclick="navigate('cs-copilot')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span> AI Copilot
+          </div>
           <div class="nav-item" id="nav-cs-portfolio" onclick="navigate('cs-portfolio')">
             <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span> Client Portfolio
           </div>
@@ -1200,6 +1299,23 @@ body.cs-mode .topbar-logo  { color: white; }
            CS PORTAL PAGES (hidden in client mode)
       ═══════════════════════════════════════ -->
 
+      <!-- CS: AI COPILOT -->
+      <div id="page-cs-copilot" class="page">
+        <div class="cscop-wrap">
+          <div class="cscop-scroll" id="cs-messages"></div>
+          <div class="cscop-input-bar">
+            <div class="cscop-input-row">
+              <textarea class="cscop-textarea" id="cs-chat-input" placeholder="Ask anything about your clients, or type a command…" rows="1"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCSMessage();}"
+                oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+              <button class="cscop-send-btn" id="cs-send-btn" onclick="sendCSMessage()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- CS: CLIENT PORTFOLIO -->
       <div id="page-cs-portfolio" class="page">
         <div class="page-header">
@@ -1207,7 +1323,13 @@ body.cs-mode .topbar-logo  { color: white; }
             <h1>Client Portfolio</h1>
             <div class="ph-sub" id="cs-portfolio-sub">5 clients · 16 entities · Updated today</div>
           </div>
-          <button class="ph-btn" onclick="csAsk('Summarise the overall health of our client portfolio and flag any risks')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+          <div style="display:flex;gap:8px;">
+            <button class="ph-btn" style="display:flex;align-items:center;gap:6px;background:white;color:var(--blue);border:1.5px solid var(--blue);" onclick="startAddClient()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Client
+            </button>
+            <button class="ph-btn" onclick="csAsk('Summarise the overall health of our client portfolio and flag any risks')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+          </div>
         </div>
         <div class="page-body">
           <div class="cs-stats section-gap" id="cs-stats"></div>
@@ -2121,7 +2243,7 @@ function submitEscalation(id) {
   scrollBottom();
 }
 
-const CS_PAGE_TITLES = { 'cs-portfolio':'Client Portfolio', 'cs-queue':'Work Queue', 'cs-compliance':'Compliance Calendar', 'cs-billing':'Billing' };
+const CS_PAGE_TITLES = { 'cs-copilot':'AI Copilot', 'cs-portfolio':'Client Portfolio', 'cs-queue':'Work Queue', 'cs-compliance':'Compliance Calendar', 'cs-billing':'Billing' };
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2140,6 +2262,7 @@ function navigate(page) {
   if (page === 'docs')           renderDocs();
   if (page === 'banking')        renderInvoices();
   // CS page renderers (defined later in the file; safe to call after DOMContentLoaded)
+  if (page === 'cs-copilot')    { if (typeof renderCSWelcome    === 'function') renderCSWelcome(); }
   if (page === 'cs-portfolio')  { if (typeof renderCSPortfolio  === 'function') renderCSPortfolio(); }
   if (page === 'cs-queue')      { if (typeof renderWorkQueue    === 'function') renderWorkQueue(); }
   if (page === 'cs-compliance') { if (typeof renderCSCompliance === 'function') renderCSCompliance(); }
@@ -3612,7 +3735,7 @@ function switchRole(role) {
     ? `<div class="nf-name">CS Portal</div><div class="nf-sub">5 clients · 16 entities</div>`
     : `<div class="nf-name">LTVentures Holdings</div><div class="nf-sub">4 entities · BVI holding</div>`;
 
-  if (isCS) { navigate('cs-portfolio'); } else { navigate('copilot'); }
+  if (isCS) { navigate('cs-copilot'); } else { navigate('copilot'); }
 }
 
 // ── CS COPILOT ────────────────────────────────
@@ -3808,6 +3931,610 @@ function renderCSBilling() {
 
 // CS page rendering is called from the main navigate() function directly
 
+// ══════════════════════════════════════════════════
+// CS COPILOT — DEDICATED CHAT ENGINE
+// ══════════════════════════════════════════════════
+
+const CS_SYSTEM = `You are an AI Copilot for a Corporate Services (CS) firm. You assist CS firm staff — not clients directly.
+
+## CS FIRM CONTEXT
+You have full visibility across the firm's client portfolio:
+
+### CLIENTS
+1. **LTVentures Holdings** — 4 entities (SG, BVI, Delaware, UK). Manager: Sarah Lim. Health: needs attention (1 overdue task). Billed YTD: USD 18,400.
+2. **Pinnacle Global Partners** — 3 entities (SG, BVI, Cayman). Manager: James Chen. Health: on track. Billed YTD: USD 12,200.
+3. **NexGen Fintech Pte Ltd** — 2 entities (SG, UK). Manager: Sarah Lim. Health: issues — 2 overdue tasks. Billed YTD: USD 9,800.
+4. **Meridian Ventures Ltd** — 1 entity (BVI). Manager: Tom Park. Health: on track. Billed YTD: USD 3,500.
+5. **Coastal Holdings Group** — 6 entities (SG, BVI, Cayman, UK, HK, UAE). Manager: James Chen. Health: needs attention (1 overdue). Billed YTD: USD 34,600.
+
+### OVERDUE / URGENT TASKS
+- NexGen Fintech: Companies House filing UK (overdue 5 days), ACRA Annual Return SG (overdue 10 days)
+- Coastal Holdings: ACRA Annual Return SG (overdue today)
+- Upcoming: BVI Annual Return — Coastal (Apr 1), LTVentures ACRA (Apr 10), US Tax Return — LTVentures (Apr 15)
+
+### OUTSTANDING BILLING
+- LTVentures Holdings: INV-2026-0040 — USD 2,800 pending (due Apr 10)
+- NexGen Fintech: INV-2026-0039 — USD 1,600 OVERDUE (due Mar 15)
+- Coastal Holdings: INV-2026-0035 — USD 5,800 pending (due Apr 15)
+
+## YOUR ROLE
+You help CS staff with:
+1. **Communications** — draft payment reminders, client update emails, KYC request letters
+2. **KYC & compliance checks** — generate KYC checklists for new directors/UBOs, flag PEP/sanctions considerations
+3. **Document drafting** — board resolutions, director appointment letters, interim financial statements, incorporation checklists
+4. **Reporting** — portfolio health summaries, revenue reports, deadline digests
+5. **Task management** — suggest next actions, identify risks, prioritise workloads
+
+## RESPONSE FORMAT
+- For **draft documents** (emails, resolutions, letters, reports): start with "DRAFT:" on its own line, then present the full formatted draft. The document will be shown in chat with export options.
+- For **action requests** (send reminder, assign task): use "ACTION:" prefix followed by the action summary, then "---" then details.
+- For **analysis/advice**: respond conversationally, use markdown formatting.
+- Always be concise and professional. You are a senior CS expert speaking to staff.`;
+
+let csHistory    = [];
+let csIsLoading  = false;
+let csTc         = 0;
+
+function renderCSWelcome() {
+  const el = document.getElementById('cs-messages');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="cscop-welcome">
+      <div class="cscop-welcome-icon">🏢</div>
+      <h2>CS Portal — AI Copilot</h2>
+      <p>I have full visibility across <strong>5 clients and 16 entities</strong>. I can draft communications, run KYC checks, generate board resolutions, prepare interim financials, and flag anything that needs urgent attention.</p>
+      <div class="cscop-chips">
+        <div class="cscop-chip" onclick="csInsertPrompt('Send a payment reminder to NexGen Fintech for overdue invoice INV-2026-0039 — USD 1,600 due March 15')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send payment reminder → NexGen
+        </div>
+        <div class="cscop-chip" onclick="csInsertPrompt('Run a KYC check on a new director being added to Coastal Holdings HK — Michael Tan, Singapore citizen, DOB 1978-06-12. What documents do we need and what checks should we run?')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          KYC check → new director
+        </div>
+        <div class="cscop-chip" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI declaring an annual dividend of USD 500,000 to the sole shareholder LTVentures Holdings')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Board resolution → BVI dividend
+        </div>
+        <div class="cscop-chip" onclick="csInsertPrompt('Give me a full client status report for this week — which clients have overdue tasks, which have outstanding invoices, and what are the top 3 priorities for the team?')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Weekly status report
+        </div>
+        <div class="cscop-chip" onclick="csInsertPrompt('Create an interim financial statement summary for LTVentures SG for Q1 2026 — revenue USD 256,200, expenses USD 178,800. Use standard format.')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Interim FS → LTVentures SG
+        </div>
+        <div class="cscop-chip" onclick="csInsertPrompt('Draft an incorporation checklist for a new Singapore Pte Ltd for Pinnacle Global Partners — what documents, steps and timeline?')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Incorporation checklist → SG
+        </div>
+      </div>
+    </div>`;
+}
+
+async function sendCSMessage() {
+  if (csIsLoading) return;
+  const inp = document.getElementById('cs-chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  inp.style.height = 'auto';
+
+  // Remove welcome if present
+  const welcome = document.querySelector('#cs-messages .cscop-welcome');
+  if (welcome) welcome.remove();
+
+  csIsLoading = true;
+  document.getElementById('cs-send-btn').disabled = true;
+  appendCSUserMsg(text);
+  const typId = appendCSTyping();
+  try {
+    const reply = await callCSClaude(text);
+    removeCSTyping(typId);
+    appendCSAssistantMsg(reply);
+  } catch(e) {
+    removeCSTyping(typId);
+    appendCSAssistantMsg(`Something went wrong: ${escHtml(e.message)}`);
+  }
+  csIsLoading = false;
+  document.getElementById('cs-send-btn').disabled = false;
+  scrollCSBottom();
+}
+
+async function callCSClaude(userText) {
+  csHistory.push({ role:'user', content: userText });
+  const res = await fetch('/.netlify/functions/chat', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ system: CS_SYSTEM, messages: csHistory })
+  });
+  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error||`Error ${res.status}`); }
+  const data = await res.json();
+  const reply = data.content;
+  csHistory.push({ role:'assistant', content: reply });
+  return reply;
+}
+
+function appendCSUserMsg(text) {
+  const el = document.getElementById('cs-messages');
+  const div = document.createElement('div');
+  div.className = 'cscop-msg user';
+  div.innerHTML = `<div class="cscop-av" style="background:var(--blue);color:white;">IG</div><div class="cscop-bubble">${escHtml(text)}</div>`;
+  el.appendChild(div); scrollCSBottom();
+}
+
+function appendCSAssistantMsg(raw) {
+  const el = document.getElementById('cs-messages');
+  const div = document.createElement('div');
+  div.className = 'cscop-msg assistant';
+
+  // Detect DRAFT documents
+  const isDraft = raw.startsWith('DRAFT:') || raw.includes('\nDRAFT:');
+  const isAction = raw.startsWith('ACTION:');
+
+  let bubbleContent = '';
+  let cleanRaw = raw;
+
+  if (isDraft) {
+    cleanRaw = raw.replace(/^DRAFT:\s*/,'').trim();
+    bubbleContent = renderMarkdown(cleanRaw);
+    bubbleContent += `
+      <div class="cscop-export-bar">
+        <span class="cscop-export-label">📄 Draft ready — export as:</span>
+        <button class="cscop-export-btn" onclick="exportCSDoc(this,'txt')">⬇ .txt</button>
+        <button class="cscop-export-btn" onclick="exportCSDoc(this,'html')">⬇ .html</button>
+        <button class="cscop-copy-btn" onclick="copyCSDoc(this)">⧉ Copy</button>
+      </div>`;
+  } else if (isAction) {
+    const body = raw.replace(/^ACTION:\s*/,'').trim();
+    const actionId = 'csa-' + Date.now();
+    bubbleContent = `
+      <div class="action-card" id="${actionId}">
+        <div class="action-card-header"><span>⚡ Action Ready</span></div>
+        <div class="action-card-body">${renderMarkdown(body)}</div>
+        <div class="action-card-footer">
+          <button class="action-approve" onclick="approveAction('${actionId}')">Approve &amp; Execute</button>
+          <button class="action-cancel" onclick="cancelAction('${actionId}')">Cancel</button>
+        </div>
+      </div>`;
+  } else {
+    bubbleContent = renderMarkdown(raw);
+  }
+
+  div.innerHTML = `
+    <div class="cscop-av" style="background:var(--blue);color:white;">${svg('sparkles',13,'white')}</div>
+    <div class="cscop-bubble">${bubbleContent}</div>`;
+
+  // Store raw text on the bubble for export
+  if (isDraft) div.querySelector('.cscop-bubble').dataset.raw = cleanRaw;
+
+  el.appendChild(div); scrollCSBottom();
+}
+
+function appendCSTyping() {
+  const id = 'cstyp-' + (++csTc);
+  const el = document.getElementById('cs-messages');
+  const div = document.createElement('div');
+  div.id = id; div.className = 'cscop-typing';
+  div.innerHTML = `<div class="cscop-av" style="background:var(--blue);color:white;">${svg('sparkles',13,'white')}</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  el.appendChild(div); scrollCSBottom(); return id;
+}
+function removeCSTyping(id) { document.getElementById(id)?.remove(); }
+
+function scrollCSBottom() {
+  const el = document.getElementById('cs-messages');
+  if (el) el.scrollTop = el.scrollHeight;
+}
+
+function csInsertPrompt(t) {
+  const inp = document.getElementById('cs-chat-input');
+  if (inp) { inp.value = t; inp.style.height = 'auto'; inp.style.height = Math.min(inp.scrollHeight,100)+'px'; inp.focus(); }
+}
+
+function exportCSDoc(btn, format) {
+  const bubble = btn.closest('.cscop-bubble');
+  const raw = bubble?.dataset?.raw || bubble?.innerText || '';
+  const ts = new Date().toISOString().slice(0,10);
+  if (format === 'html') {
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>CS Draft — ${ts}</title><style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;line-height:1.7;color:#1a1a1a;padding:0 20px;}h1,h2,h3{color:#1E3A5F;}table{border-collapse:collapse;width:100%;}td,th{border:1px solid #ddd;padding:8px 12px;}</style></head><body>${renderMarkdown(raw)}</body></html>`;
+    downloadBlob(html, `cs-draft-${ts}.html`, 'text/html');
+  } else {
+    downloadBlob(raw, `cs-draft-${ts}.txt`, 'text/plain');
+  }
+  const orig = btn.textContent;
+  btn.textContent = '✓ Downloaded'; btn.style.color = 'var(--green)';
+  setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000);
+}
+
+function copyCSDoc(btn) {
+  const bubble = btn.closest('.cscop-bubble');
+  const raw = bubble?.dataset?.raw || bubble?.innerText || '';
+  navigator.clipboard.writeText(raw).then(() => {
+    const orig = btn.textContent; btn.textContent = '✓ Copied!'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1500);
+  });
+}
+
+function downloadBlob(content, filename, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type}));
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ══════════════════════════════════════════════════
+// CLIENT ONBOARDING — WIZARD + IMPORT
+// ══════════════════════════════════════════════════
+
+let onbState = { step:0, path:'', data:{} };
+const onbNewEntities = [];
+
+function startAddClient() {
+  onbState = { step:0, path:'', data:{} };
+  onbNewEntities.length = 0;
+  document.getElementById('onb-overlay').classList.add('open');
+  document.getElementById('onb-progress').style.display = 'none';
+  document.getElementById('onb-footer').style.display = 'none';
+  document.getElementById('onb-title').textContent = 'Add New Client';
+  document.getElementById('onb-subtitle').textContent = 'Choose how to onboard';
+  renderOnbPath();
+}
+
+function closeOnboard() {
+  document.getElementById('onb-overlay').classList.remove('open');
+}
+
+function renderOnbPath() {
+  document.getElementById('onb-body').innerHTML = `
+    <p style="font-size:13px;color:var(--gray-m);margin-bottom:16px;">How would you like to add this client?</p>
+    <div class="onb-path-grid">
+      <div class="onb-path-card" onclick="onbChoosePath('wizard')">
+        <div class="onb-path-icon">🧙</div>
+        <div class="onb-path-title">New Client Wizard</div>
+        <div class="onb-path-sub">Step-by-step onboarding — enter company info, entities, directors, and generate a KYC checklist</div>
+      </div>
+      <div class="onb-path-card" onclick="onbChoosePath('import')">
+        <div class="onb-path-icon">📂</div>
+        <div class="onb-path-title">Import from File</div>
+        <div class="onb-path-sub">Upload a CSV or Excel from your previous system — AI will extract and map client data automatically</div>
+      </div>
+    </div>`;
+}
+
+function onbChoosePath(path) {
+  onbState.path = path;
+  if (path === 'wizard') {
+    document.getElementById('onb-progress').style.display = 'flex';
+    document.getElementById('onb-footer').style.display = 'flex';
+    document.getElementById('onb-back').style.display = 'none';
+    onbState.step = 1;
+    renderOnbStep();
+  } else {
+    renderOnbImport();
+  }
+}
+
+function onbSetProgress(current, total) {
+  for (let i = 1; i <= total; i++) {
+    const dot = document.getElementById('onb-dot-'+i);
+    if (dot) {
+      dot.className = 'onb-step-dot' + (i < current ? ' done' : i === current ? ' current' : '');
+    }
+  }
+}
+
+function renderOnbStep() {
+  const { step, data } = onbState;
+  onbSetProgress(step, 4);
+  document.getElementById('onb-back').style.display = step > 1 ? 'inline-block' : 'none';
+  document.getElementById('onb-next').textContent = step < 4 ? 'Continue →' : '✓ Create Client';
+
+  const stepTitles = ['','Company Info','Entity Structure','Directors & Contacts','KYC Setup'];
+  document.getElementById('onb-title').textContent = `Step ${step} of 4 — ${stepTitles[step]}`;
+
+  if (step === 1) {
+    document.getElementById('onb-subtitle').textContent = 'Basic company information';
+    document.getElementById('onb-body').innerHTML = `
+      <div class="onb-field-group">
+        <div class="onb-label">Client / Group Name *</div>
+        <input class="onb-input" id="onb-name" placeholder="e.g. Pacific Ventures Group" value="${escHtml(data.name||'')}">
+      </div>
+      <div class="onb-field-group">
+        <div class="onb-label">Account Manager</div>
+        <select class="onb-select" id="onb-manager">
+          <option ${(data.manager||'')===''?'selected':''}>Select manager…</option>
+          <option ${(data.manager||'')==='Sarah Lim'?'selected':''}>Sarah Lim</option>
+          <option ${(data.manager||'')==='James Chen'?'selected':''}>James Chen</option>
+          <option ${(data.manager||'')==='Tom Park'?'selected':''}>Tom Park</option>
+        </select>
+      </div>
+      <div class="onb-grid2">
+        <div class="onb-field-group">
+          <div class="onb-label">Service Package</div>
+          <select class="onb-select" id="onb-package">
+            <option>Registered Office</option>
+            <option>Compliance Standard</option>
+            <option selected>Compliance Premium</option>
+            <option>Full Management</option>
+          </select>
+        </div>
+        <div class="onb-field-group">
+          <div class="onb-label">Billing Currency</div>
+          <select class="onb-select" id="onb-ccy">
+            <option>USD</option><option>SGD</option><option>GBP</option>
+          </select>
+        </div>
+      </div>`;
+  }
+  else if (step === 2) {
+    document.getElementById('onb-subtitle').textContent = 'Add all entities for this client';
+    const entityList = onbNewEntities.map((e, i) => `
+      <div class="onb-entity-item">
+        <span>${e.flag}</span>
+        <span style="font-weight:600;">${escHtml(e.name)}</span>
+        <span style="color:var(--gray-m);">${escHtml(e.type)} · ${escHtml(e.jurisdiction)}</span>
+        <button class="onb-entity-remove" onclick="onbRemoveEntity(${i})">✕</button>
+      </div>`).join('');
+    document.getElementById('onb-body').innerHTML = `
+      <div class="onb-entity-list" id="onb-entity-list">${entityList || '<div style="color:var(--gray-m);font-size:12px;padding:8px 0;">No entities added yet</div>'}</div>
+      <div style="background:var(--sb-bg);border-radius:10px;padding:14px;border:1px solid var(--sb-border);">
+        <div style="font-size:11px;font-weight:700;color:var(--gray-l);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Add Entity</div>
+        <div class="onb-grid2" style="margin-bottom:10px;">
+          <div class="onb-field-group" style="margin:0;">
+            <div class="onb-label">Entity Name</div>
+            <input class="onb-input" id="onb-ent-name" placeholder="e.g. Pacific Ventures SG Pte Ltd">
+          </div>
+          <div class="onb-field-group" style="margin:0;">
+            <div class="onb-label">Jurisdiction</div>
+            <select class="onb-select" id="onb-ent-jur">
+              <option>Singapore</option><option>BVI</option><option>Delaware (USA)</option>
+              <option>UK</option><option>Cayman Islands</option><option>Hong Kong</option>
+            </select>
+          </div>
+        </div>
+        <div class="onb-field-group" style="margin-bottom:10px;">
+          <div class="onb-label">Entity Type</div>
+          <select class="onb-select" id="onb-ent-type">
+            <option>Private Limited (Pte Ltd)</option><option>Business Company (BC)</option>
+            <option>LLC</option><option>C-Corporation</option><option>Private Limited (Ltd)</option>
+            <option>Exempted Company</option>
+          </select>
+        </div>
+        <button style="background:var(--blue);color:white;border:none;border-radius:7px;padding:7px 16px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;cursor:pointer;" onclick="onbAddEntity()">+ Add Entity</button>
+      </div>`;
+  }
+  else if (step === 3) {
+    document.getElementById('onb-subtitle').textContent = 'Key contacts and directors';
+    document.getElementById('onb-body').innerHTML = `
+      <p style="font-size:12px;color:var(--gray-m);margin-bottom:14px;">Add the primary contact and at least one director or UBO for KYC purposes.</p>
+      <div class="onb-field-group">
+        <div class="onb-label">Primary Contact Name *</div>
+        <input class="onb-input" id="onb-contact" placeholder="e.g. John Smith" value="${escHtml(data.contact||'')}">
+      </div>
+      <div class="onb-grid2">
+        <div class="onb-field-group">
+          <div class="onb-label">Email</div>
+          <input class="onb-input" id="onb-email" type="email" placeholder="john@example.com" value="${escHtml(data.email||'')}">
+        </div>
+        <div class="onb-field-group">
+          <div class="onb-label">Phone</div>
+          <input class="onb-input" id="onb-phone" placeholder="+65 8xxx xxxx" value="${escHtml(data.phone||'')}">
+        </div>
+      </div>
+      <div style="margin-top:4px;padding-top:14px;border-top:1px solid var(--sb-border);">
+        <div class="onb-label">Director 1 — Name *</div>
+        <input class="onb-input" id="onb-dir1" placeholder="Full legal name" value="${escHtml(data.dir1||'')}" style="margin-bottom:10px;">
+        <div class="onb-grid2">
+          <div>
+            <div class="onb-label">Nationality</div>
+            <input class="onb-input" id="onb-dir1-nat" placeholder="e.g. Singapore" value="${escHtml(data.dir1nat||'')}">
+          </div>
+          <div>
+            <div class="onb-label">Passport / ID No.</div>
+            <input class="onb-input" id="onb-dir1-id" placeholder="e.g. E1234567X" value="${escHtml(data.dir1id||'')}">
+          </div>
+        </div>
+      </div>`;
+  }
+  else if (step === 4) {
+    document.getElementById('onb-subtitle').textContent = 'KYC documents required — auto-generated based on entity types';
+    const kycItems = [
+      { text:'Certificate of Incorporation / Registration',      req:true },
+      { text:'Memorandum & Articles of Association',             req:true },
+      { text:'Register of Directors',                            req:true },
+      { text:'Register of Shareholders',                        req:true },
+      { text:'Passport copy — all directors',                   req:true },
+      { text:'Proof of address — all directors (< 3 months)',   req:true },
+      { text:'Source of funds declaration',                     req:true },
+      { text:'Proof of business activity / company profile',    req:true },
+      { text:'Audited financial statements (last 2 years)',     req:false },
+      { text:'Corporate structure chart',                       req:false },
+      { text:'UBO declaration (>25% beneficial owner)',         req:true  },
+      { text:'Sanctions / PEP check — directors & UBOs',        req:true  },
+    ];
+    document.getElementById('onb-body').innerHTML = `
+      <p style="font-size:12px;color:var(--gray-m);margin-bottom:14px;">The following documents will be requested from <strong>${escHtml(data.name||'the client')}</strong> to complete KYC onboarding. An intake request will be sent automatically on confirmation.</p>
+      ${kycItems.map(k => `
+        <div class="onb-kyc-item">
+          <div class="onb-kyc-check">✓</div>
+          <div class="onb-kyc-text">${escHtml(k.text)}</div>
+          <span class="onb-kyc-badge ${k.req?'required':'optional'}">${k.req?'Required':'Optional'}</span>
+        </div>`).join('')}`;
+  }
+}
+
+function onbAddEntity() {
+  const name = document.getElementById('onb-ent-name')?.value.trim();
+  const jur  = document.getElementById('onb-ent-jur')?.value;
+  const type = document.getElementById('onb-ent-type')?.value;
+  if (!name) return;
+  const flagMap = { Singapore:'🇸🇬', BVI:'🇻🇬', 'Delaware (USA)':'🇺🇸', UK:'🇬🇧', 'Cayman Islands':'🇰🇾', 'Hong Kong':'🇭🇰' };
+  onbNewEntities.push({ name, jurisdiction: jur, type, flag: flagMap[jur]||'🏳' });
+  renderOnbStep();
+}
+
+function onbRemoveEntity(i) {
+  onbNewEntities.splice(i, 1);
+  renderOnbStep();
+}
+
+function onbBack()  { onbState.step = Math.max(1, onbState.step - 1); renderOnbStep(); }
+
+function onbNext() {
+  const { step } = onbState;
+  if (step === 1) {
+    const name = document.getElementById('onb-name')?.value.trim();
+    if (!name) { alert('Please enter a client name.'); return; }
+    onbState.data.name    = name;
+    onbState.data.manager = document.getElementById('onb-manager')?.value;
+    onbState.data.package = document.getElementById('onb-package')?.value;
+    onbState.data.ccy     = document.getElementById('onb-ccy')?.value;
+    onbState.step = 2;
+  } else if (step === 2) {
+    onbState.step = 3;
+  } else if (step === 3) {
+    const contact = document.getElementById('onb-contact')?.value.trim();
+    if (!contact) { alert('Please enter a primary contact name.'); return; }
+    onbState.data.contact = contact;
+    onbState.data.email   = document.getElementById('onb-email')?.value;
+    onbState.data.phone   = document.getElementById('onb-phone')?.value;
+    onbState.data.dir1    = document.getElementById('onb-dir1')?.value;
+    onbState.data.dir1nat = document.getElementById('onb-dir1-nat')?.value;
+    onbState.data.dir1id  = document.getElementById('onb-dir1-id')?.value;
+    onbState.step = 4;
+  } else if (step === 4) {
+    // Confirm — create the client
+    const d = onbState.data;
+    const colors = ['#6366F1','#8B5CF6','#10B981','#3B82F6','#EC4899','#F59E0B'];
+    const newClient = {
+      id: 'cc'+Date.now(),
+      name: d.name, initials: d.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(),
+      color: colors[CS_CLIENTS.length % colors.length],
+      manager: d.manager||'Sarah Lim',
+      managerInitials: (d.manager||'Sarah Lim').split(' ').map(w=>w[0]).join(''),
+      entities: Math.max(1, onbNewEntities.length),
+      flags: onbNewEntities.map(e=>e.flag).slice(0,6) || ['🏳'],
+      health: 'good', tasks: 0, overdue: 0,
+      billedYTD: `${d.ccy||'USD'} 0`, nextDue: '—'
+    };
+    CS_CLIENTS.push(newClient);
+    closeOnboard();
+    navigate('cs-portfolio');
+    setTimeout(() => {
+      csAsk(`A new client "${d.name}" has just been onboarded with ${onbNewEntities.length} entities. Please draft a welcome email to their primary contact ${d.contact} confirming the onboarding and listing the KYC documents we need from them.`);
+    }, 300);
+    return;
+  }
+  renderOnbStep();
+}
+
+// ── IMPORT PATH ──────────────────────────────
+function renderOnbImport() {
+  document.getElementById('onb-progress').style.display = 'none';
+  document.getElementById('onb-footer').style.display = 'none';
+  document.getElementById('onb-title').textContent = 'Import Clients from File';
+  document.getElementById('onb-subtitle').textContent = 'Upload CSV or Excel from your previous system';
+  document.getElementById('onb-body').innerHTML = `
+    <div class="onb-drop-zone" id="onb-drop" onclick="document.getElementById('onb-file-inp').click()"
+      ondragover="event.preventDefault();this.classList.add('drag-over')"
+      ondragleave="this.classList.remove('drag-over')"
+      ondrop="event.preventDefault();this.classList.remove('drag-over');handleImportFile(event.dataTransfer.files[0])">
+      <div class="onb-drop-icon">📂</div>
+      <div class="onb-drop-title">Drop your file here or click to browse</div>
+      <div class="onb-drop-sub">Supports .csv, .xlsx, .xls · Max 10 MB</div>
+      <input type="file" id="onb-file-inp" accept=".csv,.xlsx,.xls" style="display:none" onchange="handleImportFile(this.files[0])">
+    </div>
+    <div style="margin-top:16px;padding:14px;background:var(--blue-light);border-radius:9px;border:1px solid rgba(99,102,241,.2);">
+      <div style="font-size:12px;font-weight:600;color:var(--blue);margin-bottom:4px;">💡 Expected columns</div>
+      <div style="font-size:11px;color:var(--gray-m);">Client Name · Entity Name · Jurisdiction · Entity Type · Manager · Contact Email · Incorporation Date</div>
+    </div>
+    <div style="margin-top:12px;text-align:center;">
+      <button style="border:none;background:none;color:var(--blue);font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;" onclick="simulateImport()">
+        → Use demo data instead
+      </button>
+    </div>`;
+}
+
+function handleImportFile(file) {
+  if (!file) return;
+  simulateImport(file.name);
+}
+
+function simulateImport(filename) {
+  const fname = filename || 'client-data.csv';
+  document.getElementById('onb-body').innerHTML = `
+    <div class="onb-processing">
+      <div style="font-size:28px;margin-bottom:10px;">🤖</div>
+      <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px;">AI is extracting client data…</div>
+      <div style="font-size:12px;color:var(--gray-m);">Analysing ${escHtml(fname)}</div>
+      <div class="onb-processing-bar">
+        <div class="onb-processing-fill" id="onb-fill" style="width:0%"></div>
+      </div>
+      <div style="font-size:11px;color:var(--gray-m);" id="onb-proc-status">Parsing file structure…</div>
+    </div>`;
+
+  const steps = [
+    [20, 'Parsing file structure…'],
+    [45, 'Detecting column headers…'],
+    [65, 'Mapping entities and jurisdictions…'],
+    [82, 'Validating data quality…'],
+    [100, 'Extraction complete ✓'],
+  ];
+  let i = 0;
+  const tick = setInterval(() => {
+    if (i >= steps.length) { clearInterval(tick); showImportPreview(); return; }
+    document.getElementById('onb-fill').style.width = steps[i][0] + '%';
+    document.getElementById('onb-proc-status').textContent = steps[i][1];
+    i++;
+  }, 500);
+}
+
+function showImportPreview() {
+  const importedClients = [
+    { name:'Vertex Capital Partners', entities:'3', jurisdiction:'SG / BVI / Cayman', manager:'James Chen', contact:'vera@vertex.co', issue:'' },
+    { name:'SunBridge Holdings Ltd', entities:'2', jurisdiction:'SG / UK', manager:'Sarah Lim', contact:'info@sunbridge.com', issue:'' },
+    { name:'Nova Dynamics Pte Ltd', entities:'1', jurisdiction:'SG', manager:'Tom Park', contact:'', issue:'⚠ Missing contact email' },
+    { name:'BlueCrest Fund I',       entities:'2', jurisdiction:'Cayman / BVI', manager:'James Chen', contact:'admin@bluecrest.ky', issue:'' },
+  ];
+  document.getElementById('onb-title').textContent = 'Import Preview — 4 clients detected';
+  document.getElementById('onb-subtitle').textContent = 'Review and confirm before importing';
+  document.getElementById('onb-footer').style.display = 'flex';
+  document.getElementById('onb-back').textContent = 'Cancel';
+  document.getElementById('onb-back').onclick = closeOnboard;
+  document.getElementById('onb-next').textContent = '✓ Import All Clients';
+  document.getElementById('onb-next').onclick = confirmImport;
+
+  document.getElementById('onb-body').innerHTML = `
+    <div style="font-size:12px;color:var(--gray-m);margin-bottom:12px;">AI extracted <strong>4 client records</strong> with <strong>8 entities</strong>. 1 issue flagged for review.</div>
+    <table class="onb-preview-table">
+      <thead><tr><th>Client</th><th>Entities</th><th>Jurisdictions</th><th>Manager</th><th>Status</th></tr></thead>
+      <tbody>
+        ${importedClients.map(c => `
+          <tr>
+            <td><strong>${escHtml(c.name)}</strong><br><span style="font-size:10px;color:var(--gray-m);">${escHtml(c.contact)}</span></td>
+            <td style="text-align:center;">${c.entities}</td>
+            <td>${escHtml(c.jurisdiction)}</td>
+            <td>${escHtml(c.manager)}</td>
+            <td>${c.issue ? `<span class="onb-issue-badge">${escHtml(c.issue)}</span>` : '<span style="color:var(--green);font-size:11px;font-weight:600;">✓ Ready</span>'}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function confirmImport() {
+  // Add demo imported clients to CS_CLIENTS
+  const newClients = [
+    { id:'cc-imp1', name:'Vertex Capital Partners', initials:'VC', color:'#3B82F6', manager:'James Chen', managerInitials:'JC', entities:3, flags:['🇸🇬','🇻🇬','🇰🇾'], health:'good', tasks:0, overdue:0, billedYTD:'USD 0', nextDue:'—' },
+    { id:'cc-imp2', name:'SunBridge Holdings Ltd',  initials:'SB', color:'#EC4899', manager:'Sarah Lim',  managerInitials:'SL', entities:2, flags:['🇸🇬','🇬🇧'],      health:'good', tasks:0, overdue:0, billedYTD:'USD 0', nextDue:'—' },
+    { id:'cc-imp3', name:'Nova Dynamics Pte Ltd',   initials:'ND', color:'#0EA5E9', manager:'Tom Park',   managerInitials:'TP', entities:1, flags:['🇸🇬'],            health:'warn', tasks:1, overdue:0, billedYTD:'USD 0', nextDue:'—' },
+    { id:'cc-imp4', name:'BlueCrest Fund I',         initials:'BC', color:'#14B8A6', manager:'James Chen', managerInitials:'JC', entities:2, flags:['🇰🇾','🇻🇬'],      health:'good', tasks:0, overdue:0, billedYTD:'USD 0', nextDue:'—' },
+  ];
+  newClients.forEach(c => { if (!CS_CLIENTS.find(x=>x.id===c.id)) CS_CLIENTS.push(c); });
+  closeOnboard();
+  navigate('cs-portfolio');
+  setTimeout(() => csAsk('4 new clients have just been imported: Vertex Capital Partners, SunBridge Holdings, Nova Dynamics, and BlueCrest Fund I. Nova Dynamics had a missing contact email flagged. What are the next steps for KYC onboarding for each client?'), 300);
+}
+
 // ── INIT ────────────────────────────────────────
 (function init() {
   const el = document.getElementById('entities-date');
@@ -3815,5 +4542,29 @@ function renderCSBilling() {
   updateUnreadBadge();
 })();
 </script>
+<!-- ── CLIENT ONBOARDING MODAL ─────────────────── -->
+<div class="onb-overlay" id="onb-overlay" onclick="if(event.target===this)closeOnboard()">
+  <div class="onb-modal">
+    <div class="onb-header">
+      <div>
+        <div class="onb-header-title" id="onb-title">Add New Client</div>
+        <div class="onb-header-sub" id="onb-subtitle">Choose how to onboard this client</div>
+      </div>
+      <button class="onb-close" onclick="closeOnboard()">✕</button>
+    </div>
+    <div class="onb-progress" id="onb-progress" style="display:none;">
+      <div class="onb-step-dot" id="onb-dot-1"></div>
+      <div class="onb-step-dot" id="onb-dot-2"></div>
+      <div class="onb-step-dot" id="onb-dot-3"></div>
+      <div class="onb-step-dot" id="onb-dot-4"></div>
+    </div>
+    <div class="onb-body" id="onb-body"></div>
+    <div class="onb-footer" id="onb-footer" style="display:none;">
+      <button class="onb-btn-back" id="onb-back" onclick="onbBack()">← Back</button>
+      <button class="onb-btn-next" id="onb-next" onclick="onbNext()">Continue →</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
