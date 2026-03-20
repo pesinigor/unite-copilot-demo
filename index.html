@@ -267,6 +267,11 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 .send-btn svg { width: 16px; height: 16px; fill: white; }
 .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 7px; }
 
+/* ── ICON HELPERS ───────────────────────────── */
+.ni { display:inline-flex; align-items:center; justify-content:center; width:18px; flex-shrink:0; }
+.qi { display:flex; align-items:center; justify-content:center; margin:0 auto 4px; }
+.ico { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+
 /* ── ACTION BAR ─────────────────────────────── */
 .action-bar { padding: 9px 16px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; gap: 8px; background: var(--sb-bg); overflow-x: auto; flex-shrink: 0; }
 .action-bar::-webkit-scrollbar { display: none; }
@@ -386,7 +391,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
     <div class="topbar-page" id="topbar-page">AI Copilot</div>
     <div class="topbar-client">· LTVentures Holdings</div>
     <div class="topbar-spacer"></div>
-    <div class="topbar-badge">✦ AI COPILOT</div>
+    <div class="topbar-badge" style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> AI COPILOT</div>
     <div class="topbar-live" onclick="resetConversation()"><div class="dot"></div> Live</div>
   </div>
 
@@ -397,24 +402,24 @@ table.data-table tr:hover td { background: var(--sb-bg); }
       <div class="nav-items-wrap">
         <div class="nav-section-label">Workspace</div>
         <div class="nav-item active" id="nav-copilot" onclick="navigate('copilot')">
-          <span class="ni">💬</span> AI Copilot
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> AI Copilot
         </div>
         <div class="nav-item" id="nav-dashboard" onclick="navigate('dashboard')">
-          <span class="ni">🏠</span> Dashboard
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span> Dashboard
         </div>
         <div class="nav-item" id="nav-banking" onclick="navigate('banking')">
-          <span class="ni">🏦</span> Banking
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span> Banking
         </div>
         <div class="nav-item" id="nav-compliance" onclick="navigate('compliance')">
-          <span class="ni">📋</span> Compliance
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Compliance
         </div>
         <div class="nav-divider"></div>
         <div class="nav-section-label">Coming soon</div>
         <div class="nav-item" style="opacity:.45; cursor:default;">
-          <span class="ni">🗂</span> Documents <span class="nav-soon">Soon</span>
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span> Documents <span class="nav-soon">Soon</span>
         </div>
         <div class="nav-item" style="opacity:.45; cursor:default;">
-          <span class="ni">💰</span> Tax & Accounting <span class="nav-soon">Soon</span>
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span> Tax & Accounting <span class="nav-soon">Soon</span>
         </div>
       </div>
       <div class="nav-footer">
@@ -435,26 +440,26 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         <!-- Action shortcuts bar -->
         <div class="action-bar">
           <span class="ab-label">Actions</span>
-          <button class="ab-btn" onclick="startFlow('entity')">🏢 New Entity</button>
-          <button class="ab-btn" onclick="startFlow('payment')">💸 Pay Invoice</button>
-          <button class="ab-btn" onclick="startFlow('director')">👤 Add Director</button>
-          <button class="ab-btn" onclick="startFlow('account')">🏦 Open Account</button>
-          <button class="ab-btn" onclick="startFlow('dividend')">📤 Declare Dividend</button>
+          <button class="ab-btn" onclick="startFlow('entity')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg> New Entity</button>
+          <button class="ab-btn" onclick="startFlow('payment')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Pay Invoice</button>
+          <button class="ab-btn" onclick="startFlow('director')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Director</button>
+          <button class="ab-btn" onclick="startFlow('account')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Open Account</button>
+          <button class="ab-btn" onclick="startFlow('dividend')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Declare Dividend</button>
         </div>
 
         <div class="chat-scroll" id="chat-scroll">
           <div class="messages-inner" id="messages">
             <div class="welcome" id="welcome-msg">
-              <div class="welcome-icon">✦</div>
+              <div class="welcome-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="var(--blue)" stroke="var(--blue)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></div>
               <h2>Good morning, Igor.</h2>
               <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
               <div class="suggestions">
-                <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
-                <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
-                <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 Tax estimate</div>
-                <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 summary</div>
-                <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay invoice</div>
-                <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Compliance deadlines</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg> Cash overview</div>
+                <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/></svg> Tax estimate</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Q4 summary</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Pay invoice</div>
+                <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Singapore</div>
               </div>
             </div>
           </div>
@@ -482,7 +487,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
             <h1>Dashboard</h1>
             <div class="ph-sub">LTVentures Holdings · 4 active entities · As of March 2025</div>
           </div>
-          <button class="ph-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')">Ask Copilot ✦</button>
+          <button class="ph-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3 4 6l-3 1 3 1 1 3 1-3 3-1-3-1Z"/><path d="M19 13l-.667 2L17 16l1.333.667L19 19l.667-1.333L21 17l-1.333-.667Z"/></svg>Ask Copilot</button>
         </div>
         <div class="page-body">
 
@@ -588,7 +593,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
             <h1>Banking</h1>
             <div class="ph-sub">3 accounts · Total $1,650,000 USD · Updated Mar 19, 2025</div>
           </div>
-          <button class="ph-btn" onclick="qaAction('Show me a full treasury overview and any pending payments')">Ask Copilot ✦</button>
+          <button class="ph-btn" onclick="qaAction('Show me a full treasury overview and any pending payments')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3 4 6l-3 1 3 1 1 3 1-3 3-1-3-1Z"/><path d="M19 13l-.667 2L17 16l1.333.667L19 19l.667-1.333L21 17l-1.333-.667Z"/></svg>Ask Copilot</button>
         </div>
         <div class="page-body">
 
@@ -653,21 +658,21 @@ table.data-table tr:hover td { background: var(--sb-bg); }
             <h1>Compliance</h1>
             <div class="ph-sub">9 upcoming deadlines · 3 urgent (within 45 days)</div>
           </div>
-          <button class="ph-btn" onclick="qaAction('What are the most urgent compliance tasks and what do I need to prepare?')">Ask Copilot ✦</button>
+          <button class="ph-btn" onclick="qaAction('What are the most urgent compliance tasks and what do I need to prepare?')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3 4 6l-3 1 3 1 1 3 1-3 3-1-3-1Z"/><path d="M19 13l-.667 2L17 16l1.333.667L19 19l.667-1.333L21 17l-1.333-.667Z"/></svg>Ask Copilot</button>
         </div>
         <div class="page-body">
 
           <div class="comp-summary section-gap">
             <div class="cs-card">
-              <div class="cs-icon red">⚠️</div>
+              <div class="cs-icon red"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
               <div><div class="cs-count">3</div><div class="cs-label">Urgent — within 45 days</div></div>
             </div>
             <div class="cs-card">
-              <div class="cs-icon yellow">🕐</div>
+              <div class="cs-icon yellow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
               <div><div class="cs-count">3</div><div class="cs-label">Upcoming — 46–90 days</div></div>
             </div>
             <div class="cs-card">
-              <div class="cs-icon green">✓</div>
+              <div class="cs-icon green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
               <div><div class="cs-count">3</div><div class="cs-label">Scheduled — 90+ days</div></div>
             </div>
           </div>
@@ -738,14 +743,14 @@ table.data-table tr:hover td { background: var(--sb-bg); }
       <div class="rp-section">
         <div class="rp-label">Quick Actions</div>
         <div class="qa-grid">
-          <div class="qa-btn" onclick="qaAction('Show all upcoming compliance deadlines')"><span class="qi">📋</span>Deadlines</div>
-          <div class="qa-btn" onclick="qaAction('Give me a cash overview across all entities')"><span class="qi">💰</span>Cash overview</div>
-          <div class="qa-btn" onclick="qaAction('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')"><span class="qi">⚡</span>Pay invoice</div>
-          <div class="qa-btn" onclick="qaAction('Create a financial summary for Q4 2024')"><span class="qi">📊</span>Q4 summary</div>
-          <div class="qa-btn" onclick="qaAction('What is our expected tax exposure for 2025?')"><span class="qi">🧾</span>Tax estimate</div>
-          <div class="qa-btn" onclick="qaAction('What is the status of our Singapore entity?')"><span class="qi">🇸🇬</span>SG status</div>
-          <div class="qa-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')"><span class="qi">🏢</span>All entities</div>
-          <div class="qa-btn" onclick="qaAction('What was our full year 2024 performance?')"><span class="qi">📈</span>FY2024</div>
+          <div class="qa-btn" onclick="qaAction('Show all upcoming compliance deadlines')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Deadlines</div>
+          <div class="qa-btn" onclick="qaAction('Give me a cash overview across all entities')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span>Cash</div>
+          <div class="qa-btn" onclick="qaAction('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>Pay invoice</div>
+          <div class="qa-btn" onclick="qaAction('Create a financial summary for Q4 2024')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Q4 summary</div>
+          <div class="qa-btn" onclick="qaAction('What is our expected tax exposure for 2025?')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span>Tax est.</div>
+          <div class="qa-btn" onclick="qaAction('What is the status of our Singapore entity?')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>SG status</div>
+          <div class="qa-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span>All entities</div>
+          <div class="qa-btn" onclick="qaAction('What was our full year 2024 performance?')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>FY2024</div>
         </div>
       </div>
     </div>
@@ -754,6 +759,42 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 </div><!-- /app -->
 
 <script>
+// ── SVG ICON LIBRARY ───────────────────────────
+const IC = {
+  chat:      `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+  dashboard: `<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>`,
+  bank:      `<line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/>`,
+  shield:    `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+  folder:    `<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>`,
+  calc:      `<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/>`,
+  building:  `<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>`,
+  send:      `<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>`,
+  user:      `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
+  userplus:  `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>`,
+  pluscirc:  `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`,
+  trending:  `<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>`,
+  sparkles:  `<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>`,
+  clipboard: `<rect x="9" y="1" width="6" height="4" rx="1"/><path d="M9 1H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-3"/>`,
+  wallet:    `<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>`,
+  zap:       `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>`,
+  barchart:  `<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`,
+  percent:   `<line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>`,
+  globe:     `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  layout:    `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>`,
+  calendar:  `<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>`,
+  alert:     `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`,
+  card:      `<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>`,
+  dollar:    `<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>`,
+  check:     `<polyline points="20 6 9 17 4 12"/>`,
+  arrowright:`<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>`,
+  warning:   `<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>`,
+  clock:     `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`,
+  checkcirc: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
+};
+function svg(name, size=16, color='currentColor') {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0;">${IC[name]||''}</svg>`;
+}
+
 // ── NAVIGATION ─────────────────────────────────
 const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Dashboard', banking: 'Banking', compliance: 'Compliance' };
 
@@ -941,16 +982,16 @@ function scrollBottom() {
 function renderWelcome() {
   document.getElementById('messages').innerHTML = `
     <div class="welcome" id="welcome-msg">
-      <div class="welcome-icon">✦</div>
+      <div class="welcome-icon">${svg('sparkles',36,'var(--blue)')}</div>
       <h2>Good morning, Igor.</h2>
       <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
       <div class="suggestions">
-        <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
-        <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
-        <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 Tax estimate</div>
-        <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 summary</div>
-        <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay invoice</div>
-        <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')" style="display:inline-flex;align-items:center;gap:6px;">${svg('shield',12)} Compliance deadlines</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')" style="display:inline-flex;align-items:center;gap:6px;">${svg('wallet',12)} Cash overview</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')" style="display:inline-flex;align-items:center;gap:6px;">${svg('calc',12)} Tax estimate</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')" style="display:inline-flex;align-items:center;gap:6px;">${svg('barchart',12)} Q4 summary</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')" style="display:inline-flex;align-items:center;gap:6px;">${svg('send',12)} Pay invoice</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')" style="display:inline-flex;align-items:center;gap:6px;">${svg('globe',12)} Singapore</div>
       </div>
     </div>`;
 }
@@ -959,7 +1000,7 @@ function appendUserMsg(text) {
   const msgs = document.getElementById('messages');
   const div = document.createElement('div');
   div.className = 'msg user';
-  div.innerHTML = `<div class="msg-avatar">IG</div><div class="msg-bubble">${escHtml(text)}</div>`;
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--blue);color:white;font-size:10px;font-weight:700;">IG</div><div class="msg-bubble">${escHtml(text)}</div>`;
   msgs.appendChild(div); scrollBottom();
 }
 
@@ -974,7 +1015,7 @@ function appendAssistantMsg(raw) {
     while (i < lines.length && !lines[i].includes('This action is ready for your approval')) { bodyLines.push(lines[i]); i++; }
     const actionId = 'action-' + Date.now();
     div.innerHTML = `
-      <div class="msg-avatar">✦</div>
+      <div class="msg-avatar" style="background:var(--blue);color:white;">${svg('sparkles',14,'white')}</div>
       <div class="msg-bubble">
         <div class="action-card" id="${actionId}">
           <div class="action-card-header"><span>⚡ Action Ready</span></div>
@@ -986,7 +1027,8 @@ function appendAssistantMsg(raw) {
         </div>
       </div>`;
   } else {
-    div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble">${renderMarkdown(raw)}</div>`;
+    const avatarSvg = `<div class="msg-avatar" style="background:var(--blue);color:white;">${svg('sparkles',14,'white')}</div>`;
+    div.innerHTML = `${avatarSvg}<div class="msg-bubble">${renderMarkdown(raw)}</div>`;
   }
   msgs.appendChild(div); scrollBottom();
 }
@@ -1008,7 +1050,7 @@ function appendTyping() {
   const msgs = document.getElementById('messages');
   const div = document.createElement('div');
   div.id = id; div.className = 'typing';
-  div.innerHTML = `<div class="msg-avatar" style="background:var(--blue);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;">✦</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--blue);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">${svg('sparkles',14,'white')}</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
   msgs.appendChild(div); scrollBottom(); return id;
 }
 function removeTyping(id) { document.getElementById(id)?.remove(); }
@@ -1066,7 +1108,7 @@ function appendWizardMsg(html) {
   const msgs = document.getElementById('messages');
   const div = document.createElement('div');
   div.className = 'msg assistant';
-  div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble" style="padding:0;background:transparent;border:none;max-width:420px;">${html}</div>`;
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--blue);color:white;">${svg('sparkles',14,'white')}</div><div class="msg-bubble" style="padding:0;background:transparent;border:none;max-width:420px;">${html}</div>`;
   msgs.appendChild(div);
   scrollBottom();
 }
@@ -1136,7 +1178,7 @@ function startEntityFlow() {
   const jurisdictions = [['🇸🇬','Singapore'],['🇦🇪','UAE (DMCC)'],['🇬🇧','UK'],['🇻🇬','BVI'],['🇳🇱','Netherlands'],['🇰🇾','Cayman Islands']];
   appendWizardMsg(`
     <div class="wizard-card" id="wiz-e1">
-      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 4</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('building',14,'white')} Create New Entity</span></div>
       <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps"></div><div class="wiz-ps"></div><div class="wiz-ps"></div></div>
       <div class="wiz-body">
         <div class="wiz-question">Which jurisdiction?</div>
@@ -1160,7 +1202,7 @@ function entityStep2() {
   const types = ENTITY_TYPES[j] || [['Limited Company','Standard structure']];
   appendWizardMsg(`
     <div class="wizard-card" id="wiz-e2">
-      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 4</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('building',14,'white')} Create New Entity</span></div>
       <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div><div class="wiz-ps"></div></div>
       <div class="wiz-body">
         <div class="wiz-question">Entity type in ${escHtml(j)}?</div>
@@ -1183,7 +1225,7 @@ function entityStep3() {
   const j = wizState.entity.jurisdiction;
   appendWizardMsg(`
     <div class="wizard-card" id="wiz-e3">
-      <div class="wiz-header"><span class="wiz-step-txt">Step 3 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Step 3 of 4</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('building',14,'white')} Create New Entity</span></div>
       <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
       <div class="wiz-body">
         <div class="wiz-question">Entity details</div>
@@ -1212,7 +1254,7 @@ function entityStep4() {
   const id = 'wiz-e4-' + Date.now();
   appendWizardMsg(`
     <div class="wizard-card" id="${id}">
-      <div class="wiz-header"><span class="wiz-step-txt">Step 4 of 4</span><span class="wiz-title-txt">🏢 Review & Confirm</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Step 4 of 4</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('building',14,'white')} Review & Confirm</span></div>
       <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div></div>
       <div class="wiz-body">
         <div class="wiz-summary-row"><span class="wiz-sr-key">Name</span><span class="wiz-sr-val">${escHtml(s.name)}</span></div>
@@ -1239,7 +1281,7 @@ function startPaymentFlow() {
   const id = 'wiz-pay-' + Date.now();
   appendWizardMsg(`
     <div class="wizard-card" id="${id}">
-      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">💸 Authorise Payment</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Authorise Payment</span></div>
       <div class="wiz-body">
         <div class="wiz-question">Review payment details</div>
         <div class="wiz-input-group"><div class="wiz-input-label">Payee</div>
@@ -1271,7 +1313,7 @@ function startDirectorFlow() {
   const id = 'wiz-dir-' + Date.now();
   appendWizardMsg(`
     <div class="wizard-card" id="${id}">
-      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">👤 Add Director</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('user',14,'white')} Add Director</span></div>
       <div class="wiz-body">
         <div class="wiz-question">New director details</div>
         <div class="wiz-input-group"><div class="wiz-input-label">Full Legal Name</div>
@@ -1304,7 +1346,7 @@ function startAccountFlow() {
   const id = 'wiz-acct-' + Date.now();
   appendWizardMsg(`
     <div class="wizard-card" id="${id}">
-      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">🏦 Open Bank Account</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('bank',14,'white')} Open Bank Account</span></div>
       <div class="wiz-body">
         <div class="wiz-question">Account details</div>
         <div class="wiz-input-group"><div class="wiz-input-label">Entity</div>
@@ -1350,7 +1392,7 @@ function startDividendFlow() {
   const id = 'wiz-div-' + Date.now();
   appendWizardMsg(`
     <div class="wizard-card" id="${id}">
-      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">📤 Declare Dividend</span></div>
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('trending',14,'white')} Declare Dividend</span></div>
       <div class="wiz-body">
         <div class="wiz-question">Dividend details</div>
         <div class="wiz-input-group"><div class="wiz-input-label">Declaring Entity</div>
