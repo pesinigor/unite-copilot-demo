@@ -64,8 +64,8 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 
 /* ── MAIN CONTENT ───────────────────────────── */
 .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; background: white; }
-.page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
-.page.active { display: flex; }
+.page { display: none; flex: 1; flex-direction: column; overflow: hidden; width: 100%; }
+.page.active { display: flex; width: 100%; }
 
 /* ── PAGE HEADER ────────────────────────────── */
 .page-header { padding: 16px 28px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; background: white; }
@@ -123,7 +123,7 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .dl-days { font-size: 10px; color: var(--gray-l); flex-shrink: 0; width: 28px; text-align: right; }
 
 /* ── COMMUNICATION CENTRE ───────────────────── */
-.comms-layout { display: flex; flex: 1; overflow: hidden; }
+.comms-layout { display: flex; flex: 1; overflow: hidden; width: 100%; min-width: 0; }
 .comms-threads { width: 280px; flex-shrink: 0; border-right: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow: hidden; }
 .ct-header { padding: 14px 16px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 .ct-header h3 { font-size: 13px; font-weight: 700; color: var(--dark); }
@@ -467,7 +467,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 .doc-cat-chip.active { background:var(--blue); color:white; border-color:var(--blue); }
 .doc-upload-btn { display:flex; align-items:center; gap:6px; padding:7px 14px; background:var(--blue); color:white; border:none; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer; flex-shrink:0; transition:background .15s; }
 .doc-upload-btn:hover { background:var(--blue-dark); }
-.doc-list { flex:1; overflow-y:auto; padding:16px 20px; }
+.doc-list { flex:1; overflow-y:auto; padding:16px 20px; width:100%; min-width:0; }
 .doc-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border:1px solid var(--sb-border); border-radius:9px; margin-bottom:8px; cursor:pointer; transition:all .15s; background:white; }
 .doc-item:hover { border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-light); }
 .doc-icon { width:34px; height:34px; border-radius:7px; background:var(--blue-light); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -980,7 +980,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
     </div>
 
       <!-- DOCUMENTS PAGE -->
-      <div id="page-docs" class="page" style="flex-direction:column;">
+      <div id="page-docs" class="page">
         <div class="page-header">
           <div class="ph-left"><h1>Documents</h1><span class="ph-sub">Corporate document vault — all entities</span></div>
         </div>
@@ -1011,7 +1011,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
       </div>
 
       <!-- COMMUNICATION CENTRE PAGE -->
-      <div id="page-comms" class="page" style="flex-direction:column;">
+      <div id="page-comms" class="page">
         <div class="page-header">
           <div class="ph-left">
             <h1>Messages</h1>
