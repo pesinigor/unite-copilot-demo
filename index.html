@@ -435,8 +435,8 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 .input-area-inner { max-width: 720px; margin: 0 auto; }
 .input-wrap { display: flex; gap: 10px; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 14px; padding: 8px 8px 8px 16px; align-items: flex-end; transition: border-color .2s; }
 .input-wrap:focus-within { border-color: var(--blue); background: white; }
-#user-input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--dark); background: transparent; resize: none; max-height: 120px; min-height: 24px; line-height: 1.5; padding: 4px 0; }
-#user-input::placeholder { color: var(--gray-l); }
+#user-input, #cs-chat-input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--dark); background: transparent; resize: none; max-height: 120px; min-height: 24px; line-height: 1.5; padding: 4px 0; }
+#user-input::placeholder, #cs-chat-input::placeholder { color: var(--gray-l); }
 .send-btn { width: 36px; height: 36px; border-radius: 9px; background: var(--blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
 .send-btn:hover:not(:disabled) { background: var(--blue-dark); }
 .send-btn:disabled { background: var(--gray-l); cursor: not-allowed; }
@@ -603,7 +603,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
   }
   .input-area-inner { max-width: 100%; }
   .input-wrap { border-radius: 26px; padding: 8px 8px 8px 16px; min-height: 48px; align-items: center; }
-  #user-input { font-size: 15px; min-height: 28px; }
+  #user-input, #cs-chat-input { font-size: 15px; min-height: 28px; }
   .send-btn { width: 40px; height: 40px; border-radius: 50%; }
   .input-hint { display: none; }
 
