@@ -739,6 +739,13 @@ body.cs-mode {
 /* Hide CS right panel on mobile — must be AFTER the .cs-rp definition to take effect */
 @media (max-width: 960px) { .cs-rp { display: none; } }
 
+/* CS client filter tabs (used on Messages and Documents pages) */
+.cs-client-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 20px; }
+.cs-filter-tab { padding: 5px 13px; border-radius: 20px; border: 1.5px solid var(--sb-border); font-size: 12px; font-weight: 600; color: var(--gray-m); cursor: pointer; transition: all .15s; background: white; display: flex; align-items: center; gap: 5px; white-space: nowrap; font-family: 'Inter', sans-serif; }
+.cs-filter-tab:hover { border-color: var(--blue); color: var(--blue); }
+.cs-filter-tab.active { background: var(--blue); color: white; border-color: var(--blue); }
+.cs-filter-tab .cs-tab-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
 /* Summary stat tiles */
 .cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .cs-stat  { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 16px 18px; }
@@ -1022,11 +1029,22 @@ body.cs-mode {
           <div class="nav-item" id="nav-cs-queue" onclick="navigate('cs-queue')">
             <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span> Work Queue <span class="nav-badge" id="cs-queue-badge">8</span>
           </div>
+          <div class="nav-item" id="nav-cs-billing" onclick="navigate('cs-billing')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Billing
+          </div>
           <div class="nav-item" id="nav-cs-compliance" onclick="navigate('cs-compliance')">
             <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Compliance
           </div>
-          <div class="nav-item" id="nav-cs-billing" onclick="navigate('cs-billing')">
-            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Billing
+          <div class="nav-item" id="nav-cs-comms" onclick="navigate('cs-comms')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Messages <span class="nav-badge" id="cs-unread-badge">3</span>
+          </div>
+          <div class="nav-divider"></div>
+          <div class="nav-item" id="nav-cs-docs" onclick="navigate('cs-docs')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span> Documents
+          </div>
+          <div class="nav-section-label">Coming soon</div>
+          <div class="nav-item" style="opacity:.45; cursor:default;">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span> Tax & Accounting <span class="nav-soon">Soon</span>
           </div>
         </div>
 
@@ -1539,6 +1557,36 @@ body.cs-mode {
           <div class="csb-summary section-gap" id="csb-summary"></div>
           <div class="section-label section-gap">Invoices</div>
           <div id="csb-list" class="section-gap"></div>
+        </div>
+      </div>
+
+      <!-- CS: MESSAGES (by client) -->
+      <div id="page-cs-comms" class="page">
+        <div class="page-header">
+          <div class="ph-left"><h1>Messages</h1><span class="ph-sub" id="cs-comms-sub">Client communications — all clients</span></div>
+          <button class="ph-btn" onclick="csAsk('Draft a message to LTVentures Holdings about their upcoming compliance deadline')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Message
+          </button>
+        </div>
+        <div class="page-body">
+          <div class="cs-client-filter section-gap" id="cs-comms-filter"></div>
+          <div id="cs-comms-body" style="flex:1;display:flex;flex-direction:column;min-height:0;"></div>
+        </div>
+      </div>
+
+      <!-- CS: DOCUMENTS (by client) -->
+      <div id="page-cs-docs" class="page">
+        <div class="page-header">
+          <div class="ph-left"><h1>Documents</h1><span class="ph-sub" id="cs-docs-sub">Corporate document vault — all clients</span></div>
+          <button class="ph-btn" onclick="csAsk('Create a list of outstanding document requests across all clients')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Request Docs
+          </button>
+        </div>
+        <div class="page-body">
+          <div class="cs-client-filter section-gap" id="cs-docs-filter"></div>
+          <div id="cs-docs-body" style="flex:1;overflow-y:auto;padding:0 20px 20px;"></div>
         </div>
       </div>
 
@@ -2378,7 +2426,7 @@ function submitEscalation(id) {
   scrollBottom();
 }
 
-const CS_PAGE_TITLES = { 'cs-copilot':'AI Copilot', 'cs-portfolio':'Client Portfolio', 'cs-client':'Client Profile', 'cs-queue':'Work Queue', 'cs-compliance':'Compliance Calendar', 'cs-billing':'Billing' };
+const CS_PAGE_TITLES = { 'cs-copilot':'AI Copilot', 'cs-portfolio':'Client Portfolio', 'cs-client':'Client Profile', 'cs-queue':'Work Queue', 'cs-compliance':'Compliance Calendar', 'cs-billing':'Billing', 'cs-comms':'Messages', 'cs-docs':'Documents' };
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2403,6 +2451,8 @@ function navigate(page) {
   if (page === 'cs-queue')      { if (typeof renderWorkQueue    === 'function') renderWorkQueue(); }
   if (page === 'cs-compliance') { if (typeof renderCSCompliance === 'function') renderCSCompliance(); }
   if (page === 'cs-billing')    { if (typeof renderCSBilling    === 'function') renderCSBilling(); }
+  if (page === 'cs-comms')      { if (typeof renderCSComms      === 'function') renderCSComms(csCommsClient); }
+  if (page === 'cs-docs')       { if (typeof renderCSDocs       === 'function') renderCSDocs(csDoCsClient); }
   closeSidebar();
 }
 
@@ -4399,6 +4449,241 @@ You help CS staff with:
 - For **action requests** (send reminder, assign task): use "ACTION:" prefix followed by the action summary, then "---" then details.
 - For **analysis/advice**: respond conversationally, use markdown formatting.
 - Always be concise and professional. You are a senior CS expert speaking to staff.`;
+
+// ── CS MESSAGES DATA (per client) ─────────────────
+const CS_THREADS = {
+  cc1: [
+    { id:'cst-cc1-1', subject:'Q1 2026 Compliance Review — LTVentures', from:'Sarah Lim', time:'Today, 09:12', status:'progress', unread:true,
+      preview:'Upcoming ACRA filing due Apr 10 — documents needed.',
+      messages:[
+        { side:'cs', name:'Sarah Lim', time:'09:12', text:'Hi Igor, just flagging that the ACRA Annual Return for LTVentures SG is due Apr 10. We still need the signed director resolution. Can you confirm who should sign?' },
+        { side:'client', name:'Igor Pesin', time:'09:45', text:'It should be me and Marcus. I\'ll sign digitally — please send the doc over.' },
+        { side:'cs', name:'Sarah Lim', time:'10:02', text:'Perfect, sending the draft resolution now for your review.' }
+      ]},
+    { id:'cst-cc1-2', subject:'US Tax Return — LTVentures Delaware', from:'Tom Park', time:'Mar 18', status:'open', unread:false,
+      preview:'IRS filing deadline Apr 15 — tax package attached.',
+      messages:[
+        { side:'cs', name:'Tom Park', time:'Mar 18, 14:00', text:'The US tax return for LTVentures Delaware is due Apr 15. Please review the attached tax package and confirm the numbers are correct.' }
+      ]}
+  ],
+  cc2: [
+    { id:'cst-cc2-1', subject:'New Cayman Entity Incorporation', from:'James Chen', time:'Mar 19', status:'progress', unread:true,
+      preview:'Incorporation underway — estimated 5 business days.',
+      messages:[
+        { side:'cs', name:'James Chen', time:'Mar 19, 11:30', text:'Good news — we\'ve submitted the incorporation documents for Pinnacle Cayman II Ltd. Estimated completion: 5 business days. We\'ll notify you once the certificate is issued.' },
+        { side:'client', name:'Pinnacle Admin', time:'Mar 19, 15:00', text:'Thank you James. Please also arrange for a nominee director for the first 30 days.' }
+      ]}
+  ],
+  cc3: [
+    { id:'cst-cc3-1', subject:'Overdue: Companies House UK Filing', from:'Sarah Lim', time:'Today, 08:00', status:'open', unread:true,
+      preview:'UK Companies House filing is 5 days overdue — urgent action required.',
+      messages:[
+        { side:'cs', name:'Sarah Lim', time:'08:00', text:'URGENT: The Companies House Annual Confirmation Statement for NexGen UK Ltd is now 5 days overdue. Late filing incurs a £150 penalty. We need the signed form immediately.' }
+      ]},
+    { id:'cst-cc3-2', subject:'ACRA Annual Return — NexGen SG', from:'Sarah Lim', time:'Mar 15', status:'open', unread:false,
+      preview:'ACRA filing overdue by 10 days — penalty accruing.',
+      messages:[
+        { side:'cs', name:'Sarah Lim', time:'Mar 15, 09:00', text:'The ACRA Annual Return for NexGen Fintech Pte Ltd is now 10 days overdue. A SGD 300 penalty has been issued. Please provide the signed financial statements ASAP.' }
+      ]}
+  ],
+  cc4: [
+    { id:'cst-cc4-1', subject:'BVI Annual Renewal Confirmation', from:'Tom Park', time:'Mar 12', status:'resolved', unread:false,
+      preview:'BVI government fee paid — renewal confirmed.',
+      messages:[
+        { side:'cs', name:'Tom Park', time:'Mar 12, 10:00', text:'BVI annual government fee for Meridian Ventures Ltd has been paid. Renewal confirmed for 2026.' },
+        { side:'client', name:'Meridian Admin', time:'Mar 12, 14:00', text:'Thank you, please send the updated certificate.' },
+        { side:'cs', name:'Tom Park', time:'Mar 13, 09:00', text:'Certificate attached. All in order.' }
+      ]}
+  ],
+  cc5: [
+    { id:'cst-cc5-1', subject:'ACRA Annual Return — Coastal SG', from:'James Chen', time:'Today, 07:30', status:'open', unread:true,
+      preview:'ACRA filing overdue today — immediate action needed.',
+      messages:[
+        { side:'cs', name:'James Chen', time:'07:30', text:'Coastal Holdings SG Annual Return is due today. Please confirm if the financial statements are ready to submit.' }
+      ]},
+    { id:'cst-cc5-2', subject:'KYC Update — New Director Michael Tan', from:'James Chen', time:'Mar 17', status:'progress', unread:false,
+      preview:'KYC documents received — under review.',
+      messages:[
+        { side:'cs', name:'James Chen', time:'Mar 17, 09:00', text:'We\'ve received Michael Tan\'s KYC documents. Passport verified. Awaiting proof of address and source of wealth declaration.' },
+        { side:'client', name:'Coastal Admin', time:'Mar 17, 11:00', text:'He\'ll send the remaining docs by end of week.' }
+      ]}
+  ]
+};
+
+// ── CS DOCS DATA (per client) ─────────────────────
+const CS_DOCS_BY_CLIENT = {
+  cc1: [
+    { name:'LTVentures SG — M&AA', cat:'constitutional', entity:'LTVentures SG Pte Ltd', date:'Jan 15, 2024', size:'1.2 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'BVI Certificate of Incorporation', cat:'constitutional', entity:'LTVentures BVI Ltd', date:'Mar 4, 2022', size:'0.4 MB', type:'pdf', flag:'🇻🇬' },
+    { name:'Board Resolution — Q1 Dividend', cat:'resolutions', entity:'LTVentures BVI Ltd', date:'Feb 20, 2026', size:'0.3 MB', type:'pdf', flag:'🇻🇬' },
+    { name:'ACRA Annual Return 2025', cat:'compliance', entity:'LTVentures SG Pte Ltd', date:'Apr 8, 2025', size:'0.8 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'US Tax Package 2025', cat:'compliance', entity:'LTVentures Delaware LLC', date:'Mar 15, 2026', size:'2.1 MB', type:'pdf', flag:'🇺🇸' },
+    { name:'Banking Mandate — DBS', cat:'banking', entity:'LTVentures SG Pte Ltd', date:'Jun 12, 2023', size:'0.5 MB', type:'pdf', flag:'🇸🇬' }
+  ],
+  cc2: [
+    { name:'Pinnacle SG — M&AA', cat:'constitutional', entity:'Pinnacle Global SG Pte Ltd', date:'Aug 3, 2023', size:'1.1 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'Cayman Certificate', cat:'constitutional', entity:'Pinnacle Cayman Ltd', date:'Sep 10, 2023', size:'0.4 MB', type:'pdf', flag:'🇰🇾' },
+    { name:'Board Resolution — Director Appt', cat:'resolutions', entity:'Pinnacle Global SG Pte Ltd', date:'Jan 7, 2026', size:'0.2 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'ACRA Annual Return 2025', cat:'compliance', entity:'Pinnacle Global SG Pte Ltd', date:'Apr 14, 2025', size:'0.7 MB', type:'pdf', flag:'🇸🇬' }
+  ],
+  cc3: [
+    { name:'NexGen SG — M&AA', cat:'constitutional', entity:'NexGen Fintech Pte Ltd', date:'May 22, 2022', size:'0.9 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'UK Certificate of Incorporation', cat:'constitutional', entity:'NexGen UK Ltd', date:'Jul 1, 2023', size:'0.3 MB', type:'pdf', flag:'🇬🇧' },
+    { name:'ACRA Annual Return 2024', cat:'compliance', entity:'NexGen Fintech Pte Ltd', date:'Apr 20, 2024', size:'0.6 MB', type:'pdf', flag:'🇸🇬' }
+  ],
+  cc4: [
+    { name:'Meridian BVI — M&AA', cat:'constitutional', entity:'Meridian Ventures BVI Ltd', date:'Oct 8, 2021', size:'0.8 MB', type:'pdf', flag:'🇻🇬' },
+    { name:'BVI Annual Renewal 2026', cat:'compliance', entity:'Meridian Ventures BVI Ltd', date:'Mar 12, 2026', size:'0.2 MB', type:'pdf', flag:'🇻🇬' }
+  ],
+  cc5: [
+    { name:'Coastal SG — M&AA', cat:'constitutional', entity:'Coastal Holdings SG Pte Ltd', date:'Feb 14, 2020', size:'1.3 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'Coastal BVI Certificate', cat:'constitutional', entity:'Coastal BVI Ltd', date:'Mar 3, 2020', size:'0.4 MB', type:'pdf', flag:'🇻🇬' },
+    { name:'HK Business Registration', cat:'constitutional', entity:'Coastal Holdings HK Ltd', date:'Apr 1, 2022', size:'0.3 MB', type:'pdf', flag:'🇭🇰' },
+    { name:'Board Resolution — KYC Approval', cat:'resolutions', entity:'Coastal Holdings SG', date:'Feb 28, 2026', size:'0.2 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'ACRA Annual Return 2025', cat:'compliance', entity:'Coastal Holdings SG Pte Ltd', date:'Apr 2, 2025', size:'0.9 MB', type:'pdf', flag:'🇸🇬' },
+    { name:'Dubai Trade License 2025', cat:'compliance', entity:'Coastal UAE FZCO', date:'Jan 15, 2025', size:'0.6 MB', type:'pdf', flag:'🇦🇪' },
+    { name:'Banking Mandate — HSBC HK', cat:'banking', entity:'Coastal Holdings HK Ltd', date:'May 20, 2023', size:'0.5 MB', type:'pdf', flag:'🇭🇰' }
+  ]
+};
+
+let csCommsClient = 'cc1';
+let csDoCsClient  = 'cc1';
+
+// ── CS CLIENT FILTER TABS ─────────────────────────
+function renderCSClientFilterTabs(containerId, activeId, fnName) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = ['all', ...CS_CLIENTS.map(c=>c.id)].map(id => {
+    const isAll = id === 'all';
+    const c = CS_CLIENTS.find(x => x.id === id);
+    const label = isAll ? 'All Clients' : c.name.split(' ')[0];
+    const dot   = !isAll ? `<span class="cs-tab-dot" style="background:${c.color};"></span>` : '';
+    return `<div class="cs-filter-tab ${activeId === id ? 'active' : ''}" onclick="${fnName}('${id}')">${dot}${label}</div>`;
+  }).join('');
+}
+
+// ── CS MESSAGES ───────────────────────────────────
+function renderCSComms(clientId) {
+  clientId = clientId || csCommsClient;
+  csCommsClient = clientId;
+  renderCSClientFilterTabs('cs-comms-filter', clientId, 'renderCSComms');
+  const sub = document.getElementById('cs-comms-sub');
+  if (sub) {
+    const c = CS_CLIENTS.find(x => x.id === clientId);
+    sub.textContent = clientId === 'all'
+      ? 'Client communications — all clients'
+      : `Communications — ${c ? c.name : ''}`;
+  }
+  const body = document.getElementById('cs-comms-body');
+  if (!body) return;
+  let threads = [];
+  if (clientId === 'all') {
+    CS_CLIENTS.forEach(c => { (CS_THREADS[c.id]||[]).forEach(t => threads.push({...t, clientName:c.name, clientColor:c.color})); });
+  } else {
+    threads = (CS_THREADS[clientId]||[]).map(t => { const c=CS_CLIENTS.find(x=>x.id===clientId); return {...t, clientName:c?.name, clientColor:c?.color}; });
+  }
+  const statusLabel = { open:'open', progress:'in progress', resolved:'resolved' };
+  const statusClass = { open:'thread-status-open', progress:'thread-status-progress', resolved:'thread-status-resolved' };
+  body.innerHTML = `<div style="padding:0 20px 20px;">` +
+    threads.map(t => `
+      <div class="thread-item" onclick="openCSThread('${t.id}','${clientId === 'all' ? CS_CLIENTS.find(c=>(CS_THREADS[c.id]||[]).some(x=>x.id===t.id))?.id : clientId}')">
+        <div class="ti-top">
+          <div style="display:flex;align-items:center;gap:7px;min-width:0;">
+            ${clientId==='all' ? `<span style="width:8px;height:8px;border-radius:50%;background:${t.clientColor};flex-shrink:0;display:inline-block;"></span><span style="font-size:10px;color:var(--gray-m);white-space:nowrap;">${t.clientName} ·</span>` : ''}
+            <span class="ti-subject ${t.unread?'':'ti-read'}">${escHtml(t.subject)}</span>
+          </div>
+          <span class="ti-time">${t.time}</span>
+        </div>
+        <div class="ti-bottom">
+          <span class="ti-preview">${escHtml(t.preview)}</span>
+          <span class="thread-status ${statusClass[t.status]||''}">${statusLabel[t.status]||t.status}</span>
+        </div>
+      </div>`).join('') + `</div>`;
+}
+
+function openCSThread(threadId, clientId) {
+  const threads = CS_THREADS[clientId] || [];
+  const t = threads.find(x => x.id === threadId);
+  if (!t) return;
+  t.unread = false;
+  const body = document.getElementById('cs-comms-body');
+  if (!body) return;
+  const c = CS_CLIENTS.find(x => x.id === clientId);
+  body.innerHTML = `
+    <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:0;height:100%;">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0 16px;border-bottom:1px solid var(--sb-border);margin-bottom:14px;">
+        <button onclick="renderCSComms('${clientId}')" style="background:none;border:none;cursor:pointer;color:var(--gray-m);font-size:13px;display:flex;align-items:center;gap:4px;padding:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Back
+        </button>
+        <div style="font-size:13px;font-weight:600;color:var(--dark);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(t.subject)}</div>
+        <span style="font-size:10px;color:var(--gray-m);">${c ? c.name : ''}</span>
+      </div>
+      <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;">
+        ${t.messages.map(m => `
+          <div style="display:flex;gap:9px;align-items:flex-start;${m.side==='cs'?'':'flex-direction:row-reverse;'}">
+            <div style="width:28px;height:28px;border-radius:50%;background:${m.side==='cs'?'var(--blue)':'var(--sb-bg)'};color:${m.side==='cs'?'white':'var(--gray-m)'};font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${m.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+            <div style="max-width:70%;">
+              <div style="font-size:10px;color:var(--gray-m);margin-bottom:3px;${m.side!=='cs'?'text-align:right;':''}">${escHtml(m.name)} · ${m.time}</div>
+              <div style="background:${m.side==='cs'?'var(--sb-bg)':'var(--blue)'};color:${m.side==='cs'?'var(--dark)':'white'};border-radius:10px;${m.side==='cs'?'border-top-left-radius:3px;':'border-top-right-radius:3px;'};padding:9px 12px;font-size:13px;line-height:1.5;">${escHtml(m.text)}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;border-top:1px solid var(--sb-border);padding-top:12px;">
+        <input id="cs-thread-reply-${t.id}" type="text" placeholder="Reply…" style="flex:1;border:1.5px solid var(--sb-border);border-radius:8px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit;" onkeydown="if(event.key==='Enter'){sendCSThreadReply('${t.id}','${clientId}')}">
+        <button onclick="sendCSThreadReply('${t.id}','${clientId}')" style="padding:8px 14px;background:var(--blue);color:white;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Send</button>
+      </div>
+    </div>`;
+}
+
+function sendCSThreadReply(threadId, clientId) {
+  const inp = document.getElementById('cs-thread-reply-' + threadId);
+  const text = inp?.value?.trim();
+  if (!text) return;
+  const threads = CS_THREADS[clientId] || [];
+  const t = threads.find(x => x.id === threadId);
+  if (!t) return;
+  const now = new Date(); const hm = now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+  t.messages.push({ side:'cs', name:'You', time:'Just now', text });
+  inp.value = '';
+  openCSThread(threadId, clientId);
+}
+
+// ── CS DOCUMENTS ──────────────────────────────────
+function renderCSDocs(clientId) {
+  clientId = clientId || csDoCsClient;
+  csDoCsClient = clientId;
+  renderCSClientFilterTabs('cs-docs-filter', clientId, 'renderCSDocs');
+  const sub = document.getElementById('cs-docs-sub');
+  if (sub) {
+    const c = CS_CLIENTS.find(x => x.id === clientId);
+    sub.textContent = clientId === 'all'
+      ? 'Corporate document vault — all clients'
+      : `Documents — ${c ? c.name : ''}`;
+  }
+  const body = document.getElementById('cs-docs-body');
+  if (!body) return;
+  let docs = [];
+  if (clientId === 'all') {
+    CS_CLIENTS.forEach(c => { (CS_DOCS_BY_CLIENT[c.id]||[]).forEach(d => docs.push({...d, clientName:c.name, clientColor:c.color})); });
+  } else {
+    docs = CS_DOCS_BY_CLIENT[clientId] || [];
+  }
+  const typeIcon = { pdf:'📄', xlsx:'📊', docx:'📝' };
+  const catColour = { constitutional:'var(--blue)', resolutions:'#8B5CF6', compliance:'var(--green)', banking:'var(--yellow)', contracts:'#F97316' };
+  body.innerHTML = docs.map(d => `
+    <div class="doc-item">
+      <div style="font-size:20px;flex-shrink:0;">${typeIcon[d.type]||'📄'}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escHtml(d.name)}</div>
+        <div style="font-size:11px;color:var(--gray-m);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span>${d.flag} ${escHtml(d.entity)}</span>
+          ${clientId==='all'?`<span style="color:${d.clientColor};font-weight:600;">${escHtml(d.clientName)}</span>`:''}
+          <span>·</span><span>${d.date}</span><span>·</span><span>${d.size}</span>
+        </div>
+      </div>
+      <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:${catColour[d.cat]||'var(--sb-bg)'}22;color:${catColour[d.cat]||'var(--gray-m)'};white-space:nowrap;">${d.cat}</span>
+    </div>`).join('');
+}
 
 let csHistory         = [];
 let csIsLoading       = false;
