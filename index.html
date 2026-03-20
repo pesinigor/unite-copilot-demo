@@ -736,6 +736,8 @@ body.cs-mode {
 .cs-rp { width: var(--rp-w); background: white; border-left: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
 .cs-rp::-webkit-scrollbar { width: 4px; }
 .cs-rp::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
+/* Hide CS right panel on mobile — must be AFTER the .cs-rp definition to take effect */
+@media (max-width: 960px) { .cs-rp { display: none; } }
 
 /* Summary stat tiles */
 .cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
