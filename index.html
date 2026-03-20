@@ -153,33 +153,10 @@
   .send-btn svg { width: 16px; height: 16px; fill: white; }
   .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 8px; }
 
-  /* API key overlay */
-  #key-overlay { position:fixed;inset:0;z-index:200;background:rgba(17,29,54,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center; }
-  #key-overlay.hidden { display:none; }
-  .key-card { background:white;border-radius:18px;padding:40px 44px;width:420px;box-shadow:0 16px 64px rgba(0,0,0,.2);text-align:center; }
-  .key-card .klogo { background:var(--navy);color:white;font-weight:700;font-size:15px;padding:7px 16px;border-radius:8px;display:inline-block;margin-bottom:20px; }
-  .key-card h2 { font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px; }
-  .key-card p { font-size:13px;color:var(--gray-m);margin-bottom:24px;line-height:1.5; }
-  .key-input { width:100%;padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:9px;font-size:13px;font-family:'Inter',sans-serif;color:var(--navy);background:var(--cream);outline:none; }
-  .key-input:focus { border-color:var(--navy); }
-  .key-btn { width:100%;margin-top:12px;padding:13px;background:var(--navy);color:white;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif; }
-  .key-btn:hover { background:var(--navy-light); }
-  .key-err { color:var(--red);font-size:11px;margin-top:8px;display:none; }
 </style>
 </head>
 <body>
 
-<!-- API key overlay -->
-<div id="key-overlay">
-  <div class="key-card">
-    <div class="klogo">Unite.</div>
-    <h2>AI Copilot Demo</h2>
-    <p>Enter your Anthropic API key to start.<br>It stays in your browser — never stored.</p>
-    <input class="key-input" id="key-input" type="password" placeholder="sk-ant-api03-..." />
-    <div class="key-err" id="key-err">Invalid key — should start with sk-ant-</div>
-    <button class="key-btn" onclick="connectKey()">Launch Demo</button>
-  </div>
-</div>
 
 <div id="app">
   <!-- Top bar -->
@@ -277,17 +254,6 @@
 let history = [];
 let isLoading = false;
 
-function connectKey() {
-  const k = document.getElementById('key-input').value.trim();
-  if (!k.startsWith('sk-ant-')) { document.getElementById('key-err').style.display='block'; return; }
-  sessionStorage.setItem('unite_api_key', k);
-  document.getElementById('key-overlay').classList.add('hidden');
-}
-document.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('unite_api_key')) document.getElementById('key-overlay').classList.add('hidden');
-  document.getElementById('key-input')?.addEventListener('keydown', e => { if(e.key==='Enter') connectKey(); });
-});
-
 const SYSTEM = `You are the Unite AI Copilot — an intelligent agent for corporate operations, embedded directly inside the Unite platform. You are currently working with LTVentures Holdings.
 
 Your role: answer any question about this client's entities, finances, compliance, and banking — and coordinate execution of real actions when instructed.
@@ -383,22 +349,17 @@ Revenue: $8,200,000 | Net income: $2,450,000 | Total assets: $5,800,000 | YoY gr
 
 async function callClaude(userText) {
   history.push({ role: 'user', content: userText });
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('/.netlify/functions/chat', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': sessionStorage.getItem('unite_api_key'),
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024, system: SYSTEM, messages: history })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system: SYSTEM, messages: history })
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `Error ${res.status}`);
+    throw new Error(err.error || `Error ${res.status}`);
   }
   const data = await res.json();
-  const reply = data.content[0].text;
+  const reply = data.content;
   history.push({ role: 'assistant', content: reply });
   return reply;
 }
