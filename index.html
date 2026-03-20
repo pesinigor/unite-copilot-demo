@@ -3977,11 +3977,8 @@ function switchRole(role) {
 
 // ── CS COPILOT ────────────────────────────────
 function csAsk(prompt) {
-  switchRole('client');
-  setTimeout(() => {
-    const inp = document.getElementById('chat-input');
-    if (inp) { inp.value = prompt; sendMessage(); }
-  }, 200);
+  navigate('cs-copilot');
+  setTimeout(() => { csInsertPrompt(prompt); sendCSMessage(); }, 200);
 }
 
 // ── CS PORTFOLIO ──────────────────────────────
