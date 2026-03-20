@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unite. AI Copilot — LTVentures Holdings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --cream-dark: #E8E2D8;
+    --navy: #1B2A4A;
+    --navy-light: #243660;
+    --orange: #E8652A;
+    --gray-m: #6B7280;
+    --gray-l: #9CA3AF;
+    --gray-xl: #E5E7EB;
+    --white: #FFFFFF;
+    --green: #22C55E;
+    --red: #EF4444;
+    --yellow: #F59E0B;
+    --sidebar-w: 260px;
+    --sb-bg: #FAFAF9;
+    --sb-border: #ECEAE4;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: 'Inter', sans-serif; background: #FFFFFF; color: var(--navy); display: flex; flex-direction: column; }
+
+  #app { display: flex; height: 100vh; flex-direction: column; }
+
+  /* Top Bar */
+  .topbar { height: 56px; background: white; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; padding: 0 24px; gap: 12px; flex-shrink: 0; }
+  .topbar-logo { background: var(--navy); color: white; font-weight: 700; font-size: 14px; padding: 6px 14px; border-radius: 7px; letter-spacing: -.2px; }
+  .topbar-divider { width: 1px; height: 20px; background: var(--sb-border); }
+  .topbar-title { font-size: 13px; font-weight: 500; color: var(--gray-m); }
+  .topbar-client { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .topbar-badge { margin-left: auto; background: var(--orange); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; }
+  .topbar-reset { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-l); cursor: pointer; }
+  .topbar-reset .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  /* Layout */
+  .layout { display: flex; flex: 1; overflow: hidden; }
+
+  /* Sidebar — light */
+  .sidebar { width: var(--sidebar-w); background: var(--sb-bg); border-right: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 4px; }
+
+  .sb-section { padding: 16px; border-bottom: 1px solid var(--sb-border); }
+  .sb-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+
+  .entity-card { background: white; border: 1px solid var(--sb-border); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; cursor: pointer; transition: all .15s; }
+  .entity-card:hover { border-color: var(--cream-dark); background: var(--cream); box-shadow: 0 1px 4px rgba(27,42,74,.06); }
+  .entity-card-top { display: flex; align-items: center; gap: 8px; }
+  .entity-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .entity-dot.active { background: var(--green); }
+  .entity-name { font-size: 12px; font-weight: 600; color: var(--navy); flex: 1; }
+  .entity-flag { font-size: 14px; }
+  .entity-sub { font-size: 10px; color: var(--gray-l); margin-top: 3px; padding-left: 15px; }
+
+  .treasury-total { text-align: center; margin-bottom: 14px; background: var(--navy); border-radius: 10px; padding: 14px; }
+  .treasury-total .amount { font-size: 22px; font-weight: 700; color: white; }
+  .treasury-total .label { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 2px; }
+  .bank-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+  .bank-name { font-size: 11px; color: var(--gray-m); }
+  .bank-amt { font-size: 11px; font-weight: 600; color: var(--navy); }
+
+  .deadline-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+  .deadline-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+  .deadline-dot.urgent { background: var(--red); }
+  .deadline-dot.soon { background: var(--yellow); }
+  .deadline-dot.ok { background: #D1D5DB; }
+  .deadline-text { font-size: 11px; color: var(--gray-m); line-height: 1.4; }
+  .deadline-text strong { color: var(--navy); font-weight: 600; }
+
+  /* Chat */
+  .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #FFFFFF; }
+  .messages { flex: 1; overflow-y: auto; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; }
+  .messages::-webkit-scrollbar { width: 6px; }
+  .messages::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 3px; }
+
+  /* Welcome */
+  .welcome { max-width: 600px; margin: 0 auto; text-align: center; padding: 20px 0 8px; }
+  .welcome-icon { font-size: 36px; margin-bottom: 16px; }
+  .welcome h2 { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .welcome p { font-size: 14px; color: var(--gray-m); line-height: 1.6; margin-bottom: 24px; }
+  .suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .suggestion-chip { background: var(--sb-bg); border: 1.5px solid var(--sb-border); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--navy); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+  .suggestion-chip:hover { border-color: var(--navy); background: var(--navy); color: white; }
+
+  /* Messages */
+  .msg { display: flex; gap: 12px; max-width: 820px; }
+  .msg.user { flex-direction: row-reverse; margin-left: auto; }
+  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-top: 2px; }
+  .msg.user .msg-avatar { background: var(--navy); color: white; }
+  .msg.assistant .msg-avatar { background: var(--orange); color: white; }
+  .msg-bubble { max-width: calc(100% - 44px); padding: 14px 18px; border-radius: 16px; font-size: 14px; line-height: 1.65; }
+  .msg.user .msg-bubble { background: var(--navy); color: white; border-bottom-right-radius: 4px; }
+  .msg.assistant .msg-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); color: var(--navy); border-bottom-left-radius: 4px; }
+
+  .msg-bubble h3 { font-size: 13px; font-weight: 700; margin: 12px 0 6px; color: var(--navy); }
+  .msg-bubble h3:first-child { margin-top: 0; }
+  .msg-bubble p { margin-bottom: 8px; }
+  .msg-bubble p:last-child { margin-bottom: 0; }
+  .msg-bubble ul { padding-left: 18px; margin: 6px 0; }
+  .msg-bubble li { margin-bottom: 4px; }
+  .msg-bubble strong { font-weight: 600; }
+  .msg-bubble table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; border: 1px solid var(--sb-border); border-radius: 8px; overflow: hidden; }
+  .msg-bubble th { background: var(--cream); padding: 7px 10px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: .03em; color: var(--navy); }
+  .msg-bubble td { padding: 7px 10px; border-bottom: 1px solid var(--sb-border); background: white; }
+  .msg-bubble tr:last-child td { border-bottom: none; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; letter-spacing: .03em; }
+  .badge.urgent { background: #FEE2E2; color: #DC2626; }
+  .badge.soon { background: #FEF3C7; color: #D97706; }
+  .badge.ok { background: #D1FAE5; color: #059669; }
+  .badge.active { background: #DBEAFE; color: #1D4ED8; }
+
+  /* Action card — light version */
+  .action-card { background: white; border: 1.5px solid var(--orange); border-radius: 14px; overflow: hidden; margin-top: 4px; }
+  .action-card-header { background: var(--orange); padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
+  .action-card-header span { font-size: 12px; font-weight: 700; color: white; letter-spacing: .04em; text-transform: uppercase; }
+  .action-card-body { padding: 16px; color: var(--navy); font-size: 13px; line-height: 1.6; }
+  .action-card-body strong { color: var(--navy); font-weight: 700; }
+  .action-card-footer { padding: 0 16px 16px; display: flex; gap: 8px; }
+  .action-approve { flex: 1; padding: 10px; background: var(--green); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; }
+  .action-approve:hover { background: #16A34A; }
+  .action-cancel { padding: 10px 16px; background: var(--sb-bg); color: var(--gray-m); border: 1px solid var(--sb-border); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .action-cancel:hover { background: var(--cream); }
+  .action-success { background: #D1FAE5; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin: 0 16px 16px; }
+  .action-success p { font-size: 13px; color: #065F46; font-weight: 500; }
+
+  /* Typing */
+  .typing { display: flex; gap: 12px; align-items: flex-start; }
+  .typing-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); padding: 14px 18px; border-radius: 16px; border-bottom-left-radius: 4px; display: flex; gap: 5px; align-items: center; }
+  .typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gray-l); animation: typingBounce 1.2s infinite; }
+  .typing-dot:nth-child(2) { animation-delay: .2s; }
+  .typing-dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+
+  /* Input */
+  .input-area { padding: 16px 32px 20px; background: white; border-top: 1px solid var(--sb-border); flex-shrink: 0; }
+  .input-wrap { display: flex; gap: 10px; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 14px; padding: 8px 8px 8px 16px; align-items: flex-end; transition: border-color .2s; }
+  .input-wrap:focus-within { border-color: var(--navy); background: white; }
+  #user-input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--navy); background: transparent; resize: none; max-height: 120px; min-height: 24px; line-height: 1.5; padding: 4px 0; }
+  #user-input::placeholder { color: var(--gray-l); }
+  .send-btn { width: 36px; height: 36px; border-radius: 9px; background: var(--navy); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+  .send-btn:hover:not(:disabled) { background: var(--navy-light); }
+  .send-btn:disabled { background: var(--gray-l); cursor: not-allowed; }
+  .send-btn svg { width: 16px; height: 16px; fill: white; }
+  .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 8px; }
+
+  /* API key overlay */
+  #key-overlay { position:fixed;inset:0;z-index:200;background:rgba(17,29,54,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center; }
+  #key-overlay.hidden { display:none; }
+  .key-card { background:white;border-radius:18px;padding:40px 44px;width:420px;box-shadow:0 16px 64px rgba(0,0,0,.2);text-align:center; }
+  .key-card .klogo { background:var(--navy);color:white;font-weight:700;font-size:15px;padding:7px 16px;border-radius:8px;display:inline-block;margin-bottom:20px; }
+  .key-card h2 { font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px; }
+  .key-card p { font-size:13px;color:var(--gray-m);margin-bottom:24px;line-height:1.5; }
+  .key-input { width:100%;padding:11px 14px;border:1.5px solid var(--cream-dark);border-radius:9px;font-size:13px;font-family:'Inter',sans-serif;color:var(--navy);background:var(--cream);outline:none; }
+  .key-input:focus { border-color:var(--navy); }
+  .key-btn { width:100%;margin-top:12px;padding:13px;background:var(--navy);color:white;border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif; }
+  .key-btn:hover { background:var(--navy-light); }
+  .key-err { color:var(--red);font-size:11px;margin-top:8px;display:none; }
+</style>
+</head>
+<body>
+
+<!-- API key overlay -->
+<div id="key-overlay">
+  <div class="key-card">
+    <div class="klogo">Unite.</div>
+    <h2>AI Copilot Demo</h2>
+    <p>Enter your Anthropic API key to start.<br>It stays in your browser — never stored.</p>
+    <input class="key-input" id="key-input" type="password" placeholder="sk-ant-api03-..." />
+    <div class="key-err" id="key-err">Invalid key — should start with sk-ant-</div>
+    <button class="key-btn" onclick="connectKey()">Launch Demo</button>
+  </div>
+</div>
+
+<div id="app">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-logo">Unite.</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-title">AI Copilot &nbsp;/&nbsp;</div>
+    <div class="topbar-client">LTVentures Holdings</div>
+    <div class="topbar-badge">✦ AI COPILOT</div>
+    <div class="topbar-reset" onclick="resetConversation()" title="Reset conversation">
+      <div class="dot"></div> Live
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-section">
+        <div class="sb-label">Entities</div>
+        <div class="entity-card" onclick="insertPrompt('Give me a status overview of all our entities')">
+          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures Holdings</div><div class="entity-flag">🇻🇬</div></div>
+          <div class="entity-sub">British Virgin Islands · Holding</div>
+        </div>
+        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our Singapore entity?')">
+          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures Singapore</div><div class="entity-flag">🇸🇬</div></div>
+          <div class="entity-sub">Singapore · Operating HQ</div>
+        </div>
+        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our UAE entity?')">
+          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures DMCC</div><div class="entity-flag">🇦🇪</div></div>
+          <div class="entity-sub">UAE (Dubai) · Operations</div>
+        </div>
+        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our UK entity?')">
+          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures UK</div><div class="entity-flag">🇬🇧</div></div>
+          <div class="entity-sub">England & Wales · Europe</div>
+        </div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Treasury</div>
+        <div class="treasury-total">
+          <div class="amount">$1,650,000</div>
+          <div class="label">Total across entities (USD)</div>
+        </div>
+        <div class="bank-row"><span class="bank-name">🇸🇬 DBS Singapore</span><span class="bank-amt">$836K</span></div>
+        <div class="bank-row"><span class="bank-name">🇦🇪 Emirates NBD</span><span class="bank-amt">$501K</span></div>
+        <div class="bank-row"><span class="bank-name">🇬🇧 Barclays UK</span><span class="bank-amt">$313K</span></div>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-label">Upcoming Deadlines</div>
+        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 28</strong> — UAE VAT Return · 40 days</div></div>
+        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 30</strong> — SG Annual Return · 42 days</div></div>
+        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 30</strong> — SG GST Filing Q1 · 42 days</div></div>
+        <div class="deadline-row"><div class="deadline-dot soon"></div><div class="deadline-text"><strong>May 31</strong> — BVI Annual Return · 73 days</div></div>
+        <div class="deadline-row"><div class="deadline-dot soon"></div><div class="deadline-text"><strong>Jun 15</strong> — UAE Trade License · 88 days</div></div>
+        <div class="deadline-row"><div class="deadline-dot ok"></div><div class="deadline-text"><strong>Oct 14</strong> — UK Confirmation Statement</div></div>
+      </div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-area">
+      <div class="messages" id="messages">
+        <div class="welcome" id="welcome-msg">
+          <div class="welcome-icon">✦</div>
+          <h2>Good morning, Igor.</h2>
+          <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
+          <div class="suggestions">
+            <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
+            <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
+            <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 2025 tax estimate</div>
+            <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 financial summary</div>
+            <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay pending invoice</div>
+            <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore status</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrap">
+          <textarea id="user-input" rows="1"
+            placeholder="Ask anything about LTVentures Holdings — or give an instruction to execute…"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24"><path d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>
+          </button>
+        </div>
+        <div class="input-hint">Unite AI Copilot · Powered by Claude · Demo — LTVentures Holdings</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let history = [];
+let isLoading = false;
+
+function connectKey() {
+  const k = document.getElementById('key-input').value.trim();
+  if (!k.startsWith('sk-ant-')) { document.getElementById('key-err').style.display='block'; return; }
+  sessionStorage.setItem('unite_api_key', k);
+  document.getElementById('key-overlay').classList.add('hidden');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('unite_api_key')) document.getElementById('key-overlay').classList.add('hidden');
+  document.getElementById('key-input')?.addEventListener('keydown', e => { if(e.key==='Enter') connectKey(); });
+});
+
+const SYSTEM = `You are the Unite AI Copilot — an intelligent agent for corporate operations, embedded directly inside the Unite platform. You are currently working with LTVentures Holdings.
+
+Your role: answer any question about this client's entities, finances, compliance, and banking — and coordinate execution of real actions when instructed.
+
+## CLIENT: LTVentures Holdings
+
+### CORPORATE STRUCTURE
+1. **LTVentures Holdings Ltd** (BVI)
+   - Incorporated: January 15, 2021 | Status: Active
+   - Purpose: Ultimate holding company | Registered Agent: Maples Group
+   - Deadlines: Annual Return May 31, 2025 · Economic Substance Report June 30, 2025
+
+2. **LTVentures Singapore Pte Ltd** (Singapore)
+   - UEN: 202112345K | Incorporated: March 8, 2021 | Status: Active
+   - Purpose: Main operating entity — Southeast Asia HQ
+   - Directors: Alex Tan, Maria Rodriguez | Shareholders: LTVentures Holdings Ltd (100%)
+   - Deadlines: Annual Return April 30, 2025 · AGM June 30, 2025 · GST Filing Q1 April 30, 2025
+   - Address: 1 Raffles Place, #20-61, Singapore 048616
+
+3. **LTVentures DMCC** (UAE — Dubai Multi Commodities Centre)
+   - License No: DMCC-123456 | Incorporated: June 22, 2022 | Status: Active
+   - Purpose: Middle East & Africa operations
+   - Deadlines: VAT Return April 28, 2025 · Trade License Renewal June 15, 2025
+   - VAT Registration: TRN 100123456789012
+
+4. **LTVentures UK Ltd** (England & Wales)
+   - Company No: 14789123 | Incorporated: September 12, 2023 | Status: Active
+   - Purpose: European operations and sales
+   - Deadlines: Confirmation Statement October 14, 2025 · Corporation Tax Return January 31, 2026
+   - Address: 20 Fenchurch Street, London EC3M 3BY
+
+### BANKING & TREASURY (as of March 19, 2025)
+- DBS Bank Singapore (SGD Current, acct ending 8842): SGD 1,124,350 ≈ USD 836,000
+- Emirates NBD UAE (AED Business, acct ending 4471): AED 1,842,000 ≈ USD 501,000
+- Barclays UK (GBP Business, acct ending 3301): GBP 247,500 ≈ USD 313,000
+- **TOTAL TREASURY: ~$1,650,000 USD**
+
+### RECENT TRANSACTIONS (last 30 days)
+- Mar 15: +SGD 114,200 from Apex Group (Invoice #SG-2025-0312)
+- Mar 14: -SGD 28,400 quarterly office rent (1 Raffles Place)
+- Mar 12: -GBP 8,400 Baker McKenzie legal fees
+- Mar 10: -SGD 142,000 Singapore payroll (March)
+- Mar 8: +AED 154,400 from Nomad Capital (Invoice #UAE-2025-0089)
+- Mar 7: -AED 38,200 DMCC office rent
+- Mar 5: -AED 52,100 UAE payroll (March)
+- Mar 3: -GBP 12,800 UK payroll (March)
+- Feb 28: +GBP 84,000 from Meridian Partners (Invoice #UK-2025-0041)
+
+### PENDING ITEMS
+- Invoice from TechVentures FZ LLC: AED 87,500 (~$23,800) — due April 1, 2025
+- Awaiting signature: Singapore director resolution for Q1 dividend distribution
+- UAE VAT return data collection in progress (due April 28)
+
+### FINANCIAL SUMMARY — Q4 2024
+Revenue: SG $1,370K + UAE $610K + UK $405K = **$2,385,000 total**
+Expenses: Payroll $980K · Professional Services $215K · Rent $128K · SaaS $84K · Travel $52K · Other $121K = **$1,580,000 total**
+Net operating income: **$805,000** | EBITDA margin: **~34%**
+
+### FY2024 FULL YEAR
+Revenue: $8,200,000 | Net income: $2,450,000 | Total assets: $5,800,000 | YoY growth: +42%
+
+### TAX ESTIMATES 2025
+- Singapore (17%, partial exemption): ~SGD 338,000 (~$252,000)
+- UAE (9% corp tax): ~AED 127,800 (~$35,000)
+- UK (25%): ~GBP 102,500 (~$130,000)
+- **Total: ~$417,000**
+
+### COMPLIANCE DEADLINES
+1. Apr 28 — UAE VAT Return — URGENT (40 days)
+2. Apr 30 — Singapore Annual Return — URGENT (42 days)
+3. Apr 30 — Singapore GST Q1 — URGENT (42 days)
+4. May 31 — BVI Annual Return (73 days)
+5. Jun 15 — UAE Trade License Renewal (88 days)
+6. Jun 30 — Singapore AGM (103 days)
+7. Jun 30 — BVI Economic Substance Report (103 days)
+8. Oct 14 — UK Confirmation Statement (209 days)
+9. Jan 31, 2026 — UK Corporation Tax Return (318 days)
+
+---
+
+## RESPONSE GUIDELINES
+**Tone**: Professional, clear, direct. You're a trusted advisor who knows this company inside out.
+**Formatting**: Use markdown tables for data. Bold key figures. Keep answers concise.
+
+**For ACTION requests** (pay invoice, file document, transfer funds, set up entity, etc.):
+- Begin with exactly: "ACTION:"
+- Next line: "**Preparing:** [description]"
+- List specific details (amount, recipient, account, entity)
+- End with: "This action is ready for your approval."
+
+**For questions**: Answer directly with exact figures from the data above.
+**Today's date**: March 19, 2025.`;
+
+async function callClaude(userText) {
+  history.push({ role: 'user', content: userText });
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': sessionStorage.getItem('unite_api_key'),
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1024, system: SYSTEM, messages: history })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `Error ${res.status}`);
+  }
+  const data = await res.json();
+  const reply = data.content[0].text;
+  history.push({ role: 'assistant', content: reply });
+  return reply;
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+  hideWelcome();
+  input.value = '';
+  input.style.height = 'auto';
+  setLoading(true);
+  appendUserMsg(text);
+  const typingId = appendTyping();
+  try {
+    const reply = await callClaude(text);
+    removeTyping(typingId);
+    appendAssistantMsg(reply);
+  } catch (e) {
+    removeTyping(typingId);
+    appendAssistantMsg(`Something went wrong: ${e.message}`);
+  }
+  setLoading(false);
+  scrollBottom();
+}
+
+function resetConversation() {
+  if (!confirm('Reset the conversation?')) return;
+  history = [];
+  document.getElementById('messages').innerHTML = '';
+  renderWelcome();
+}
+
+function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+function insertPrompt(t) { const i = document.getElementById('user-input'); i.value = t; autoResize(i); i.focus(); }
+function setLoading(v) { isLoading = v; document.getElementById('send-btn').disabled = v; }
+function hideWelcome() { document.getElementById('welcome-msg')?.remove(); }
+function scrollBottom() { const m = document.getElementById('messages'); m.scrollTop = m.scrollHeight; }
+
+function renderWelcome() {
+  document.getElementById('messages').innerHTML = `
+    <div class="welcome" id="welcome-msg">
+      <div class="welcome-icon">✦</div>
+      <h2>Good morning, Igor.</h2>
+      <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
+      <div class="suggestions">
+        <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 2025 tax estimate</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 financial summary</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay pending invoice</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore status</div>
+      </div>
+    </div>`;
+}
+
+function appendUserMsg(text) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `<div class="msg-avatar">IG</div><div class="msg-bubble">${escHtml(text)}</div>`;
+  msgs.appendChild(div); scrollBottom();
+}
+
+function appendAssistantMsg(raw) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg assistant';
+  if (raw.startsWith('ACTION:')) {
+    const lines = raw.replace(/^ACTION:\s*/, '').trim().split('\n');
+    const bodyLines = [];
+    let i = 0;
+    while (i < lines.length && !lines[i].includes('This action is ready for your approval')) { bodyLines.push(lines[i]); i++; }
+    const actionId = 'action-' + Date.now();
+    div.innerHTML = `
+      <div class="msg-avatar">✦</div>
+      <div class="msg-bubble">
+        <div class="action-card" id="${actionId}">
+          <div class="action-card-header"><span>⚡ Action Ready</span></div>
+          <div class="action-card-body">${renderMarkdown(bodyLines.join('\n'))}</div>
+          <div class="action-card-footer">
+            <button class="action-approve" onclick="approveAction('${actionId}')">Approve &amp; Execute</button>
+            <button class="action-cancel" onclick="cancelAction('${actionId}')">Cancel</button>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble">${renderMarkdown(raw)}</div>`;
+  }
+  msgs.appendChild(div); scrollBottom();
+}
+
+function approveAction(id) {
+  document.getElementById(id).innerHTML = `
+    <div class="action-card-header"><span>✓ Executed</span></div>
+    <div class="action-success"><p>✅ Action executed successfully. Confirmation will appear in your activity log.</p></div>`;
+}
+function cancelAction(id) {
+  document.getElementById(id).innerHTML = `
+    <div class="action-card-header" style="background:var(--gray-m)"><span>✕ Cancelled</span></div>
+    <div style="padding:12px 16px;color:rgba(255,255,255,.5);font-size:13px;">Action cancelled. No changes were made.</div>`;
+}
+
+let tc = 0;
+function appendTyping() {
+  const id = 'typing-' + (++tc);
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.id = id; div.className = 'typing';
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--orange);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;">✦</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(div); scrollBottom(); return id;
+}
+function removeTyping(id) { document.getElementById(id)?.remove(); }
+
+function renderMarkdown(text) {
+  let h = escHtml(text);
+  h = h.replace(/(\|.+\|\n?)+/g, match => {
+    const rows = match.trim().split('\n').filter(r => r.trim());
+    if (rows.length < 2) return match;
+    let t = '<table>';
+    rows.forEach((row, i) => {
+      if (/^[\s|:-]+$/.test(row)) return;
+      const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
+      const tag = i === 0 ? 'th' : 'td';
+      t += '<tr>' + cells.map(c => `<${tag}>${renderBadge(c)}</${tag}>`).join('') + '</tr>';
+    });
+    return t + '</table>';
+  });
+  h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>').replace(/^## (.+)$/gm, '<h3>$1</h3>');
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  h = h.replace(/^[\*\-] (.+)$/gm, '<li>$1</li>');
+  h = h.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
+  h = h.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+  return h.split(/\n\n+/).map(p => {
+    p = p.trim(); if (!p) return '';
+    if (p.startsWith('<h3>') || p.startsWith('<ul>') || p.startsWith('<table>') || p.startsWith('<li>')) return p;
+    return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+function renderBadge(t) {
+  const l = t.toLowerCase();
+  if (l.includes('urgent') || l.includes('overdue')) return `<span class="badge urgent">${t}</span>`;
+  if (l.includes('soon')) return `<span class="badge soon">${t}</span>`;
+  if (l.includes('active')) return `<span class="badge active">${t}</span>`;
+  if (l.includes('filed') || l.includes('complete')) return `<span class="badge ok">${t}</span>`;
+  return t;
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+</script>
+</body>
+</html>
