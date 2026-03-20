@@ -153,14 +153,86 @@
   .send-btn svg { width: 16px; height: 16px; fill: white; }
   .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 8px; }
 
+  /* ── MENU BUTTON (hidden on desktop) ─── */
+  .menu-btn { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; border-radius: 8px; flex-shrink: 0; }
+  .menu-btn:hover { background: var(--sb-bg); }
+  .menu-btn svg { width: 20px; height: 20px; stroke: var(--navy); }
+
+  /* ── SIDEBAR OVERLAY (mobile backdrop) ─── */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 99; }
+  .sidebar-overlay.open { display: block; }
+
+  /* ── MOBILE ───────────────────────────── */
+  @media (max-width: 768px) {
+    /* Show menu button */
+    .menu-btn { display: flex; }
+
+    /* Hide desktop topbar elements to save space */
+    .topbar-divider, .topbar-title { display: none; }
+    .topbar { padding: 0 12px; gap: 8px; }
+    .topbar-badge { font-size: 10px; padding: 3px 8px; }
+
+    /* Sidebar becomes a slide-in drawer */
+    .sidebar {
+      position: fixed; top: 0; left: -100%; height: 100%; z-index: 100;
+      width: 280px; transition: left .28s cubic-bezier(.4,0,.2,1);
+      box-shadow: 4px 0 24px rgba(27,42,74,.15);
+    }
+    .sidebar.open { left: 0; }
+
+    /* Chat fills full width */
+    .layout { flex-direction: column; }
+    .chat-area { width: 100%; }
+
+    /* Messenger-style message padding */
+    .messages { padding: 12px 12px 8px; gap: 6px; }
+
+    /* Bubbles feel more like iMessage/WhatsApp */
+    .msg { max-width: 100%; }
+    .msg.user .msg-bubble { max-width: 78%; border-radius: 18px; border-bottom-right-radius: 4px; }
+    .msg.assistant .msg-bubble { max-width: 88%; border-radius: 18px; border-bottom-left-radius: 4px; font-size: 13.5px; }
+    .msg-avatar { width: 28px; height: 28px; font-size: 10px; }
+
+    /* Avatars hidden on mobile (like Telegram) */
+    .msg.user .msg-avatar { display: none; }
+
+    /* Input area — messenger style bottom bar */
+    .input-area { padding: 8px 10px 16px; background: white; }
+    .input-wrap { border-radius: 24px; padding: 6px 6px 6px 14px; }
+    #user-input { font-size: 15px; }
+    .send-btn { width: 38px; height: 38px; border-radius: 50%; }
+    .input-hint { display: none; }
+
+    /* Welcome screen adjustments */
+    .welcome { padding: 16px 16px 8px; }
+    .welcome h2 { font-size: 18px; }
+    .suggestions { gap: 6px; }
+    .suggestion-chip { font-size: 11px; padding: 7px 12px; }
+
+    /* Action card adjustments */
+    .action-card-footer { flex-direction: column; }
+  }
+
+  /* ── VERY SMALL PHONES ─────────────────── */
+  @media (max-width: 380px) {
+    .msg.assistant .msg-bubble { max-width: 95%; }
+    .msg.user .msg-bubble { max-width: 88%; }
+  }
+
 </style>
 </head>
 <body>
 
 
+<!-- Mobile sidebar backdrop -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <div id="app">
   <!-- Top bar -->
   <div class="topbar">
+    <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="topbar-logo">Unite.</div>
     <div class="topbar-divider"></div>
     <div class="topbar-title">AI Copilot &nbsp;/&nbsp;</div>
@@ -253,6 +325,15 @@
 <script>
 let history = [];
 let isLoading = false;
+
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
 
 const SYSTEM = `You are the Unite AI Copilot — an intelligent agent for corporate operations, embedded directly inside the Unite platform. You are currently working with LTVentures Holdings.
 
@@ -396,7 +477,7 @@ function resetConversation() {
 
 function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
 function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
-function insertPrompt(t) { const i = document.getElementById('user-input'); i.value = t; autoResize(i); i.focus(); }
+function insertPrompt(t) { const i = document.getElementById('user-input'); i.value = t; autoResize(i); i.focus(); closeSidebar(); }
 function setLoading(v) { isLoading = v; document.getElementById('send-btn').disabled = v; }
 function hideWelcome() { document.getElementById('welcome-msg')?.remove(); }
 function scrollBottom() { const m = document.getElementById('messages'); m.scrollTop = m.scrollHeight; }
