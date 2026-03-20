@@ -647,6 +647,158 @@ table.data-table tr:hover td { background: var(--sb-bg); }
   .page-header { padding: 12px 16px; }
   .ph-left h1 { font-size: 15px; }
   .ph-btn { padding: 6px 12px; font-size: 11px; }
+  .role-toggle { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   ROLE TOGGLE
+═══════════════════════════════════════════════ */
+.role-toggle { display: flex; background: rgba(255,255,255,.15); border-radius: 20px; padding: 3px; gap: 2px; margin-left: 4px; flex-shrink: 0; }
+.role-btn { padding: 4px 12px; border-radius: 16px; border: none; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all .2s; background: transparent; color: rgba(255,255,255,.75); white-space: nowrap; }
+.role-btn.active { background: white; color: var(--dark); }
+
+/* ═══════════════════════════════════════════════
+   CS PORTAL — COLOR OVERRIDE (body.cs-mode)
+═══════════════════════════════════════════════ */
+body.cs-mode {
+  --blue:       #6366F1;
+  --blue-dark:  #4F46E5;
+  --blue-light: #EEF2FF;
+  --blue-mid:   #818CF8;
+}
+body.cs-mode .topbar    { background: #4338CA; }
+body.cs-mode .nav-sidebar { background: #1E1B4B; border-right-color: #312E81; }
+body.cs-mode .nav-section-label { color: #818CF8; }
+body.cs-mode .nav-item  { color: #C7D2FE; }
+body.cs-mode .nav-item:hover { background: rgba(99,102,241,.18); color: white; }
+body.cs-mode .nav-item.active { background: rgba(99,102,241,.3); color: white; }
+body.cs-mode .nav-item.active .ni { color: #A5B4FC; }
+body.cs-mode .nav-footer { border-top-color: #312E81; }
+body.cs-mode .nf-name   { color: #E0E7FF; }
+body.cs-mode .nf-sub    { color: #818CF8; }
+body.cs-mode .nf-dot    { background: #6366F1; }
+body.cs-mode .nav-badge { background: #6366F1; }
+body.cs-mode .topbar-badge { background: #4F46E5; }
+body.cs-mode .topbar-logo  { color: white; }
+
+/* ═══════════════════════════════════════════════
+   CS PORTAL — PAGE STYLES
+═══════════════════════════════════════════════ */
+
+/* Summary stat tiles */
+.cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.cs-stat  { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 16px 18px; }
+.cs-stat-num   { font-size: 26px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 4px; }
+.cs-stat-label { font-size: 11px; color: var(--gray-m); font-weight: 500; }
+.cs-stat-delta { font-size: 11px; font-weight: 600; margin-top: 6px; }
+.cs-stat-delta.up   { color: var(--green); }
+.cs-stat-delta.warn { color: #D97706; }
+.cs-stat-delta.red  { color: var(--red); }
+
+/* Client portfolio table */
+.cs-client-table { background: white; border: 1px solid var(--sb-border); border-radius: 10px; overflow: hidden; }
+.cs-client-row   { display: grid; grid-template-columns: 2fr 1fr 1.2fr 0.8fr 1fr 90px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--sb-border); gap: 12px; transition: background .1s; }
+.cs-client-row:last-child { border-bottom: none; }
+.cs-client-row:hover { background: var(--sb-bg); }
+.cs-client-row.header { background: var(--sb-bg); font-size: 10px; font-weight: 700; color: var(--gray-l); text-transform: uppercase; letter-spacing: .07em; }
+.cs-client-row.header:hover { background: var(--sb-bg); }
+.cs-client-name  { font-size: 13px; font-weight: 600; color: var(--dark); }
+.cs-client-sub   { font-size: 10px; color: var(--gray-m); margin-top: 2px; }
+.cs-flags        { display: flex; gap: 2px; font-size: 14px; }
+.cs-manager-tag  { display: inline-flex; align-items: center; gap: 5px; background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 20px; padding: 3px 9px; font-size: 11px; font-weight: 500; color: var(--dark); }
+.cs-manager-av   { width: 18px; height: 18px; border-radius: 50%; background: var(--blue); color: white; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cs-health       { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; }
+.cs-health-dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cs-health.good  .cs-health-dot { background: var(--green); }
+.cs-health.good  { color: var(--green); }
+.cs-health.warn  .cs-health-dot { background: #D97706; }
+.cs-health.warn  { color: #D97706; }
+.cs-health.bad   .cs-health-dot { background: var(--red); }
+.cs-health.bad   { color: var(--red); }
+.cs-open-btn     { padding: 5px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--blue-light); color: var(--blue); border: none; transition: all .15s; }
+.cs-open-btn:hover { background: var(--blue); color: white; }
+
+/* Work Queue */
+.wq-toolbar  { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.wq-tabs     { display: flex; border: 1.5px solid var(--sb-border); border-radius: 8px; overflow: hidden; }
+.wq-tab      { padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--gray-m); cursor: pointer; background: white; white-space: nowrap; transition: all .15s; }
+.wq-tab.active { background: var(--blue); color: white; }
+.wq-client-filter { padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--sb-border); font-size: 12px; font-family: 'Inter', sans-serif; color: var(--dark); background: white; outline: none; cursor: pointer; }
+.wq-add-btn  { margin-left: auto; background: var(--blue); color: white; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.wq-add-btn:hover { background: var(--blue-dark); }
+.wq-list     { display: flex; flex-direction: column; gap: 8px; }
+.wq-item     { background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 13px 16px; display: flex; align-items: center; gap: 12px; transition: all .15s; }
+.wq-item:hover { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+.wq-type-chip { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; flex-shrink: 0; white-space: nowrap; }
+.wq-type-chip.incorporation { background: #EDE9FE; color: #7C3AED; }
+.wq-type-chip.annual        { background: var(--blue-light); color: var(--blue); }
+.wq-type-chip.bank          { background: #ECFDF5; color: #065F46; }
+.wq-type-chip.tax           { background: #FEF3C7; color: #92400E; }
+.wq-type-chip.kyc           { background: #FEE2E2; color: #991B1B; }
+.wq-type-chip.director      { background: #F0F9FF; color: #0369A1; }
+.wq-item-info { flex: 1; min-width: 0; }
+.wq-title    { font-size: 13px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wq-client-tag { font-size: 10px; color: var(--gray-m); margin-top: 2px; }
+.wq-meta     { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.wq-assignee { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-m); }
+.wq-av       { width: 20px; height: 20px; border-radius: 50%; background: var(--blue-light); color: var(--blue); font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wq-due      { font-size: 11px; font-weight: 500; }
+.wq-due.urgent { color: var(--red); font-weight: 700; }
+.wq-due.soon   { color: #D97706; }
+.wq-due.ok     { color: var(--gray-m); }
+.wq-status-badge { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+.wq-status-badge.todo        { background: var(--sb-bg); color: var(--gray-m); border: 1px solid var(--sb-border); }
+.wq-status-badge.in_progress { background: var(--blue-light); color: var(--blue); }
+.wq-status-badge.review      { background: #FEF3C7; color: #92400E; }
+.wq-status-badge.done        { background: var(--green-light); color: var(--green); }
+.wq-status-badge.overdue     { background: var(--red-light); color: var(--red); }
+.wq-act-btn  { padding: 5px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--blue-light); color: var(--blue); border: none; transition: all .15s; }
+.wq-act-btn:hover { background: var(--blue); color: white; }
+.wq-empty    { text-align: center; padding: 32px; color: var(--gray-m); font-size: 13px; background: white; border: 1.5px dashed var(--sb-border); border-radius: 10px; }
+
+/* CS Compliance */
+.csc-client-group { margin-bottom: 20px; }
+.csc-client-label { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px solid var(--blue-light); }
+.csc-client-label .csc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.csc-rows { display: flex; flex-direction: column; gap: 6px; }
+.csc-row  { display: flex; align-items: center; gap: 12px; background: white; border: 1.5px solid var(--sb-border); border-radius: 9px; padding: 11px 15px; transition: all .15s; }
+.csc-row:hover { border-color: var(--blue); }
+.csc-urgency { width: 4px; height: 36px; border-radius: 4px; flex-shrink: 0; }
+.csc-info { flex: 1; min-width: 0; }
+.csc-task-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+.csc-entity    { font-size: 10px; color: var(--gray-m); margin-top: 2px; }
+.csc-due-chip  { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.csc-due-chip.urgent { background: var(--red-light); color: var(--red); }
+.csc-due-chip.soon   { background: #FEF3C7; color: #92400E; }
+.csc-due-chip.ok     { background: var(--green-light); color: var(--green); }
+.csc-assign  { font-size: 11px; color: var(--gray-m); white-space: nowrap; flex-shrink: 0; }
+
+/* CS Billing */
+.csb-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.csb-card    { background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 16px 18px; }
+.csb-card-num   { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.csb-card-label { font-size: 11px; color: var(--gray-m); }
+.csb-create-btn { background: var(--blue); color: white; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.csb-create-btn:hover { background: var(--blue-dark); }
+.csb-row { display: flex; align-items: center; gap: 12px; background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 13px 16px; margin-bottom: 8px; transition: all .15s; }
+.csb-row:hover { border-color: var(--blue); }
+.csb-client-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.csb-info    { flex: 1; min-width: 0; }
+.csb-title   { font-size: 13px; font-weight: 600; color: var(--dark); }
+.csb-sub     { font-size: 11px; color: var(--gray-m); margin-top: 2px; }
+.csb-amount  { font-size: 14px; font-weight: 700; color: var(--dark); text-align: right; flex-shrink: 0; }
+.csb-status  { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.csb-status.paid    { background: var(--green-light); color: var(--green); }
+.csb-status.pending { background: #FEF3C7; color: #92400E; }
+.csb-status.overdue { background: var(--red-light); color: var(--red); }
+.csb-send-btn { padding: 5px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--blue-light); color: var(--blue); border: none; transition: all .15s; flex-shrink: 0; }
+.csb-send-btn:hover { background: var(--blue); color: white; }
+
+@media (max-width: 768px) {
+  .cs-stats, .csb-summary { grid-template-columns: 1fr 1fr; }
+  .cs-client-row { grid-template-columns: 1fr 1fr; }
+  .cs-client-row > *:nth-child(n+3) { display: none; }
+  .role-toggle { display: flex; }
 }
 </style>
 </head>
@@ -665,7 +817,11 @@ table.data-table tr:hover td { background: var(--sb-bg); }
     <div class="topbar-page" id="topbar-page">AI Copilot</div>
     <div class="topbar-client">· LTVentures Holdings</div>
     <div class="topbar-spacer"></div>
-    <div class="topbar-badge" style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> AI COPILOT</div>
+    <div class="topbar-badge" id="topbar-badge" style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> AI COPILOT</div>
+    <div class="role-toggle">
+      <button class="role-btn active" id="role-btn-client" onclick="switchRole('client')">👤 Client</button>
+      <button class="role-btn" id="role-btn-cs" onclick="switchRole('cs')">🏢 CS Portal</button>
+    </div>
     <div class="topbar-live" onclick="resetConversation()"><div class="dot"></div> Live</div>
   </div>
 
@@ -698,10 +854,29 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         <div class="nav-item" style="opacity:.45; cursor:default;">
           <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="12" y2="16"/></svg></span> Tax & Accounting <span class="nav-soon">Soon</span>
         </div>
+
+        <!-- CS PORTAL NAV (hidden in client mode) -->
+        <div id="cs-nav-group" style="display:none;">
+          <div class="nav-divider"></div>
+          <div class="nav-section-label">CS Portal</div>
+          <div class="nav-item" id="nav-cs-portfolio" onclick="navigate('cs-portfolio')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span> Client Portfolio
+          </div>
+          <div class="nav-item" id="nav-cs-queue" onclick="navigate('cs-queue')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span> Work Queue <span class="nav-badge" id="cs-queue-badge">8</span>
+          </div>
+          <div class="nav-item" id="nav-cs-compliance" onclick="navigate('cs-compliance')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Compliance
+          </div>
+          <div class="nav-item" id="nav-cs-billing" onclick="navigate('cs-billing')">
+            <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Billing
+          </div>
+        </div>
+
       </div>
       <div class="nav-footer">
         <div class="nf-dot"></div>
-        <div class="nf-info">
+        <div class="nf-info" id="nav-footer-info">
           <div class="nf-name">LTVentures Holdings</div>
           <div class="nf-sub">4 entities · BVI holding</div>
         </div>
@@ -1018,6 +1193,95 @@ table.data-table tr:hover td { background: var(--sb-bg); }
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════
+           CS PORTAL PAGES (hidden in client mode)
+      ═══════════════════════════════════════ -->
+
+      <!-- CS: CLIENT PORTFOLIO -->
+      <div id="page-cs-portfolio" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Client Portfolio</h1>
+            <div class="ph-sub" id="cs-portfolio-sub">5 clients · 16 entities · Updated today</div>
+          </div>
+          <button class="ph-btn" onclick="csAsk('Summarise the overall health of our client portfolio and flag any risks')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+        </div>
+        <div class="page-body">
+          <div class="cs-stats section-gap" id="cs-stats"></div>
+          <div class="section-label section-gap">All Clients</div>
+          <div class="cs-client-table section-gap">
+            <div class="cs-client-row header">
+              <div>Client</div><div>Entities</div><div>Manager</div><div>Health</div><div>Billed YTD</div><div></div>
+            </div>
+            <div id="cs-client-rows"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CS: WORK QUEUE -->
+      <div id="page-cs-queue" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Work Queue</h1>
+            <div class="ph-sub" id="cs-queue-sub">Loading…</div>
+          </div>
+          <button class="ph-btn" onclick="csAsk('What are the most urgent tasks in our work queue and what should we prioritise?')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+        </div>
+        <div class="page-body">
+          <div class="wq-toolbar section-gap">
+            <div class="wq-tabs" id="wq-tabs">
+              <div class="wq-tab active" onclick="setWqFilter('all',this)">All</div>
+              <div class="wq-tab" onclick="setWqFilter('overdue',this)">Overdue</div>
+              <div class="wq-tab" onclick="setWqFilter('todo',this)">To Do</div>
+              <div class="wq-tab" onclick="setWqFilter('in_progress',this)">In Progress</div>
+              <div class="wq-tab" onclick="setWqFilter('review',this)">Review</div>
+              <div class="wq-tab" onclick="setWqFilter('done',this)">Done</div>
+            </div>
+            <select class="wq-client-filter" id="wq-client-filter" onchange="renderWorkQueue()">
+              <option value="all">All clients</option>
+            </select>
+            <button class="wq-add-btn" onclick="csAsk('Draft a task brief for a new incorporation in Singapore')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Task
+            </button>
+          </div>
+          <div class="wq-list" id="wq-list"></div>
+        </div>
+      </div>
+
+      <!-- CS: COMPLIANCE CALENDAR -->
+      <div id="page-cs-compliance" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Compliance Calendar</h1>
+            <div class="ph-sub" id="cs-comp-sub">All deadlines across all clients</div>
+          </div>
+          <button class="ph-btn" onclick="csAsk('List all compliance deadlines in the next 60 days across all clients, grouped by urgency')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+        </div>
+        <div class="page-body">
+          <div id="cs-comp-list" class="section-gap"></div>
+        </div>
+      </div>
+
+      <!-- CS: BILLING -->
+      <div id="page-cs-billing" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Billing</h1>
+            <div class="ph-sub">Invoices sent to clients · March 2026</div>
+          </div>
+          <button class="csb-create-btn" onclick="csAsk('Create a draft invoice for LTVentures Holdings for Q1 2026 corporate services — registered office, compliance filings, and director fees')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Create Invoice
+          </button>
+        </div>
+        <div class="page-body">
+          <div class="csb-summary section-gap" id="csb-summary"></div>
+          <div class="section-label section-gap">Invoices</div>
+          <div id="csb-list" class="section-gap"></div>
         </div>
       </div>
 
@@ -1857,6 +2121,8 @@ function submitEscalation(id) {
   scrollBottom();
 }
 
+const CS_PAGE_TITLES = { 'cs-portfolio':'Client Portfolio', 'cs-queue':'Work Queue', 'cs-compliance':'Compliance Calendar', 'cs-billing':'Billing' };
+
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item[id^="nav-"]').forEach(n => n.classList.remove('active'));
@@ -1864,14 +2130,20 @@ function navigate(page) {
   const navEl  = document.getElementById('nav-' + page);
   if (pageEl) pageEl.classList.add('active');
   if (navEl)  navEl.classList.add('active');
-  document.getElementById('topbar-page').textContent = PAGE_TITLES[page] || page;
-  // Hide right panel on full-width pages
+  const titleEl = document.getElementById('topbar-page');
+  if (titleEl) titleEl.textContent = CS_PAGE_TITLES[page] || PAGE_TITLES[page] || page;
+  // Hide right panel on full-width pages (including all CS pages)
   const rp = document.querySelector('.right-panel');
-  const hideRp = page === 'comms' || page === 'docs';
+  const hideRp = page === 'comms' || page === 'docs' || page.startsWith('cs-');
   if (rp) rp.style.display = hideRp ? 'none' : '';
-  if (page === 'comms')   renderThreadList();
-  if (page === 'docs')    renderDocs();
-  if (page === 'banking') renderInvoices();
+  if (page === 'comms')          renderThreadList();
+  if (page === 'docs')           renderDocs();
+  if (page === 'banking')        renderInvoices();
+  // CS page renderers (defined later in the file; safe to call after DOMContentLoaded)
+  if (page === 'cs-portfolio')  { if (typeof renderCSPortfolio  === 'function') renderCSPortfolio(); }
+  if (page === 'cs-queue')      { if (typeof renderWorkQueue    === 'function') renderWorkQueue(); }
+  if (page === 'cs-compliance') { if (typeof renderCSCompliance === 'function') renderCSCompliance(); }
+  if (page === 'cs-billing')    { if (typeof renderCSBilling    === 'function') renderCSBilling(); }
   closeSidebar();
 }
 
@@ -3251,15 +3523,295 @@ function startDividendFlow() {
     </div>`);
 }
 
+// ══════════════════════════════════════════════════
+// CS PORTAL — DATA & LOGIC
+// ══════════════════════════════════════════════════
+
+const CS_CLIENTS = [
+  { id:'cc1', name:'LTVentures Holdings',      initials:'LT', color:'#6366F1', manager:'Sarah Lim',  managerInitials:'SL', entities:4, flags:['🇸🇬','🇻🇬','🇺🇸','🇬🇧'], health:'warn', tasks:3, overdue:1, billedYTD:'USD 18,400', nextDue:'Apr 5, 2026' },
+  { id:'cc2', name:'Pinnacle Global Partners',  initials:'PG', color:'#8B5CF6', manager:'James Chen', managerInitials:'JC', entities:3, flags:['🇸🇬','🇻🇬','🇰🇾'],            health:'good', tasks:2, overdue:0, billedYTD:'USD 12,200', nextDue:'Apr 15, 2026' },
+  { id:'cc3', name:'NexGen Fintech Pte Ltd',    initials:'NF', color:'#EF4444', manager:'Sarah Lim',  managerInitials:'SL', entities:2, flags:['🇸🇬','🇬🇧'],            health:'bad',  tasks:5, overdue:2, billedYTD:'USD 9,800',  nextDue:'Mar 31, 2026' },
+  { id:'cc4', name:'Meridian Ventures Ltd',     initials:'MV', color:'#10B981', manager:'Tom Park',   managerInitials:'TP', entities:1, flags:['🇻🇬'],                   health:'good', tasks:1, overdue:0, billedYTD:'USD 3,500',  nextDue:'Jun 30, 2026' },
+  { id:'cc5', name:'Coastal Holdings Group',    initials:'CH', color:'#F59E0B', manager:'James Chen', managerInitials:'JC', entities:6, flags:['🇸🇬','🇻🇬','🇰🇾','🇬🇧','🇭🇰','🇦🇪'], health:'warn', tasks:8, overdue:1, billedYTD:'USD 34,600', nextDue:'Apr 1, 2026' },
+];
+
+const CS_TASKS = [
+  { id:'wt1',  client:'LTVentures Holdings',      type:'annual',        typeLabel:'Annual Filing',   title:'ACRA Annual Return — SG',              entity:'LTVentures SG Pte Ltd',        status:'in_progress', assignee:'Sarah Lim',  aInit:'SL', due:'2026-04-10', priority:'high' },
+  { id:'wt2',  client:'LTVentures Holdings',      type:'annual',        typeLabel:'Annual Filing',   title:'Delaware Annual Report',               entity:'LTVentures Delaware LLC',       status:'todo',        assignee:'Sarah Lim',  aInit:'SL', due:'2026-06-01', priority:'medium' },
+  { id:'wt3',  client:'LTVentures Holdings',      type:'tax',           typeLabel:'Tax',             title:'Federal Tax Return FY2024',            entity:'LTVentures Delaware LLC',       status:'todo',        assignee:'Tom Park',   aInit:'TP', due:'2026-04-15', priority:'high' },
+  { id:'wt4',  client:'NexGen Fintech Pte Ltd',   type:'annual',        typeLabel:'Annual Filing',   title:'Companies House Filing — UK',          entity:'NexGen UK Ltd',                 status:'overdue',     assignee:'Sarah Lim',  aInit:'SL', due:'2026-03-15', priority:'high' },
+  { id:'wt5',  client:'NexGen Fintech Pte Ltd',   type:'kyc',           typeLabel:'KYC / AML',       title:'UBO Update — Singapore entity',        entity:'NexGen Fintech Pte Ltd',        status:'todo',        assignee:'James Chen', aInit:'JC', due:'2026-03-31', priority:'high' },
+  { id:'wt6',  client:'NexGen Fintech Pte Ltd',   type:'kyc',           typeLabel:'KYC / AML',       title:'CDD Refresh — all entities',           entity:'NexGen (group-wide)',            status:'todo',        assignee:'James Chen', aInit:'JC', due:'2026-04-20', priority:'medium' },
+  { id:'wt7',  client:'NexGen Fintech Pte Ltd',   type:'annual',        typeLabel:'Annual Filing',   title:'ACRA Annual Return — SG',              entity:'NexGen Fintech Pte Ltd',        status:'overdue',     assignee:'Sarah Lim',  aInit:'SL', due:'2026-03-10', priority:'high' },
+  { id:'wt8',  client:'NexGen Fintech Pte Ltd',   type:'director',      typeLabel:'Director Change', title:'Add new director to board — UK',       entity:'NexGen UK Ltd',                 status:'review',      assignee:'Tom Park',   aInit:'TP', due:'2026-04-05', priority:'medium' },
+  { id:'wt9',  client:'Coastal Holdings Group',   type:'incorporation', typeLabel:'Incorporation',   title:'New Cayman exempted company setup',    entity:'Coastal Holdings Cayman (new)', status:'in_progress', assignee:'James Chen', aInit:'JC', due:'2026-04-20', priority:'medium' },
+  { id:'wt10', client:'Coastal Holdings Group',   type:'annual',        typeLabel:'Annual Filing',   title:'BVI Annual Return — FY2025',           entity:'Coastal BVI Ltd',               status:'todo',        assignee:'James Chen', aInit:'JC', due:'2026-04-01', priority:'high' },
+  { id:'wt11', client:'Coastal Holdings Group',   type:'director',      typeLabel:'Director Change', title:'Add director — Hong Kong entity',      entity:'Coastal Holdings HK Ltd',       status:'review',      assignee:'Sarah Lim',  aInit:'SL', due:'2026-03-28', priority:'medium' },
+  { id:'wt12', client:'Coastal Holdings Group',   type:'annual',        typeLabel:'Annual Filing',   title:'ACRA Annual Return — SG',              entity:'Coastal Holdings SG Pte Ltd',   status:'overdue',     assignee:'James Chen', aInit:'JC', due:'2026-03-20', priority:'high' },
+  { id:'wt13', client:'Coastal Holdings Group',   type:'kyc',           typeLabel:'KYC / AML',       title:'FATF UBO disclosure — Cayman entity', entity:'Coastal Holdings Cayman',        status:'todo',        assignee:'Tom Park',   aInit:'TP', due:'2026-05-01', priority:'medium' },
+  { id:'wt14', client:'Pinnacle Global Partners', type:'bank',          typeLabel:'Bank Account',    title:'DBS account opening — Singapore',      entity:'Pinnacle SG Pte Ltd',           status:'in_progress', assignee:'Tom Park',   aInit:'TP', due:'2026-04-15', priority:'medium' },
+  { id:'wt15', client:'Pinnacle Global Partners', type:'annual',        typeLabel:'Annual Filing',   title:'BVI Annual Return',                   entity:'Pinnacle BVI Ltd',              status:'todo',        assignee:'James Chen', aInit:'JC', due:'2026-04-30', priority:'medium' },
+  { id:'wt16', client:'Meridian Ventures Ltd',    type:'annual',        typeLabel:'Annual Filing',   title:'BVI Annual Return FY2025',             entity:'Meridian Ventures BVI',         status:'todo',        assignee:'Tom Park',   aInit:'TP', due:'2026-06-30', priority:'low' },
+];
+
+const CS_COMPLIANCE = [
+  { client:'NexGen Fintech Pte Ltd',    clientId:'cc3', task:'ACRA Annual Return — SG',           entity:'NexGen Fintech Pte Ltd',       due:'2026-03-10', daysLeft:-10, assignee:'Sarah Lim' },
+  { client:'NexGen Fintech Pte Ltd',    clientId:'cc3', task:'Companies House Annual Filing',      entity:'NexGen UK Ltd',                due:'2026-03-15', daysLeft:-5,  assignee:'Sarah Lim' },
+  { client:'Coastal Holdings Group',    clientId:'cc5', task:'ACRA Annual Return — SG',            entity:'Coastal Holdings SG Pte Ltd',  due:'2026-03-20', daysLeft:0,   assignee:'James Chen' },
+  { client:'Coastal Holdings Group',    clientId:'cc5', task:'Director resolution — HK entity',   entity:'Coastal Holdings HK Ltd',      due:'2026-03-28', daysLeft:8,   assignee:'Sarah Lim' },
+  { client:'NexGen Fintech Pte Ltd',    clientId:'cc3', task:'UBO Update — Singapore',             entity:'NexGen Fintech Pte Ltd',       due:'2026-03-31', daysLeft:11,  assignee:'James Chen' },
+  { client:'Coastal Holdings Group',    clientId:'cc5', task:'BVI Annual Return — FY2025',         entity:'Coastal BVI Ltd',              due:'2026-04-01', daysLeft:12,  assignee:'James Chen' },
+  { client:'LTVentures Holdings',       clientId:'cc1', task:'Invoice payment — Acme Corp Inc',   entity:'LTVentures Delaware LLC',      due:'2026-04-05', daysLeft:16,  assignee:'Sarah Lim' },
+  { client:'LTVentures Holdings',       clientId:'cc1', task:'ACRA Annual Return — SG',            entity:'LTVentures SG Pte Ltd',        due:'2026-04-10', daysLeft:21,  assignee:'Sarah Lim' },
+  { client:'LTVentures Holdings',       clientId:'cc1', task:'Federal Tax Return FY2024',          entity:'LTVentures Delaware LLC',      due:'2026-04-15', daysLeft:26,  assignee:'Tom Park' },
+  { client:'Pinnacle Global Partners',  clientId:'cc2', task:'DBS account opening deadline',       entity:'Pinnacle SG Pte Ltd',          due:'2026-04-15', daysLeft:26,  assignee:'Tom Park' },
+  { client:'Coastal Holdings Group',    clientId:'cc5', task:'New Cayman entity incorporation',   entity:'Coastal Holdings Cayman',      due:'2026-04-20', daysLeft:31,  assignee:'James Chen' },
+  { client:'NexGen Fintech Pte Ltd',    clientId:'cc3', task:'CDD Refresh — all entities',         entity:'NexGen (group-wide)',           due:'2026-04-20', daysLeft:31,  assignee:'James Chen' },
+  { client:'Pinnacle Global Partners',  clientId:'cc2', task:'BVI Annual Return',                  entity:'Pinnacle BVI Ltd',             due:'2026-04-30', daysLeft:41,  assignee:'James Chen' },
+  { client:'Meridian Ventures Ltd',     clientId:'cc4', task:'BVI Annual Return FY2025',           entity:'Meridian Ventures BVI',        due:'2026-06-30', daysLeft:102, assignee:'Tom Park' },
+];
+
+const CS_BILLING = [
+  { id:'cb1', client:'Coastal Holdings Group',    initials:'CH', color:'#F59E0B', num:'INV-2026-0041', desc:'Q1 Corporate Services — registered office, compliance, misc',      amount:'USD 4,200', status:'paid',    issued:'2026-03-01', due:'2026-03-31' },
+  { id:'cb2', client:'LTVentures Holdings',        initials:'LT', color:'#6366F1', num:'INV-2026-0040', desc:'Q1 Corporate Services — SG + Delaware compliance, bank mandate',   amount:'USD 2,800', status:'pending', issued:'2026-03-10', due:'2026-04-10' },
+  { id:'cb3', client:'NexGen Fintech Pte Ltd',     initials:'NF', color:'#EF4444', num:'INV-2026-0039', desc:'Annual compliance package — ACRA, Companies House, UBO update',    amount:'USD 1,600', status:'overdue', issued:'2026-02-15', due:'2026-03-15' },
+  { id:'cb4', client:'Pinnacle Global Partners',   initials:'PG', color:'#8B5CF6', num:'INV-2026-0038', desc:'Registered office renewal + director fees — BVI and SG',           amount:'USD 3,100', status:'paid',    issued:'2026-02-28', due:'2026-03-28' },
+  { id:'cb5', client:'Coastal Holdings Group',     initials:'CH', color:'#F59E0B', num:'INV-2026-0035', desc:'New Cayman entity incorporation — govt fees + service fee',         amount:'USD 5,800', status:'pending', issued:'2026-03-15', due:'2026-04-15' },
+  { id:'cb6', client:'Meridian Ventures Ltd',      initials:'MV', color:'#10B981', num:'INV-2026-0030', desc:'BVI Annual return + registered agent fee',                         amount:'USD 1,200', status:'paid',    issued:'2026-01-20', due:'2026-02-20' },
+];
+
+let wqFilter       = 'all';
+let wqClientFilter = 'all';
+
+// ── ROLE SWITCHER ──────────────────────────────
+function switchRole(role) {
+  const isCS = role === 'cs';
+  document.body.classList.toggle('cs-mode', isCS);
+  document.getElementById('role-btn-client').classList.toggle('active', !isCS);
+  document.getElementById('role-btn-cs').classList.toggle('active', isCS);
+  document.getElementById('cs-nav-group').style.display = isCS ? 'block' : 'none';
+
+  // Show/hide client nav items
+  const clientNavIds = ['nav-copilot','nav-dashboard','nav-banking','nav-compliance','nav-comms','nav-docs'];
+  clientNavIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = isCS ? 'none' : '';
+  });
+  document.querySelectorAll('.nav-sidebar .nav-section-label').forEach(el => {
+    const txt = el.textContent.trim();
+    if (txt === 'Workspace' || txt === 'Coming soon') el.style.display = isCS ? 'none' : '';
+  });
+  // Hide "coming soon" nav item
+  document.querySelectorAll('.nav-sidebar .nav-items-wrap > .nav-item').forEach(el => {
+    if (el.style.opacity === '0.45') el.style.display = isCS ? 'none' : '';
+  });
+
+  // Update footer
+  const footer = document.getElementById('nav-footer-info');
+  if (footer) footer.innerHTML = isCS
+    ? `<div class="nf-name">CS Portal</div><div class="nf-sub">5 clients · 16 entities</div>`
+    : `<div class="nf-name">LTVentures Holdings</div><div class="nf-sub">4 entities · BVI holding</div>`;
+
+  if (isCS) { navigate('cs-portfolio'); } else { navigate('copilot'); }
+}
+
+// ── CS COPILOT ────────────────────────────────
+function csAsk(prompt) {
+  switchRole('client');
+  setTimeout(() => {
+    const inp = document.getElementById('chat-input');
+    if (inp) { inp.value = prompt; sendMessage(); }
+  }, 200);
+}
+
+// ── CS PORTFOLIO ──────────────────────────────
+function renderCSPortfolio() {
+  const stats = document.getElementById('cs-stats');
+  if (stats) {
+    const totalTasks   = CS_CLIENTS.reduce((s,c) => s + c.tasks, 0);
+    const totalOverdue = CS_CLIENTS.reduce((s,c) => s + c.overdue, 0);
+    stats.innerHTML = `
+      <div class="cs-stat">
+        <div class="cs-stat-num">${CS_CLIENTS.length}</div>
+        <div class="cs-stat-label">Active Clients</div>
+        <div class="cs-stat-delta up">↑ 2 added this quarter</div>
+      </div>
+      <div class="cs-stat">
+        <div class="cs-stat-num">${CS_CLIENTS.reduce((s,c)=>s+c.entities,0)}</div>
+        <div class="cs-stat-label">Total Entities Managed</div>
+        <div class="cs-stat-delta up">↑ 1 new incorporation in progress</div>
+      </div>
+      <div class="cs-stat">
+        <div class="cs-stat-num">${totalTasks}</div>
+        <div class="cs-stat-label">Open Tasks</div>
+        <div class="cs-stat-delta ${totalOverdue>0?'red':'up'}">${totalOverdue>0?'⚠ '+totalOverdue+' overdue':'✓ All on track'}</div>
+      </div>
+      <div class="cs-stat">
+        <div class="cs-stat-num">USD 78,500</div>
+        <div class="cs-stat-label">Revenue YTD</div>
+        <div class="cs-stat-delta up">↑ 12% vs same period last year</div>
+      </div>`;
+  }
+  const rows = document.getElementById('cs-client-rows');
+  if (!rows) return;
+  rows.innerHTML = CS_CLIENTS.map(c => {
+    const healthLabel = { good:'On track', warn:'Attention needed', bad:'Issues — action required' }[c.health];
+    const tasksBadge  = c.overdue>0
+      ? `<span style="color:var(--red);font-weight:700;">${c.tasks} <small>(${c.overdue} overdue)</small></span>`
+      : `${c.tasks}`;
+    return `
+      <div class="cs-client-row">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:${c.color}22;color:${c.color};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${c.initials}</div>
+          <div>
+            <div class="cs-client-name">${escHtml(c.name)}</div>
+            <div class="cs-client-sub">Next deadline: ${c.nextDue} · ${tasksBadge} open tasks</div>
+          </div>
+        </div>
+        <div class="cs-flags">${c.flags.join('')}</div>
+        <div><span class="cs-manager-tag"><span class="cs-manager-av" style="background:${c.color};">${c.managerInitials}</span>${escHtml(c.manager)}</span></div>
+        <div><div class="cs-health ${c.health}"><div class="cs-health-dot"></div>${healthLabel}</div></div>
+        <div style="font-size:12px;font-weight:600;color:var(--dark);">${c.billedYTD}</div>
+        <div><button class="cs-open-btn" onclick="openClientView('${c.id}')">Open →</button></div>
+      </div>`;
+  }).join('');
+}
+
+function openClientView(clientId) {
+  const c = CS_CLIENTS.find(x => x.id === clientId);
+  if (!c) return;
+  csAsk(`Give me a complete status briefing for ${c.name}: entity structure, open tasks, upcoming compliance deadlines, and any outstanding invoices.`);
+}
+
+// ── WORK QUEUE ────────────────────────────────
+function setWqFilter(f, el) {
+  wqFilter = f;
+  document.querySelectorAll('#wq-tabs .wq-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderWorkQueue();
+}
+
+function renderWorkQueue() {
+  const sel = document.getElementById('wq-client-filter');
+  wqClientFilter = sel ? sel.value : 'all';
+  if (sel && sel.options.length <= 1) {
+    CS_CLIENTS.forEach(c => { const o = document.createElement('option'); o.value = c.name; o.textContent = c.name; sel.appendChild(o); });
+  }
+  let tasks = CS_TASKS.filter(t => {
+    if (wqFilter !== 'all' && t.status !== wqFilter) return false;
+    if (wqClientFilter !== 'all' && t.client !== wqClientFilter) return false;
+    return true;
+  });
+  const sOrd = { overdue:0, in_progress:1, review:2, todo:3, done:4 };
+  tasks.sort((a,b) => (sOrd[a.status]||5)-(sOrd[b.status]||5) || new Date(a.due)-new Date(b.due));
+
+  const list = document.getElementById('wq-list');
+  const sub  = document.getElementById('cs-queue-sub');
+  const od   = CS_TASKS.filter(t=>t.status==='overdue').length;
+  if (sub) sub.textContent = `${CS_TASKS.length} total tasks · ${od} overdue`;
+  if (!list) return;
+  if (!tasks.length) { list.innerHTML = `<div class="wq-empty">No tasks matching the current filter.</div>`; return; }
+
+  const sLabel = { todo:'To Do', in_progress:'In Progress', review:'In Review', done:'Done', overdue:'Overdue' };
+  list.innerHTML = tasks.map(t => {
+    const dl = Math.round((new Date(t.due)-new Date())/86400000);
+    const dc = dl<0?'urgent':dl<14?'soon':'ok';
+    const ds = dl<0?`${Math.abs(dl)}d overdue`:dl===0?'Due today':`Due in ${dl}d`;
+    const prompt = `Help me with this task: ${t.title} for ${t.client}. Entity: ${t.entity}. Deadline: ${t.due}. What documents are needed and what are the steps?`;
+    return `
+      <div class="wq-item">
+        <span class="wq-type-chip ${t.type}">${escHtml(t.typeLabel)}</span>
+        <div class="wq-item-info">
+          <div class="wq-title">${escHtml(t.title)}</div>
+          <div class="wq-client-tag">${escHtml(t.client)} · ${escHtml(t.entity)}</div>
+        </div>
+        <div class="wq-meta">
+          <div class="wq-assignee"><div class="wq-av">${t.aInit}</div>${escHtml(t.assignee)}</div>
+          <div class="wq-due ${dc}">${ds}</div>
+          <span class="wq-status-badge ${t.status}">${sLabel[t.status]||t.status}</span>
+          <button class="wq-act-btn" onclick="csAsk(${JSON.stringify(prompt)})">Ask AI</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── CS COMPLIANCE ─────────────────────────────
+function renderCSCompliance() {
+  const container = document.getElementById('cs-comp-list');
+  if (!container) return;
+  const byClient = {};
+  CS_COMPLIANCE.forEach(d => {
+    if (!byClient[d.client]) byClient[d.client] = { items:[], clientId:d.clientId };
+    byClient[d.client].items.push(d);
+  });
+  const cColors = { cc1:'#6366F1', cc2:'#8B5CF6', cc3:'#EF4444', cc4:'#10B981', cc5:'#F59E0B' };
+  const urgentCount = CS_COMPLIANCE.filter(d=>d.daysLeft<14).length;
+  const sub = document.getElementById('cs-comp-sub');
+  if (sub) sub.textContent = `${CS_COMPLIANCE.length} upcoming deadlines · ${urgentCount} within 14 days`;
+  container.innerHTML = Object.entries(byClient).map(([clientName, group]) => {
+    const color = cColors[group.clientId]||'#6366F1';
+    const rows = group.items.map(d => {
+      const uc  = d.daysLeft<0?'urgent':d.daysLeft<14?'soon':'ok';
+      const ucl = d.daysLeft<0?'#EF4444':d.daysLeft<14?'#D97706':'#10B981';
+      const dl  = d.daysLeft<0?`${Math.abs(d.daysLeft)}d overdue`:d.daysLeft===0?'Today':`${d.daysLeft}d left`;
+      const dd  = new Date(d.due).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      return `
+        <div class="csc-row">
+          <div class="csc-urgency" style="background:${ucl};"></div>
+          <div class="csc-info">
+            <div class="csc-task-name">${escHtml(d.task)}</div>
+            <div class="csc-entity">${escHtml(d.entity)}</div>
+          </div>
+          <div class="csc-due-chip ${uc}">${dd} · ${dl}</div>
+          <div class="csc-assign">👤 ${escHtml(d.assignee)}</div>
+        </div>`;
+    }).join('');
+    return `
+      <div class="csc-client-group">
+        <div class="csc-client-label"><div class="csc-dot" style="background:${color};"></div>${escHtml(clientName)}</div>
+        <div class="csc-rows">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── CS BILLING ────────────────────────────────
+function renderCSBilling() {
+  const summary = document.getElementById('csb-summary');
+  if (summary) {
+    const pen = CS_BILLING.filter(b=>b.status==='pending').length;
+    const ov  = CS_BILLING.filter(b=>b.status==='overdue').length;
+    summary.innerHTML = `
+      <div class="csb-card"><div class="csb-card-num" style="color:var(--green);">USD 22,500</div><div class="csb-card-label">Revenue received · Mar 2026</div></div>
+      <div class="csb-card"><div class="csb-card-num" style="color:#D97706;">USD 8,600</div><div class="csb-card-label">${pen} invoice${pen!==1?'s':''} pending · awaiting payment</div></div>
+      <div class="csb-card"><div class="csb-card-num" style="color:var(--red);">USD 1,600</div><div class="csb-card-label">${ov} invoice${ov!==1?'s':''} overdue · follow-up needed</div></div>`;
+  }
+  const list = document.getElementById('csb-list');
+  if (!list) return;
+  const sLabel = { paid:'Paid', pending:'Pending', overdue:'Overdue' };
+  list.innerHTML = CS_BILLING.map(b => {
+    const issued = new Date(b.issued).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    const sendBtn = (b.status==='pending'||b.status==='overdue')
+      ? `<button class="csb-send-btn" onclick="csAsk('Draft a payment reminder for ${b.client} for invoice ${b.num} — ${b.amount} due ${b.due}')">Remind</button>` : '';
+    return `
+      <div class="csb-row">
+        <div class="csb-client-av" style="background:${b.color}22;color:${b.color};">${b.initials}</div>
+        <div class="csb-info">
+          <div class="csb-title">${escHtml(b.client)} <span style="color:var(--gray-m);font-size:11px;">${escHtml(b.num)}</span></div>
+          <div class="csb-sub">${escHtml(b.desc)} · Issued ${issued}</div>
+        </div>
+        <div class="csb-amount">${escHtml(b.amount)}</div>
+        <span class="csb-status ${b.status}">${sLabel[b.status]}</span>
+        ${sendBtn}
+      </div>`;
+  }).join('');
+}
+
+// CS page rendering is called from the main navigate() function directly
+
 // ── INIT ────────────────────────────────────────
 (function init() {
-  // Set dynamic date on Entities page
   const el = document.getElementById('entities-date');
-  if (el) {
-    const now = new Date();
-    el.textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  }
-  // Show unread badge on nav
+  if (el) { const now = new Date(); el.textContent = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}); }
   updateUnreadBadge();
 })();
 </script>
