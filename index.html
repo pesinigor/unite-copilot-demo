@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Unite. AI Copilot — LTVentures Holdings</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -197,10 +197,24 @@
     .msg.user .msg-avatar { display: none; }
 
     /* Input area — messenger style bottom bar */
-    .input-area { padding: 8px 10px 16px; background: white; }
-    .input-wrap { border-radius: 24px; padding: 6px 6px 6px 14px; }
-    #user-input { font-size: 15px; }
-    .send-btn { width: 38px; height: 38px; border-radius: 50%; }
+    .input-area {
+      padding: 10px 12px;
+      padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
+      background: white;
+      border-top: 1.5px solid var(--sb-border);
+      box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+    }
+    .input-wrap {
+      border-radius: 26px;
+      padding: 8px 8px 8px 16px;
+      border: 1.5px solid var(--navy);
+      background: white;
+      min-height: 48px;
+      align-items: center;
+    }
+    .input-wrap:focus-within { border-color: var(--orange); }
+    #user-input { font-size: 15px; min-height: 28px; }
+    .send-btn { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
     .input-hint { display: none; }
 
     /* Welcome screen adjustments */
