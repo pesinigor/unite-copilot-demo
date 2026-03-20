@@ -122,6 +122,59 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .dl-entity { font-size: 10px; color: var(--gray-l); background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 5px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0; }
 .dl-days { font-size: 10px; color: var(--gray-l); flex-shrink: 0; width: 28px; text-align: right; }
 
+/* ── COMMUNICATION CENTRE ───────────────────── */
+.comms-layout { display: flex; flex: 1; overflow: hidden; }
+.comms-threads { width: 280px; flex-shrink: 0; border-right: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow: hidden; }
+.ct-header { padding: 14px 16px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.ct-header h3 { font-size: 13px; font-weight: 700; color: var(--dark); }
+.ct-new-btn { display: flex; align-items: center; gap: 5px; background: var(--blue); color: white; border: none; border-radius: 7px; padding: 5px 10px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+.ct-new-btn:hover { background: var(--blue-dark); }
+.threads-list { flex: 1; overflow-y: auto; }
+.thread-item { padding: 12px 14px; border-bottom: 1px solid var(--sb-bg); cursor: pointer; transition: background .12s; }
+.thread-item:hover { background: var(--sb-bg); }
+.thread-item.active { background: var(--blue-light); border-bottom-color: #DBEAFE; }
+.ti-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; gap: 8px; }
+.ti-subject { font-size: 12px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.thread-item.active .ti-subject { color: var(--blue); }
+.ti-time { font-size: 10px; color: var(--gray-l); flex-shrink: 0; }
+.ti-preview { font-size: 11px; color: var(--gray-m); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; }
+.ti-badges { display: flex; align-items: center; gap: 5px; }
+.ti-badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; letter-spacing: .04em; }
+.ti-badge.open     { background: var(--blue-light); color: var(--blue); }
+.ti-badge.progress { background: var(--yellow-light); color: #92400E; }
+.ti-badge.resolved { background: var(--green-light); color: #065F46; }
+.ti-unread { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-left: auto; }
+.comms-detail { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: white; }
+.comms-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--gray-l); }
+.comms-empty svg { opacity: .3; }
+.comms-empty p { font-size: 13px; }
+.cd-header { padding: 14px 20px; border-bottom: 1px solid var(--sb-border); flex-shrink: 0; }
+.cd-subject { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.cd-meta { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--gray-m); }
+.cd-status-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; }
+.cd-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.cd-messages::-webkit-scrollbar { width: 4px; }
+.cd-messages::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
+.tm-msg { display: flex; gap: 9px; max-width: 85%; }
+.tm-msg.user-side { align-self: flex-end; flex-direction: row-reverse; }
+.tm-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.tm-avatar.support { background: var(--blue); color: white; }
+.tm-avatar.user    { background: var(--dark-2); color: white; }
+.tm-content { display: flex; flex-direction: column; gap: 3px; }
+.tm-name { font-size: 10px; color: var(--gray-l); }
+.tm-msg.user-side .tm-name { text-align: right; }
+.tm-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 12px; border-top-left-radius: 4px; padding: 9px 13px; font-size: 13px; color: var(--dark); line-height: 1.5; }
+.tm-msg.user-side .tm-bubble { background: var(--blue); color: white; border: none; border-radius: 12px; border-top-right-radius: 4px; }
+.tm-time { font-size: 10px; color: var(--gray-l); }
+.tm-msg.user-side .tm-time { text-align: right; }
+.tm-system { align-self: center; font-size: 11px; color: var(--gray-l); background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 20px; padding: 4px 12px; }
+.cd-reply { padding: 12px 20px; border-top: 1px solid var(--sb-border); flex-shrink: 0; display: flex; gap: 10px; align-items: flex-end; background: white; }
+.cd-reply textarea { flex: 1; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 9px 12px; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--dark); outline: none; resize: none; min-height: 38px; max-height: 100px; transition: border-color .15s; line-height: 1.5; }
+.cd-reply textarea:focus { border-color: var(--blue); }
+.cd-reply-btn { width: 36px; height: 36px; border-radius: 9px; background: var(--blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+.cd-reply-btn:hover { background: var(--blue-dark); }
+.nav-badge { background: var(--red); color: white; font-size: 9px; font-weight: 700; border-radius: 8px; padding: 1px 5px; margin-left: auto; }
+
 /* ── ENTITY DETAIL ──────────────────────────── */
 .ed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--blue); cursor: pointer; padding: 4px 0; margin-bottom: 18px; background: none; border: none; font-family: 'Inter', sans-serif; }
 .ed-back:hover { opacity: .75; }
@@ -488,6 +541,9 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         <div class="nav-item" id="nav-compliance" onclick="navigate('compliance')">
           <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Compliance
         </div>
+        <div class="nav-item" id="nav-comms" onclick="navigate('comms')">
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Messages <span class="nav-badge" id="nav-unread-badge">1</span>
+        </div>
         <div class="nav-divider"></div>
         <div class="nav-section-label">Coming soon</div>
         <div class="nav-item" style="opacity:.45; cursor:default;">
@@ -522,6 +578,8 @@ table.data-table tr:hover td { background: var(--sb-bg); }
           <button class="ab-btn" onclick="startFlow('dividend')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Declare Dividend</button>
           <button class="ab-btn" onclick="startFlow('send')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Money</button>
           <button class="ab-btn" onclick="startFlow('move')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg> Move Funds</button>
+          <div style="width:1px;background:var(--sb-border);height:18px;flex-shrink:0;"></div>
+          <button class="ab-btn" onclick="startFlow('escalate')" style="color:var(--gray-m);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Talk to Team</button>
         </div>
 
         <div class="chat-scroll" id="chat-scroll">
@@ -873,6 +931,41 @@ table.data-table tr:hover td { background: var(--sb-bg); }
       </div>
     </div>
 
+      <!-- COMMUNICATION CENTRE PAGE -->
+      <div id="page-comms" class="page" style="flex-direction:column;">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Messages</h1>
+            <div class="ph-sub">Direct line to your Unite team · Typically replies in &lt;2 hours</div>
+          </div>
+          <button class="ph-btn" onclick="openNewRequest()" style="display:flex;align-items:center;gap:6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Request
+          </button>
+        </div>
+        <div class="comms-layout">
+          <!-- Thread list -->
+          <div class="comms-threads">
+            <div class="ct-header">
+              <h3>Conversations</h3>
+              <button class="ct-new-btn" onclick="openNewRequest()">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                New
+              </button>
+            </div>
+            <div class="threads-list" id="threads-list"></div>
+          </div>
+          <!-- Thread detail -->
+          <div class="comms-detail" id="comms-detail">
+            <div class="comms-empty" id="comms-empty">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <p>Select a conversation</p>
+            </div>
+            <div id="thread-view" style="display:none;flex:1;flex-direction:column;overflow:hidden;display:none;"></div>
+          </div>
+        </div>
+      </div>
+
   </div><!-- /layout -->
 </div><!-- /app -->
 
@@ -1054,7 +1147,248 @@ function hideEntityDetail() {
 }
 
 // ── NAVIGATION ─────────────────────────────────
-const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Entities', banking: 'Banking', compliance: 'Compliance' };
+const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Entities', banking: 'Banking', compliance: 'Compliance', comms: 'Messages' };
+
+// ── COMMUNICATION CENTRE ───────────────────────
+const THREADS = [
+  {
+    id: 't1', subject: 'SG GST Q1 Filing — April 2026', status: 'progress', unread: true,
+    entity: 'LTVentures SG', assignee: 'Sarah Lim', time: '2h ago',
+    messages: [
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 18, 10:14',  text: "Hi, I need help with the Singapore GST Q1 filing. The deadline is April 30 and I want to make sure we're prepared. Can you confirm what documents you'll need from our side?" },
+      { side: 'support', name: 'Sarah Lim',    time: 'Mar 18, 11:02',  text: "Hi Igor! Happy to help. For the Q1 GST F5 return (Jan–Mar 2026), we'll need:\n\n1. All sales invoices issued in Q1\n2. All purchase invoices (input tax)\n3. Bank statements for the quarter\n\nCould you share these by April 20 so we have time to prepare the draft for your review before submission?" },
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 18, 14:30',  text: "Got it, I'll get those across by April 18. Should we use the shared Drive folder or send directly to you?" },
+      { side: 'support', name: 'Sarah Lim',    time: 'Mar 18, 14:55',  text: "The shared Drive folder works perfectly — just drop them in the LTVentures SG → 2026 → Q1 Tax folder. I'll pick them up from there and confirm once received. Also flagging that your GST registration (M90123456X) is current and in good standing." },
+    ]
+  },
+  {
+    id: 't2', subject: 'DMCC Trade License Renewal — Jun 2026', status: 'open', unread: false,
+    entity: 'LTVentures DMCC', assignee: 'Ravi Menon', time: 'Yesterday',
+    messages: [
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 17, 09:20',  text: "Hi Ravi, want to get ahead of the DMCC trade license renewal this year. Last time we were quite close to the deadline. Can you kick off the process now?" },
+      { side: 'support', name: 'Ravi Menon',   time: 'Mar 17, 10:45',  text: "Great initiative Igor! The renewal is due June 15, 2026. I'll start the process. To initiate we need:\n\n• Updated NOC from shareholders\n• Audited financial statements for FY2025\n• Confirmation of registered office address\n\nThe audited financials are usually the longest lead-time item. Has your audit started for FY2025?" },
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 17, 16:10',  text: "Audit is in progress, should be done by end of April. I'll chase the NOC from shareholders this week." },
+    ]
+  },
+  {
+    id: 't3', subject: 'Q1 Dividend Resolution — SG & BVI', status: 'resolved', unread: false,
+    entity: 'LTVentures SG', assignee: 'Sarah Lim', time: 'Mar 12',
+    messages: [
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 10, 08:55',  text: "We'd like to declare a Q1 dividend from Singapore to BVI — SGD 280,000. Can you prepare the board resolution?" },
+      { side: 'support', name: 'Sarah Lim',    time: 'Mar 10, 10:30',  text: "Of course. I'll prepare the board resolution for SGD 280,000 dividend from LTVentures Singapore Pte Ltd to LTVentures Holdings Ltd (BVI). I'll also prepare the dividend voucher and withholding tax certificate. Please expect documents by Mar 12 for your signature." },
+      { side: 'support', name: 'Sarah Lim',    time: 'Mar 12, 14:20',  text: "Documents are ready and have been sent to DocuSign for your signature. Once signed, funds can be remitted and we'll file the withholding tax return within 1 month." },
+      { side: 'user',    name: 'Igor Pesin',   time: 'Mar 12, 18:05',  text: "Signed. Thanks for the quick turnaround!" },
+      { side: 'system',  text: 'Thread resolved · Mar 12, 2026' },
+    ]
+  },
+];
+
+let activeThreadId = null;
+
+function renderThreadList() {
+  const list = document.getElementById('threads-list');
+  if (!list) return;
+  const statusLabel = { open: 'open', progress: 'in progress', resolved: 'resolved' };
+  const statusClass = { open: 'open', progress: 'progress', resolved: 'resolved' };
+  list.innerHTML = THREADS.map(t => `
+    <div class="thread-item ${t.id === activeThreadId ? 'active' : ''}" onclick="openThread('${t.id}')">
+      <div class="ti-top">
+        <span class="ti-subject">${t.subject}</span>
+        <span class="ti-time">${t.time}</span>
+      </div>
+      <div class="ti-preview">${t.messages.filter(m=>m.side!=='system').at(-1)?.text.slice(0,60)}…</div>
+      <div class="ti-badges">
+        <span class="ti-badge ${statusClass[t.status]}">${statusLabel[t.status]}</span>
+        <span style="font-size:10px;color:var(--gray-l);">${t.assignee}</span>
+        ${t.unread ? '<span class="ti-unread"></span>' : ''}
+      </div>
+    </div>`).join('');
+}
+
+function openThread(id) {
+  activeThreadId = id;
+  const t = THREADS.find(x => x.id === id);
+  if (!t) return;
+  t.unread = false;
+  updateUnreadBadge();
+  renderThreadList();
+  const statusLabel = { open: 'Open', progress: 'In Progress', resolved: 'Resolved' };
+  const statusColor  = { open: 'var(--blue)', progress: 'var(--yellow)', resolved: 'var(--green)' };
+  const statusBg     = { open: 'var(--blue-light)', progress: 'var(--yellow-light)', resolved: 'var(--green-light)' };
+  const msgsHtml = t.messages.map(m => {
+    if (m.side === 'system') return `<div class="tm-system">${m.text}</div>`;
+    const isUser = m.side === 'user';
+    const initials = m.name.split(' ').map(w=>w[0]).join('');
+    return `
+      <div class="tm-msg ${isUser ? 'user-side' : ''}">
+        <div class="tm-avatar ${isUser ? 'user' : 'support'}">${initials}</div>
+        <div class="tm-content">
+          <div class="tm-name">${m.name}</div>
+          <div class="tm-bubble">${m.text.replace(/\n/g,'<br>')}</div>
+          <div class="tm-time">${m.time}</div>
+        </div>
+      </div>`;
+  }).join('');
+  const replyDisabled = t.status === 'resolved';
+  document.getElementById('comms-empty').style.display = 'none';
+  const tv = document.getElementById('thread-view');
+  tv.style.display = 'flex';
+  tv.style.flexDirection = 'column';
+  tv.style.overflow = 'hidden';
+  tv.style.flex = '1';
+  tv.innerHTML = `
+    <div class="cd-header">
+      <div class="cd-subject">${t.subject}</div>
+      <div class="cd-meta">
+        <span class="cd-status-badge" style="background:${statusBg[t.status]};color:${statusColor[t.status]};">${statusLabel[t.status]}</span>
+        <span>${t.entity}</span>
+        <span>·</span>
+        <span>Assigned to ${t.assignee}</span>
+      </div>
+    </div>
+    <div class="cd-messages" id="cd-msgs-${id}">${msgsHtml}</div>
+    ${replyDisabled ? `<div style="padding:10px 20px;font-size:12px;color:var(--gray-l);border-top:1px solid var(--sb-border);background:var(--sb-bg);">This thread is resolved. <span style="color:var(--blue);cursor:pointer;" onclick="openNewRequest()">Start a new request →</span></div>`
+    : `<div class="cd-reply">
+        <textarea id="reply-input-${id}" placeholder="Write a message…" rows="1" oninput="autoResizeReply(this)" onkeydown="replyKey(event,'${id}')"></textarea>
+        <button class="cd-reply-btn" onclick="sendThreadReply('${id}')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>`}`;
+  // Scroll messages to bottom
+  setTimeout(() => {
+    const el = document.getElementById('cd-msgs-' + id);
+    if (el) el.scrollTop = el.scrollHeight;
+  }, 50);
+}
+
+function sendThreadReply(id) {
+  const input = document.getElementById('reply-input-' + id);
+  const text = input?.value?.trim();
+  if (!text) return;
+  const t = THREADS.find(x => x.id === id);
+  if (!t) return;
+  t.messages.push({ side: 'user', name: 'Igor Pesin', time: 'Just now', text });
+  input.value = '';
+  input.style.height = 'auto';
+  const msgs = document.getElementById('cd-msgs-' + id);
+  if (msgs) {
+    const div = document.createElement('div');
+    div.className = 'tm-msg user-side';
+    div.innerHTML = `
+      <div class="tm-avatar user">IP</div>
+      <div class="tm-content">
+        <div class="tm-name">Igor Pesin</div>
+        <div class="tm-bubble">${text.replace(/\n/g,'<br>')}</div>
+        <div class="tm-time">Just now</div>
+      </div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  renderThreadList();
+  // Simulate typing + reply after 2s
+  setTimeout(() => {
+    const typing = document.createElement('div');
+    typing.className = 'tm-msg';
+    typing.id = 'typing-' + id;
+    typing.innerHTML = `<div class="tm-avatar support">${t.assignee.split(' ').map(w=>w[0]).join('')}</div><div class="tm-content"><div class="tm-name">${t.assignee}</div><div class="tm-bubble" style="color:var(--gray-l);font-style:italic;">Typing…</div></div>`;
+    document.getElementById('cd-msgs-' + id)?.appendChild(typing);
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => {
+      document.getElementById('typing-' + id)?.remove();
+      const reply = { side: 'support', name: t.assignee, time: 'Just now', text: "Thanks for the update, Igor! I'll note this and follow up shortly." };
+      t.messages.push(reply);
+      const rd = document.createElement('div');
+      rd.className = 'tm-msg';
+      rd.innerHTML = `<div class="tm-avatar support">${t.assignee.split(' ').map(w=>w[0]).join('')}</div><div class="tm-content"><div class="tm-name">${t.assignee}</div><div class="tm-bubble">${reply.text}</div><div class="tm-time">Just now</div></div>`;
+      document.getElementById('cd-msgs-' + id)?.appendChild(rd);
+      msgs.scrollTop = msgs.scrollHeight;
+      renderThreadList();
+    }, 2000);
+  }, 1500);
+}
+
+function autoResizeReply(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+function replyKey(e, id) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendThreadReply(id); } }
+
+function openNewRequest() {
+  navigate('copilot');
+  startFlow('escalate');
+}
+
+function updateUnreadBadge() {
+  const count = THREADS.filter(t => t.unread).length;
+  const badge = document.getElementById('nav-unread-badge');
+  if (badge) { badge.textContent = count; badge.style.display = count > 0 ? '' : 'none'; }
+}
+
+// ── ESCALATION WIZARD ──────────────────────────
+function startEscalateFlow() {
+  const id = 'wiz-esc-' + Date.now();
+  const topics = ['Tax & Compliance', 'Banking & Treasury', 'Entity Management', 'Legal & Documents', 'Other'];
+  const topicOpts = topics.map(t => `<option value="${t}">${t}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Support</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('chat',14,'white')} Talk to the Team</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question">What do you need help with?</div>
+        <div class="wiz-form">
+          <div class="wf-group">
+            <label class="wf-label">Topic</label>
+            <select class="wf-select" id="${id}-topic">${topicOpts}</select>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Priority</label>
+            <select class="wf-select" id="${id}-priority">
+              <option value="Normal">Normal — reply within 2 business hours</option>
+              <option value="Urgent">Urgent — reply within 30 minutes</option>
+            </select>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Describe your question</label>
+            <textarea class="wf-input" id="${id}-desc" rows="3" placeholder="e.g. I need help understanding the withholding tax treatment on our Singapore dividend…" style="resize:vertical;min-height:72px;line-height:1.5;"></textarea>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--gray-l);margin-bottom:10px;">The full conversation history from this chat will be attached to your request so our team has full context.</p>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="submitEscalation('${id}')">Send Request →</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function submitEscalation(id) {
+  const topic    = document.getElementById(id+'-topic')?.value;
+  const priority = document.getElementById(id+'-priority')?.value;
+  const desc     = document.getElementById(id+'-desc')?.value?.trim();
+  if (!desc) { alert('Please describe your question.'); return; }
+  const ticketNo = 'TKT-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
+  const assignees = { 'Tax & Compliance': 'Sarah Lim', 'Banking & Treasury': 'Ravi Menon', 'Entity Management': 'Sarah Lim', 'Legal & Documents': 'Ravi Menon', 'Other': 'Unite Team' };
+  const assignee = assignees[topic] || 'Unite Team';
+  // Add as new thread
+  const newThread = {
+    id: 'tN' + Date.now(), subject: topic + ' — ' + desc.slice(0,40) + (desc.length>40?'…':''),
+    status: 'open', unread: false, entity: 'LTVentures Holdings', assignee, time: 'Just now',
+    messages: [
+      { side: 'user',    name: 'Igor Pesin', time: 'Just now', text: desc },
+      { side: 'support', name: assignee,     time: 'Just now', text: `Hi Igor! Thanks for reaching out. I've picked up your ${priority === 'Urgent' ? '🔴 urgent' : ''} request about "${topic}". I'll review the details and get back to you ${priority === 'Urgent' ? 'within 30 minutes' : 'within 2 business hours'}.` },
+    ]
+  };
+  THREADS.unshift(newThread);
+  document.getElementById(id).innerHTML = `
+    <div class="wiz-header" style="background:var(--green);"><span class="wiz-step-txt">Sent</span><span class="wiz-title-txt">✓ Request Submitted</span></div>
+    <div class="wiz-confirmed">
+      <div style="background:var(--green-light);border-radius:8px;padding:12px 14px;">
+        <p style="font-size:13px;color:#065F46;font-weight:500;margin-bottom:8px;">✅ Your request has been sent to <strong>${assignee}</strong>.</p>
+        <p style="font-size:12px;color:#065F46;">Reference: <strong>${ticketNo}</strong> · Priority: ${priority}</p>
+      </div>
+      <div style="margin-top:10px;">
+        <button class="wiz-btn-primary" onclick="navigate('comms');openThread('${newThread.id}')">View in Messages →</button>
+      </div>
+    </div>`;
+  renderThreadList();
+  scrollBottom();
+}
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1064,6 +1398,7 @@ function navigate(page) {
   if (pageEl) pageEl.classList.add('active');
   if (navEl)  navEl.classList.add('active');
   document.getElementById('topbar-page').textContent = PAGE_TITLES[page] || page;
+  if (page === 'comms') renderThreadList();
   closeSidebar();
 }
 
@@ -1527,6 +1862,7 @@ function startFlow(type, preFrom, preCcy) {
   else if (type === 'send')     startSendFlow(preFrom, preCcy);
   else if (type === 'receive')  startReceiveFlow(preFrom, preCcy);
   else if (type === 'move')     startMoveFlow(preFrom);
+  else if (type === 'escalate') startEscalateFlow();
 }
 
 // ── SEND MONEY FLOW ───────────────────────────
@@ -2136,6 +2472,8 @@ function startDividendFlow() {
     const now = new Date();
     el.textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   }
+  // Show unread badge on nav
+  updateUnreadBadge();
 })();
 </script>
 </body>
