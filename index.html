@@ -726,7 +726,8 @@ body.cs-mode {
 .cs-con-kyc.p    { background:var(--yellow-light); color:#92400E; }
 
 /* CS Copilot 2-column layout (chat + right panel, mirroring client copilot) */
-#page-cs-copilot.active { flex-direction: row; }
+/* page stays flex-column; cscop-body is the inner flex-row */
+.cscop-body { display: flex; flex-direction: row; flex: 1; overflow: hidden; }
 .cscop-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .cs-rp { width: var(--rp-w); background: white; border-left: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
 .cs-rp::-webkit-scrollbar { width: 4px; }
@@ -1363,6 +1364,7 @@ body.cs-mode {
         </div>
 
         <!-- Two-column: chat + right panel -->
+        <div class="cscop-body">
         <div class="cscop-main">
           <div class="cscop-scroll" id="cs-messages"></div>
 
@@ -1431,6 +1433,7 @@ body.cs-mode {
           </div>
         </div>
 
+        </div><!-- end cscop-body -->
       </div>
 
       <!-- CS: CLIENT PORTFOLIO -->
