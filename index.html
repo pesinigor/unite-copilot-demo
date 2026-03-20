@@ -132,12 +132,33 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .txn-right .txn-entity { font-size: 10px; color: var(--gray-l); margin-top: 1px; }
 
 /* ── BANKING PAGE ───────────────────────────── */
+.bk-action-bar { padding: 10px 28px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; gap: 8px; background: white; flex-shrink: 0; }
+.bkab-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; border: 1.5px solid transparent; }
+.bkab-btn.primary { background: var(--blue); color: white; }
+.bkab-btn.primary:hover { background: var(--blue-dark); }
+.bkab-btn.ghost { background: white; color: var(--dark); border-color: var(--sb-border); }
+.bkab-btn.ghost:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 .acct-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.acct-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; transition: all .15s; }
+.acct-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; transition: all .15s; display: flex; flex-direction: column; }
 .acct-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
 .acct-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .acct-bank { font-size: 12px; font-weight: 600; color: var(--dark); }
 .acct-flag { font-size: 20px; }
+.acct-actions { display: flex; gap: 6px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--sb-border); }
+.acct-act-btn { flex: 1; padding: 6px 0; border-radius: 7px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; border: 1.5px solid var(--sb-border); background: white; color: var(--gray-m); display: flex; align-items: center; justify-content: center; gap: 5px; }
+.acct-act-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.acct-act-btn.blue { background: var(--blue); color: white; border-color: transparent; }
+.acct-act-btn.blue:hover { background: var(--blue-dark); }
+
+/* ── RIGHT PANEL TRANSFER ───────────────────── */
+.rpt-form { display: flex; flex-direction: column; gap: 7px; }
+.rpt-field { display: flex; flex-direction: column; gap: 3px; }
+.rpt-label { font-size: 10px; font-weight: 600; color: var(--gray-l); text-transform: uppercase; letter-spacing: .06em; }
+.rpt-select, .rpt-input { width: 100%; border: 1.5px solid var(--sb-border); border-radius: 7px; padding: 6px 9px; font-size: 12px; font-family: 'Inter', sans-serif; color: var(--dark); background: white; outline: none; transition: border-color .15s; }
+.rpt-select:focus, .rpt-input:focus { border-color: var(--blue); }
+.rpt-row2 { display: grid; grid-template-columns: 1fr 80px; gap: 6px; }
+.rpt-send-btn { width: 100%; padding: 8px; border-radius: 8px; background: var(--blue); color: white; border: none; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: background .15s; display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 2px; }
+.rpt-send-btn:hover { background: var(--blue-dark); }
 .acct-balance { font-size: 24px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 3px; }
 .acct-currency { font-size: 11px; color: var(--gray-m); }
 .acct-no { font-size: 10px; color: var(--gray-l); margin-top: 12px; font-family: monospace; letter-spacing: .05em; }
@@ -461,6 +482,8 @@ table.data-table tr:hover td { background: var(--sb-bg); }
           <button class="ab-btn" onclick="startFlow('director')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Director</button>
           <button class="ab-btn" onclick="startFlow('account')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg> Open Account</button>
           <button class="ab-btn" onclick="startFlow('dividend')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Declare Dividend</button>
+          <button class="ab-btn" onclick="startFlow('send')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Money</button>
+          <button class="ab-btn" onclick="startFlow('move')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg> Move Funds</button>
         </div>
 
         <div class="chat-scroll" id="chat-scroll">
@@ -616,6 +639,23 @@ table.data-table tr:hover td { background: var(--sb-bg); }
           </div>
           <button class="ph-btn" onclick="qaAction('Show me a full treasury overview and any pending payments')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3 4 6l-3 1 3 1 1 3 1-3 3-1-3-1Z"/><path d="M19 13l-.667 2L17 16l1.333.667L19 19l.667-1.333L21 17l-1.333-.667Z"/></svg>Ask Copilot</button>
         </div>
+
+        <!-- Banking action bar -->
+        <div class="bk-action-bar">
+          <button class="bkab-btn primary" onclick="startFlow('send')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Money
+          </button>
+          <button class="bkab-btn ghost" onclick="startFlow('receive')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+            Receive Funds
+          </button>
+          <button class="bkab-btn ghost" onclick="startFlow('move')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+            Move Between Accounts
+          </button>
+        </div>
+
         <div class="page-body">
 
           <div class="section-label section-gap">Accounts</div>
@@ -626,6 +666,11 @@ table.data-table tr:hover td { background: var(--sb-bg); }
               <div class="acct-currency">SGD 1,124,350 · Singapore Dollar</div>
               <div class="acct-no">•••• •••• 8842</div>
               <div class="acct-tag">SGD Current Account</div>
+              <div class="acct-actions">
+                <button class="acct-act-btn blue" onclick="startFlow('send','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="startFlow('receive','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="startFlow('move','DBS •8842')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+              </div>
             </div>
             <div class="acct-card">
               <div class="acct-top"><div class="acct-bank">Emirates NBD</div><div class="acct-flag">🇦🇪</div></div>
@@ -633,6 +678,11 @@ table.data-table tr:hover td { background: var(--sb-bg); }
               <div class="acct-currency">AED 1,842,000 · UAE Dirham</div>
               <div class="acct-no">•••• •••• 4471</div>
               <div class="acct-tag">AED Business Account</div>
+              <div class="acct-actions">
+                <button class="acct-act-btn blue" onclick="startFlow('send','Emirates •4471','AED')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="startFlow('receive','Emirates •4471','AED')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="startFlow('move','Emirates •4471')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+              </div>
             </div>
             <div class="acct-card">
               <div class="acct-top"><div class="acct-bank">Barclays</div><div class="acct-flag">🇬🇧</div></div>
@@ -640,6 +690,11 @@ table.data-table tr:hover td { background: var(--sb-bg); }
               <div class="acct-currency">GBP 247,500 · British Pound</div>
               <div class="acct-no">•••• •••• 3301</div>
               <div class="acct-tag">GBP Business Account</div>
+              <div class="acct-actions">
+                <button class="acct-act-btn blue" onclick="startFlow('send','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="startFlow('receive','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="startFlow('move','Barclays •3301')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+              </div>
             </div>
           </div>
 
@@ -759,6 +814,37 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         <div class="rp-pending-row">
           <div class="rp-pending-title">Signature required</div>
           <div class="rp-pending-sub">SG director resolution · Q1 dividend</div>
+        </div>
+      </div>
+      <div class="rp-section">
+        <div class="rp-label">Quick Transfer</div>
+        <div class="rpt-form">
+          <div class="rpt-field">
+            <span class="rpt-label">From</span>
+            <select class="rpt-select" id="rpt-from">
+              <option value="DBS •8842 · SGD">DBS •8842 · SGD</option>
+              <option value="Emirates •4471 · AED">Emirates •4471 · AED</option>
+              <option value="Barclays •3301 · GBP">Barclays •3301 · GBP</option>
+            </select>
+          </div>
+          <div class="rpt-field">
+            <span class="rpt-label">To (Beneficiary)</span>
+            <input class="rpt-input" id="rpt-to" type="text" placeholder="Name or account…">
+          </div>
+          <div class="rpt-row2">
+            <div class="rpt-field">
+              <span class="rpt-label">Amount</span>
+              <input class="rpt-input" id="rpt-amt" type="number" placeholder="0.00" min="0">
+            </div>
+            <div class="rpt-field">
+              <span class="rpt-label">Currency</span>
+              <select class="rpt-select" id="rpt-ccy"><option>SGD</option><option>AED</option><option>GBP</option><option>USD</option></select>
+            </div>
+          </div>
+          <button class="rpt-send-btn" onclick="rpTransfer()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Money
+          </button>
         </div>
       </div>
       <div class="rp-section">
@@ -1278,7 +1364,7 @@ function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 // ── ACTION FLOWS ──────────────────────────────
 const wizState = {};
 
-function startFlow(type) {
+function startFlow(type, preFrom, preCcy) {
   navigate('copilot');
   hideWelcome();
   document.getElementById('messages').style.justifyContent = 'flex-start';
@@ -1287,6 +1373,287 @@ function startFlow(type) {
   else if (type === 'director') startDirectorFlow();
   else if (type === 'account')  startAccountFlow();
   else if (type === 'dividend') startDividendFlow();
+  else if (type === 'send')     startSendFlow(preFrom, preCcy);
+  else if (type === 'receive')  startReceiveFlow(preFrom, preCcy);
+  else if (type === 'move')     startMoveFlow(preFrom);
+}
+
+// ── SEND MONEY FLOW ───────────────────────────
+function startSendFlow(preFrom, preCcy) {
+  const id = 'wiz-send-' + Date.now();
+  wizState[id] = { from: preFrom || '', ccy: preCcy || 'SGD' };
+  const fromOpts = ['DBS •8842 · SGD', 'Emirates •4471 · AED', 'Barclays •3301 · GBP']
+    .map(a => `<option value="${a}" ${a.startsWith(preFrom||'_') ? 'selected' : ''}>${a}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 3</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Send Money</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Transfer details</div>
+        <div class="wiz-form">
+          <div class="wf-group">
+            <label class="wf-label">From account</label>
+            <select class="wf-select" id="${id}-from">${fromOpts}</select>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Beneficiary name</label>
+            <input class="wf-input" id="${id}-bname" type="text" placeholder="e.g. TechVentures FZ LLC">
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Beneficiary bank &amp; account</label>
+            <input class="wf-input" id="${id}-bbank" type="text" placeholder="e.g. ENBD AE07 0331 0000 0012 3456 789">
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="wizSendAmt('${id}')">Next →</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function wizSendAmt(id) {
+  const bname = document.getElementById(id+'-bname')?.value?.trim();
+  const bbank = document.getElementById(id+'-bbank')?.value?.trim();
+  const from  = document.getElementById(id+'-from')?.value;
+  if (!bname || !bbank) { alert('Please fill in beneficiary name and account.'); return; }
+  wizState[id] = { ...wizState[id], from, bname, bbank };
+  const ccyOpts = ['SGD','AED','GBP','USD','EUR'].map(c => `<option value="${c}" ${c === (wizState[id].ccy||'SGD') ? 'selected' : ''}>${c}</option>`).join('');
+  document.getElementById(id).outerHTML = `
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 3</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Send Money</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Amount &amp; reference</div>
+        <div class="wiz-form">
+          <div class="wf-group" style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+            <div>
+              <label class="wf-label">Amount</label>
+              <input class="wf-input" id="${id}-amt" type="number" placeholder="0.00" min="0">
+            </div>
+            <div>
+              <label class="wf-label">Currency</label>
+              <select class="wf-select" id="${id}-ccy">${ccyOpts}</select>
+            </div>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Payment reference</label>
+            <input class="wf-input" id="${id}-ref" type="text" placeholder="e.g. Invoice #UAE-0089">
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="wizSendReview('${id}')">Review →</button>
+        </div>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+function wizSendReview(id) {
+  const amt = document.getElementById(id+'-amt')?.value;
+  const ccy = document.getElementById(id+'-ccy')?.value;
+  const ref = document.getElementById(id+'-ref')?.value?.trim() || '—';
+  if (!amt || parseFloat(amt) <= 0) { alert('Please enter a valid amount.'); return; }
+  const s = { ...wizState[id], amt, ccy, ref };
+  wizState[id] = s;
+  document.getElementById(id).outerHTML = `
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 3 of 3</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Send Money</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Review &amp; confirm</div>
+        <div class="wiz-review">
+          <div class="wr-row"><span class="wr-key">From</span><span class="wr-val">${escHtml(s.from)}</span></div>
+          <div class="wr-row"><span class="wr-key">To</span><span class="wr-val">${escHtml(s.bname)}</span></div>
+          <div class="wr-row"><span class="wr-key">Account</span><span class="wr-val" style="font-size:11px;">${escHtml(s.bbank)}</span></div>
+          <div class="wr-row"><span class="wr-key">Amount</span><span class="wr-val" style="font-weight:700;color:var(--blue);">${s.ccy} ${parseFloat(s.amt).toLocaleString('en-US',{minimumFractionDigits:2})}</span></div>
+          <div class="wr-row"><span class="wr-key">Reference</span><span class="wr-val">${escHtml(s.ref)}</span></div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="confirmWizard('${id}','send')">✓ Approve Payment</button>
+        </div>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+// ── RECEIVE FUNDS FLOW ────────────────────────
+const ACCT_DETAILS = {
+  'DBS':      { bank: 'DBS Bank Ltd', swift: 'DBSSSGSG', account: '027-901234-0', sort: '—', address: '12 Marina Boulevard, Marina Bay Financial Centre, Singapore 018982' },
+  'Emirates': { bank: 'Emirates NBD', swift: 'EBILAEAD', account: 'AE07 0331 0000 0012 3456 789', sort: '—', address: 'Baniyas Road, Deira, Dubai, UAE' },
+  'Barclays': { bank: 'Barclays Bank UK PLC', swift: 'BARCGB22', account: '20-00-00 / 83974512', sort: '20-00-00', address: '1 Churchill Place, London E14 5HP, UK' },
+};
+
+function startReceiveFlow(preFrom, preCcy) {
+  const id = 'wiz-recv-' + Date.now();
+  const bankKey = preFrom ? preFrom.split(' ')[0] : 'DBS';
+  const d = ACCT_DETAILS[bankKey] || ACCT_DETAILS['DBS'];
+  const acctOpts = ['DBS •8842 · SGD', 'Emirates •4471 · AED', 'Barclays •3301 · GBP']
+    .map(a => `<option value="${a.split(' ')[0]}" ${a.startsWith(preFrom||'_') ? 'selected' : ''}>${a}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Account Details</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('bank',14,'white')} Receive Funds</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question" style="margin-bottom:8px;">Select account to share</div>
+        <select class="wf-select" style="margin-bottom:12px;" onchange="updateReceiveDetails(this.value,'${id}')">
+          ${acctOpts}
+        </select>
+        <div id="${id}-details" class="wiz-review">
+          <div class="wr-row"><span class="wr-key">Bank</span><span class="wr-val">${d.bank}</span></div>
+          <div class="wr-row"><span class="wr-key">Account No.</span><span class="wr-val">${d.account}</span></div>
+          ${d.sort !== '—' ? `<div class="wr-row"><span class="wr-key">Sort Code</span><span class="wr-val">${d.sort}</span></div>` : ''}
+          <div class="wr-row"><span class="wr-key">SWIFT / BIC</span><span class="wr-val">${d.swift}</span></div>
+          <div class="wr-row"><span class="wr-key">Bank address</span><span class="wr-val" style="font-size:11px;">${d.address}</span></div>
+        </div>
+        <div class="wiz-actions" style="margin-top:12px;">
+          <button class="wiz-btn-secondary" onclick="this.closest('.wizard-card').remove()">Close</button>
+          <button class="wiz-btn-primary" onclick="qaAction('Generate a payment instruction letter for our ${bankKey} account')">Get Letter →</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function updateReceiveDetails(bankKey, id) {
+  const d = ACCT_DETAILS[bankKey] || ACCT_DETAILS['DBS'];
+  document.getElementById(id+'-details').innerHTML = `
+    <div class="wr-row"><span class="wr-key">Bank</span><span class="wr-val">${d.bank}</span></div>
+    <div class="wr-row"><span class="wr-key">Account No.</span><span class="wr-val">${d.account}</span></div>
+    ${d.sort !== '—' ? `<div class="wr-row"><span class="wr-key">Sort Code</span><span class="wr-val">${d.sort}</span></div>` : ''}
+    <div class="wr-row"><span class="wr-key">SWIFT / BIC</span><span class="wr-val">${d.swift}</span></div>
+    <div class="wr-row"><span class="wr-key">Bank address</span><span class="wr-val" style="font-size:11px;">${d.address}</span></div>`;
+}
+
+// ── MOVE BETWEEN ACCOUNTS FLOW ────────────────
+function startMoveFlow(preFrom) {
+  const id = 'wiz-move-' + Date.now();
+  wizState[id] = {};
+  const accounts = ['DBS •8842 · SGD', 'Emirates •4471 · AED', 'Barclays •3301 · GBP'];
+  const fromOpts = accounts.map(a => `<option value="${a}" ${a.startsWith(preFrom||'_') ? 'selected' : ''}>${a}</option>`).join('');
+  const toOpts   = accounts.map(a => `<option value="${a}">${a}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 2</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('arrowright',14,'white')} Move Between Accounts</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Select accounts &amp; amount</div>
+        <div class="wiz-form">
+          <div class="wf-group">
+            <label class="wf-label">From account</label>
+            <select class="wf-select" id="${id}-from">${fromOpts}</select>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">To account</label>
+            <select class="wf-select" id="${id}-to">${toOpts}</select>
+          </div>
+          <div class="wf-group" style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+            <div>
+              <label class="wf-label">Amount (source currency)</label>
+              <input class="wf-input" id="${id}-amt" type="number" placeholder="0.00" min="0">
+            </div>
+            <div>
+              <label class="wf-label">FX note</label>
+              <select class="wf-select" id="${id}-fx">
+                <option value="Market rate">Market rate</option>
+                <option value="Fix rate">Fix rate</option>
+              </select>
+            </div>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Reference (optional)</label>
+            <input class="wf-input" id="${id}-ref" type="text" placeholder="e.g. Q1 liquidity rebalancing">
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="wizMoveReview('${id}')">Review →</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function wizMoveReview(id) {
+  const from = document.getElementById(id+'-from')?.value;
+  const to   = document.getElementById(id+'-to')?.value;
+  const amt  = document.getElementById(id+'-amt')?.value;
+  const fx   = document.getElementById(id+'-fx')?.value;
+  const ref  = document.getElementById(id+'-ref')?.value?.trim() || '—';
+  if (!amt || parseFloat(amt) <= 0) { alert('Please enter a valid amount.'); return; }
+  if (from === to) { alert('From and To accounts must be different.'); return; }
+  wizState[id] = { from, to, amt, fx, ref };
+  document.getElementById(id).outerHTML = `
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 2</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('arrowright',14,'white')} Move Between Accounts</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Review &amp; confirm transfer</div>
+        <div class="wiz-review">
+          <div class="wr-row"><span class="wr-key">From</span><span class="wr-val">${escHtml(from)}</span></div>
+          <div class="wr-row"><span class="wr-key">To</span><span class="wr-val">${escHtml(to)}</span></div>
+          <div class="wr-row"><span class="wr-key">Amount</span><span class="wr-val" style="font-weight:700;color:var(--blue);">${parseFloat(amt).toLocaleString('en-US',{minimumFractionDigits:2})} (source currency)</span></div>
+          <div class="wr-row"><span class="wr-key">FX rate</span><span class="wr-val">${escHtml(fx)}</span></div>
+          <div class="wr-row"><span class="wr-key">Reference</span><span class="wr-val">${escHtml(ref)}</span></div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="confirmWizard('${id}','move')">✓ Confirm Transfer</button>
+        </div>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+// ── RIGHT PANEL QUICK TRANSFER ─────────────────
+function rpTransfer() {
+  const from = document.getElementById('rpt-from')?.value;
+  const to   = document.getElementById('rpt-to')?.value?.trim();
+  const amt  = document.getElementById('rpt-amt')?.value;
+  const ccy  = document.getElementById('rpt-ccy')?.value;
+  if (!to || !amt || parseFloat(amt) <= 0) { alert('Please fill in the recipient and amount.'); return; }
+  // Pre-fill wizState and jump straight to the send wizard with values populated
+  navigate('copilot');
+  hideWelcome();
+  document.getElementById('messages').style.justifyContent = 'flex-start';
+  const id = 'wiz-send-' + Date.now();
+  wizState[id] = { from, bname: to, ccy };
+  // Skip to step 2 directly since we have from + beneficiary
+  const ccyOpts = ['SGD','AED','GBP','USD','EUR'].map(c => `<option value="${c}" ${c === ccy ? 'selected' : ''}>${c}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 3</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Send Money</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Amount &amp; reference</div>
+        <div class="wiz-review" style="margin-bottom:10px;">
+          <div class="wr-row"><span class="wr-key">From</span><span class="wr-val">${escHtml(from)}</span></div>
+          <div class="wr-row"><span class="wr-key">To</span><span class="wr-val">${escHtml(to)}</span></div>
+        </div>
+        <div class="wiz-form">
+          <div class="wf-group" style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+            <div>
+              <label class="wf-label">Amount</label>
+              <input class="wf-input" id="${id}-amt" type="number" placeholder="${amt||'0.00'}" value="${amt||''}" min="0">
+            </div>
+            <div>
+              <label class="wf-label">Currency</label>
+              <select class="wf-select" id="${id}-ccy">${ccyOpts}</select>
+            </div>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Payment reference</label>
+            <input class="wf-input" id="${id}-ref" type="text" placeholder="e.g. Invoice #UAE-0089">
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="wizSendReview('${id}')">Review →</button>
+        </div>
+      </div>
+    </div>`);
+  // Clear the right panel form
+  document.getElementById('rpt-to').value = '';
+  document.getElementById('rpt-amt').value = '';
 }
 
 function appendWizardMsg(html) {
@@ -1322,6 +1689,12 @@ function confirmWizard(id, type) {
     const amount = document.getElementById('div-amount')?.value || 'the declared amount';
     const entity = document.getElementById('div-entity')?.value || 'entity';
     msg = `Dividend declaration of <strong>${escHtml(amount)}</strong> from <strong>${escHtml(entity)}</strong> submitted for board approval. Resolutions will be prepared and sent for signatures.`;
+  } else if (type === 'send') {
+    const s = wizState[id] || {};
+    msg = `Payment of <strong>${escHtml(s.ccy)} ${parseFloat(s.amt||0).toLocaleString('en-US',{minimumFractionDigits:2})}</strong> to <strong>${escHtml(s.bname||'beneficiary')}</strong> approved and queued for processing. Reference: ${escHtml(s.ref||'—')}. Expected settlement within 1–2 business days.`;
+  } else if (type === 'move') {
+    const s = wizState[id] || {};
+    msg = `Internal transfer of <strong>${parseFloat(s.amt||0).toLocaleString('en-US',{minimumFractionDigits:2})}</strong> from <strong>${escHtml(s.from||'')}</strong> to <strong>${escHtml(s.to||'')}</strong> confirmed. FX at ${escHtml(s.fx||'market rate')}. Funds will be available within 1 business day.`;
   }
   el.innerHTML = `
     <div class="wiz-header"><span class="wiz-step-txt">Confirmed</span><span class="wiz-title-txt">✓ Request Submitted</span></div>
