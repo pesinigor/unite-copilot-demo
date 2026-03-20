@@ -230,8 +230,34 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .bkab-btn.ghost { background: white; color: var(--dark); border-color: var(--sb-border); }
 .bkab-btn.ghost:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
 .acct-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.acct-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; transition: all .15s; display: flex; flex-direction: column; }
-.acct-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.acct-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; transition: all .15s; display: flex; flex-direction: column; cursor: pointer; }
+.acct-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.09); border-color: var(--blue); }
+.acct-view-hint { font-size: 10px; color: var(--blue); margin-top: 6px; display: flex; align-items: center; gap: 3px; opacity: 0; transition: opacity .15s; }
+.acct-card:hover .acct-view-hint { opacity: 1; }
+
+/* ── ACCOUNT DETAIL MODAL ───────────────────── */
+.acct-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.acct-modal { background: white; border-radius: 14px; width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.18); overflow: hidden; }
+.acct-modal-header { background: var(--blue); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.acct-modal-title { font-size: 15px; font-weight: 700; color: white; display: flex; align-items: center; gap: 8px; }
+.acct-modal-close { background: rgba(255,255,255,.2); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+.acct-modal-close:hover { background: rgba(255,255,255,.35); }
+.acct-modal-body { padding: 20px; }
+.acct-modal-balance { background: var(--blue-light); border-radius: 9px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: baseline; gap: 8px; }
+.acct-modal-bal-num { font-size: 22px; font-weight: 700; color: var(--blue); }
+.acct-modal-bal-ccy { font-size: 12px; color: var(--blue); font-weight: 600; }
+.acct-detail-row { display: flex; align-items: flex-start; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--sb-border); gap: 12px; }
+.acct-detail-row:last-child { border-bottom: none; }
+.acct-detail-key { font-size: 11px; color: var(--gray-m); font-weight: 500; flex-shrink: 0; width: 100px; }
+.acct-detail-val { font-size: 12px; color: var(--dark); font-weight: 600; text-align: right; word-break: break-all; display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.acct-copy-btn { background: none; border: none; cursor: pointer; color: var(--gray-l); padding: 2px; border-radius: 4px; transition: color .15s; flex-shrink: 0; display: flex; align-items: center; }
+.acct-copy-btn:hover { color: var(--blue); }
+.acct-modal-actions { display: flex; gap: 8px; margin-top: 16px; }
+.acct-modal-act-btn { flex: 1; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all .15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.acct-modal-act-btn.primary { background: var(--blue); color: white; border: none; }
+.acct-modal-act-btn.primary:hover { background: var(--blue-dark); }
+.acct-modal-act-btn.ghost { background: white; color: var(--dark); border: 1.5px solid var(--sb-border); }
+.acct-modal-act-btn.ghost:hover { border-color: var(--blue); color: var(--blue); }
 .acct-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .acct-bank { font-size: 12px; font-weight: 600; color: var(--dark); }
 .acct-flag { font-size: 20px; }
@@ -254,6 +280,43 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .acct-currency { font-size: 11px; color: var(--gray-m); }
 .acct-no { font-size: 10px; color: var(--gray-l); margin-top: 12px; font-family: monospace; letter-spacing: .05em; }
 .acct-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 600; color: var(--blue); background: var(--blue-light); padding: 2px 7px; border-radius: 6px; }
+
+/* ── INVOICES SECTION ───────────────────────── */
+.inv-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.inv-tabs { display: flex; gap: 0; border: 1.5px solid var(--sb-border); border-radius: 8px; overflow: hidden; }
+.inv-tab { padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--gray-m); cursor: pointer; transition: all .15s; background: white; white-space: nowrap; }
+.inv-tab.active { background: var(--blue); color: white; }
+.inv-add-btn { margin-left: auto; background: var(--blue); color: white; border: none; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
+.inv-add-btn:hover { background: var(--blue-dark); }
+.inv-list { display: flex; flex-direction: column; gap: 8px; }
+.inv-item { background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; transition: all .15s; }
+.inv-item:hover { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+.inv-icon { width: 38px; height: 38px; border-radius: 8px; background: var(--sb-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.inv-info { flex: 1; min-width: 0; }
+.inv-client { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.inv-meta { font-size: 11px; color: var(--gray-m); }
+.inv-right { text-align: right; flex-shrink: 0; }
+.inv-amount { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+.inv-status { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.inv-status.pending { background: #FEF3C7; color: #92400E; }
+.inv-status.overdue { background: var(--red-light); color: var(--red); }
+.inv-status.paid { background: var(--green-light); color: var(--green); }
+.inv-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.inv-act-btn { padding: 6px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; }
+.inv-act-btn.pay { background: var(--blue); color: white; border: none; }
+.inv-act-btn.pay:hover { background: var(--blue-dark); }
+.inv-act-btn.view { background: white; color: var(--dark); border: 1.5px solid var(--sb-border); }
+.inv-act-btn.view:hover { border-color: var(--blue); color: var(--blue); }
+.inv-empty { text-align: center; padding: 32px; color: var(--gray-m); font-size: 13px; background: white; border: 1.5px dashed var(--sb-border); border-radius: 10px; }
+
+/* ── CLIENTS SECTION ────────────────────────── */
+.client-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.client-card { background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 14px; transition: all .15s; }
+.client-card:hover { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+.client-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+.client-name { font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+.client-meta { font-size: 10px; color: var(--gray-m); }
+.client-total { font-size: 11px; font-weight: 600; color: var(--blue); margin-top: 6px; }
 
 .full-table-wrap { background: white; border: 1px solid var(--sb-border); border-radius: 10px; overflow: hidden; }
 .ftw-header { padding: 13px 18px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; }
@@ -513,7 +576,10 @@ table.data-table tr:hover td { background: var(--sb-bg); }
   .page-header { padding: 14px 16px; }
   .ph-left h1 { font-size: 15px; }
 
-  .grid-2, .grid-3, .grid-4, .two-col, .acct-cards, .comp-summary { grid-template-columns: 1fr; }
+  .grid-2, .grid-3, .grid-4, .two-col, .acct-cards, .comp-summary, .client-grid { grid-template-columns: 1fr; }
+  .inv-item { flex-wrap: wrap; gap: 10px; }
+  .inv-right { order: 2; }
+  .inv-actions { order: 3; width: 100%; justify-content: flex-end; }
 
   .messages-inner { padding: 14px 12px; gap: 12px; }
   .msg.user { max-width: 85%; }
@@ -809,40 +875,43 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 
           <div class="section-label section-gap">Accounts</div>
           <div class="acct-cards section-gap">
-            <div class="acct-card">
+            <div class="acct-card" onclick="showAcctDetail('DBS','$836,000','SGD 1,124,350','SGD Current Account')">
               <div class="acct-top"><div class="acct-bank">DBS Bank</div><div class="acct-flag">🇸🇬</div></div>
               <div class="acct-balance">$836,000</div>
               <div class="acct-currency">SGD 1,124,350 · Singapore Dollar</div>
               <div class="acct-no">•••• •••• 8842</div>
               <div class="acct-tag">SGD Current Account</div>
+              <div class="acct-view-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> View full account details</div>
               <div class="acct-actions">
-                <button class="acct-act-btn blue" onclick="startFlow('send','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
-                <button class="acct-act-btn" onclick="startFlow('receive','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
-                <button class="acct-act-btn" onclick="startFlow('move','DBS •8842')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+                <button class="acct-act-btn blue" onclick="event.stopPropagation();startFlow('send','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('receive','DBS •8842','SGD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('move','DBS •8842')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
               </div>
             </div>
-            <div class="acct-card">
+            <div class="acct-card" onclick="showAcctDetail('JPMorgan','$501,000','USD 501,000','USD Business Checking')">
               <div class="acct-top"><div class="acct-bank">JPMorgan Chase</div><div class="acct-flag">🇺🇸</div></div>
               <div class="acct-balance">$501,000</div>
               <div class="acct-currency">USD 501,000 · US Dollar</div>
               <div class="acct-no">•••• •••• 2290</div>
               <div class="acct-tag">USD Business Checking</div>
+              <div class="acct-view-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> View full account details</div>
               <div class="acct-actions">
-                <button class="acct-act-btn blue" onclick="startFlow('send','JPMorgan •2290','USD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
-                <button class="acct-act-btn" onclick="startFlow('receive','JPMorgan •2290','USD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
-                <button class="acct-act-btn" onclick="startFlow('move','JPMorgan •2290')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+                <button class="acct-act-btn blue" onclick="event.stopPropagation();startFlow('send','JPMorgan •2290','USD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('receive','JPMorgan •2290','USD')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('move','JPMorgan •2290')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
               </div>
             </div>
-            <div class="acct-card">
+            <div class="acct-card" onclick="showAcctDetail('Barclays','$313,000','GBP 247,500','GBP Business Account')">
               <div class="acct-top"><div class="acct-bank">Barclays</div><div class="acct-flag">🇬🇧</div></div>
               <div class="acct-balance">$313,000</div>
               <div class="acct-currency">GBP 247,500 · British Pound</div>
               <div class="acct-no">•••• •••• 3301</div>
               <div class="acct-tag">GBP Business Account</div>
+              <div class="acct-view-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> View full account details</div>
               <div class="acct-actions">
-                <button class="acct-act-btn blue" onclick="startFlow('send','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
-                <button class="acct-act-btn" onclick="startFlow('receive','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
-                <button class="acct-act-btn" onclick="startFlow('move','Barclays •3301')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
+                <button class="acct-act-btn blue" onclick="event.stopPropagation();startFlow('send','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('receive','Barclays •3301','GBP')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Receive</button>
+                <button class="acct-act-btn" onclick="event.stopPropagation();startFlow('move','Barclays •3301')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg> Move</button>
               </div>
             </div>
           </div>
@@ -873,6 +942,26 @@ table.data-table tr:hover td { background: var(--sb-bg); }
               </tbody>
             </table>
           </div>
+
+          <!-- INVOICES SECTION -->
+          <div class="section-label section-gap" style="margin-top:24px;">Invoices</div>
+          <div class="inv-toolbar section-gap">
+            <div class="inv-tabs" id="inv-tabs">
+              <div class="inv-tab active" onclick="setInvFilter('pending',this)">Pending</div>
+              <div class="inv-tab" onclick="setInvFilter('paid',this)">Paid</div>
+              <div class="inv-tab" onclick="setInvFilter('all',this)">All</div>
+            </div>
+            <button class="inv-add-btn" onclick="startAddInvoice()">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Invoice
+            </button>
+          </div>
+          <div class="inv-list" id="inv-list"></div>
+
+          <!-- CLIENTS SECTION -->
+          <div class="section-label section-gap" style="margin-top:24px;">Clients</div>
+          <div class="client-grid section-gap" id="client-grid"></div>
+
         </div>
       </div>
 
@@ -1780,8 +1869,9 @@ function navigate(page) {
   const rp = document.querySelector('.right-panel');
   const hideRp = page === 'comms' || page === 'docs';
   if (rp) rp.style.display = hideRp ? 'none' : '';
-  if (page === 'comms') renderThreadList();
-  if (page === 'docs')  renderDocs();
+  if (page === 'comms')   renderThreadList();
+  if (page === 'docs')    renderDocs();
+  if (page === 'banking') renderInvoices();
   closeSidebar();
 }
 
@@ -2349,12 +2439,326 @@ function wizSendReview(id) {
   scrollBottom();
 }
 
-// ── RECEIVE FUNDS FLOW ────────────────────────
+// ── ACCOUNT DETAIL MODAL ──────────────────────
 const ACCT_DETAILS = {
   'DBS':      { bank: 'DBS Bank Ltd', swift: 'DBSSSGSG', account: '027-901234-0', sort: '—', address: '12 Marina Boulevard, Marina Bay Financial Centre, Singapore 018982' },
   'JPMorgan': { bank: 'JPMorgan Chase Bank, N.A.', swift: 'CHASUS33', account: '000000002290', sort: '021000021', address: '383 Madison Avenue, New York, NY 10017, USA' },
   'Barclays': { bank: 'Barclays Bank UK PLC', swift: 'BARCGB22', account: '20-00-00 / 83974512', sort: '20-00-00', address: '1 Churchill Place, London E14 5HP, UK' },
 };
+
+function showAcctDetail(bankKey, balUSD, balLocal, acctType) {
+  const d = ACCT_DETAILS[bankKey] || ACCT_DETAILS['DBS'];
+  const flags = { DBS: '🇸🇬', JPMorgan: '🇺🇸', Barclays: '🇬🇧' };
+  const labels = { DBS: 'DBS Bank', JPMorgan: 'JPMorgan Chase', Barclays: 'Barclays' };
+  const acctNos = { DBS: '•••• •••• 8842', JPMorgan: '•••• •••• 2290', Barclays: '•••• •••• 3301' };
+  const copyIcon = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+  const sortRow = d.sort !== '—' ? `
+    <div class="acct-detail-row">
+      <span class="acct-detail-key">Routing / Sort</span>
+      <span class="acct-detail-val">${escHtml(d.sort)}<button class="acct-copy-btn" onclick="copyToClip('${d.sort}',this)" title="Copy">${copyIcon}</button></span>
+    </div>` : '';
+  const el = document.createElement('div');
+  el.className = 'acct-modal-overlay';
+  el.id = 'acct-modal-overlay';
+  el.innerHTML = `
+    <div class="acct-modal" onclick="event.stopPropagation()">
+      <div class="acct-modal-header">
+        <div class="acct-modal-title">${flags[bankKey] || '🏦'} ${escHtml(labels[bankKey] || bankKey)}</div>
+        <button class="acct-modal-close" onclick="closeAcctModal()">✕</button>
+      </div>
+      <div class="acct-modal-body">
+        <div class="acct-modal-balance">
+          <span class="acct-modal-bal-num">${escHtml(balUSD)}</span>
+          <span class="acct-modal-bal-ccy">${escHtml(balLocal)} · ${escHtml(acctType)}</span>
+        </div>
+        <div class="acct-detail-row">
+          <span class="acct-detail-key">Account No.</span>
+          <span class="acct-detail-val">${acctNos[bankKey] || '—'}<button class="acct-copy-btn" onclick="copyToClip('${d.account}',this)" title="Copy full number">${copyIcon}</button></span>
+        </div>
+        <div class="acct-detail-row">
+          <span class="acct-detail-key">Full Account</span>
+          <span class="acct-detail-val" style="font-family:monospace;font-size:11px;">${escHtml(d.account)}<button class="acct-copy-btn" onclick="copyToClip('${d.account}',this)" title="Copy">${copyIcon}</button></span>
+        </div>
+        ${sortRow}
+        <div class="acct-detail-row">
+          <span class="acct-detail-key">SWIFT / BIC</span>
+          <span class="acct-detail-val" style="font-family:monospace;">${escHtml(d.swift)}<button class="acct-copy-btn" onclick="copyToClip('${d.swift}',this)" title="Copy">${copyIcon}</button></span>
+        </div>
+        <div class="acct-detail-row">
+          <span class="acct-detail-key">Bank</span>
+          <span class="acct-detail-val" style="font-size:11px;font-weight:500;">${escHtml(d.bank)}</span>
+        </div>
+        <div class="acct-detail-row">
+          <span class="acct-detail-key">Bank Address</span>
+          <span class="acct-detail-val" style="font-size:11px;font-weight:500;max-width:200px;">${escHtml(d.address)}</span>
+        </div>
+        <div class="acct-modal-actions">
+          <button class="acct-modal-act-btn ghost" onclick="closeAcctModal()">Close</button>
+          <button class="acct-modal-act-btn ghost" onclick="event.stopPropagation();closeAcctModal();startFlow('receive','${bankKey}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+            Share Details
+          </button>
+          <button class="acct-modal-act-btn primary" onclick="event.stopPropagation();closeAcctModal();startFlow('send','${bankKey}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Money
+          </button>
+        </div>
+      </div>
+    </div>`;
+  el.addEventListener('click', closeAcctModal);
+  document.body.appendChild(el);
+}
+
+function closeAcctModal() {
+  const el = document.getElementById('acct-modal-overlay');
+  if (el) el.remove();
+}
+
+function copyToClip(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 1500);
+  });
+}
+
+// ── INVOICES & CLIENTS ────────────────────────
+const INVOICES = [
+  { id:'inv1', num:'#US-2026-0042', client:'Acme Corp Inc', entity:'LTVentures Delaware LLC', amount:'USD 25,000', amtNum:25000, currency:'USD', issued:'2026-03-10', due:'2026-04-05', status:'pending', account:'JPMorgan •2290' },
+  { id:'inv2', num:'#SG-2026-0031', client:'Apex Group Ltd', entity:'LTVentures SG', amount:'SGD 68,500', amtNum:68500, currency:'SGD', issued:'2026-03-01', due:'2026-03-31', status:'pending', account:'DBS •8842' },
+  { id:'inv3', num:'#UK-2026-0018', client:'Meridian Partners', entity:'LTVentures UK', amount:'GBP 42,000', amtNum:42000, currency:'GBP', issued:'2026-02-15', due:'2026-03-15', status:'overdue', account:'Barclays •3301' },
+  { id:'inv4', num:'#SG-2025-0312', client:'Apex Group Ltd', entity:'LTVentures SG', amount:'SGD 114,200', amtNum:114200, currency:'SGD', issued:'2025-12-01', due:'2026-01-15', status:'paid', account:'DBS •8842' },
+  { id:'inv5', num:'#UK-2025-0041', client:'Meridian Partners', entity:'LTVentures UK', amount:'GBP 84,000', amtNum:84000, currency:'GBP', issued:'2025-11-20', due:'2025-12-31', status:'paid', account:'Barclays •3301' },
+  { id:'inv6', num:'#US-2025-0089', client:'Acme Corp Inc', entity:'LTVentures Delaware LLC', amount:'USD 142,000', amtNum:142000, currency:'USD', issued:'2025-10-01', due:'2025-11-01', status:'paid', account:'JPMorgan •2290' },
+];
+
+const CLIENTS = [
+  { id:'c1', name:'Acme Corp Inc', flag:'🇺🇸', country:'USA', totalBilled:'USD 167,000', invoices:2, initials:'AC' },
+  { id:'c2', name:'Apex Group Ltd', flag:'🇸🇬', country:'Singapore', totalBilled:'SGD 182,700', invoices:2, initials:'AG' },
+  { id:'c3', name:'Meridian Partners', flag:'🇬🇧', country:'UK', totalBilled:'GBP 126,000', invoices:2, initials:'MP' },
+];
+
+let invFilter = 'pending';
+
+function setInvFilter(f, el) {
+  invFilter = f;
+  document.querySelectorAll('#inv-tabs .inv-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderInvoices();
+}
+
+function renderInvoices() {
+  const list = document.getElementById('inv-list');
+  if (!list) return;
+  let filtered = INVOICES.filter(inv => invFilter === 'all' ? true : inv.status === invFilter);
+  if (!filtered.length) {
+    list.innerHTML = `<div class="inv-empty">No ${invFilter === 'all' ? '' : invFilter + ' '}invoices found.</div>`;
+    renderClients();
+    return;
+  }
+  const statusLabel = { pending:'Pending', overdue:'Overdue', paid:'Paid' };
+  list.innerHTML = filtered.map(inv => {
+    const isPending = inv.status === 'pending' || inv.status === 'overdue';
+    const dueDate = new Date(inv.due).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    const payBtn = isPending ? `<button class="inv-act-btn pay" onclick="payInvoiceFlow('${inv.id}')">Pay</button>` : '';
+    const svgDoc = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${isPending ? '#3B82F6' : '#10B981'}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+    return `
+      <div class="inv-item">
+        <div class="inv-icon">${svgDoc}</div>
+        <div class="inv-info">
+          <div class="inv-client">${escHtml(inv.client)} <span style="font-weight:400;color:var(--gray-m);font-size:11px;">${escHtml(inv.num)}</span></div>
+          <div class="inv-meta">${escHtml(inv.entity)} · ${escHtml(inv.account)} · Due ${dueDate}</div>
+        </div>
+        <div class="inv-right">
+          <div class="inv-amount">${escHtml(inv.amount)}</div>
+          <span class="inv-status ${inv.status}">${statusLabel[inv.status]||inv.status}</span>
+        </div>
+        <div class="inv-actions">
+          ${payBtn}
+          <button class="inv-act-btn view" onclick="qaAction('Show invoice details for ${inv.num} — ${inv.client} ${inv.amount}')">Ask AI</button>
+        </div>
+      </div>`;
+  }).join('');
+  renderClients();
+}
+
+function renderClients() {
+  const grid = document.getElementById('client-grid');
+  if (!grid) return;
+  const colors = ['#3B82F6','#8B5CF6','#10B981'];
+  grid.innerHTML = CLIENTS.map((c, i) => `
+    <div class="client-card">
+      <div class="client-avatar" style="background:${colors[i]}22;color:${colors[i]}">${c.initials}</div>
+      <div class="client-name">${escHtml(c.name)}</div>
+      <div class="client-meta">${c.flag} ${escHtml(c.country)}</div>
+      <div class="client-total">${escHtml(c.totalBilled)} billed</div>
+    </div>`).join('');
+}
+
+function payInvoiceFlow(invId) {
+  const inv = INVOICES.find(i => i.id === invId);
+  if (!inv) return;
+  navigate('copilot');
+  // Pre-fill the payment wizard with invoice details
+  setTimeout(() => {
+    startPayFlow(inv.client, inv.amount, inv.account);
+  }, 100);
+}
+
+function startPayFlow(payee, amount, account) {
+  const id = 'wiz-payinv-' + Date.now();
+  const acctOpts = ['DBS •8842 · SGD', 'JPMorgan •2290 · USD', 'Barclays •3301 · GBP']
+    .map(a => `<option value="${a}" ${a.startsWith(account||'_') ? 'selected' : ''}>${a}</option>`).join('');
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 2</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Pay Invoice</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Confirm payment details</div>
+        <div class="wiz-form">
+          <div class="wf-group">
+            <label class="wf-label">Pay to</label>
+            <input class="wf-input" id="${id}-payee" value="${escHtml(payee)}">
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Amount</label>
+            <input class="wf-input" id="${id}-amount" value="${escHtml(amount)}">
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">From account</label>
+            <select class="wf-select" id="${id}-acct">${acctOpts}</select>
+          </div>
+          <div class="wf-group">
+            <label class="wf-label">Payment reference</label>
+            <input class="wf-input" id="${id}-ref" placeholder="e.g. Invoice #US-2026-0042">
+          </div>
+        </div>
+        <div class="wiz-actions">
+          <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+          <button class="wiz-btn-primary" onclick="confirmPayInvoice('${id}')">Review →</button>
+        </div>
+      </div>
+    </div>`);
+  scrollBottom();
+}
+
+function confirmPayInvoice(id) {
+  const payee = document.getElementById(id+'-payee')?.value || '';
+  const amount = document.getElementById(id+'-amount')?.value || '';
+  const acct   = document.getElementById(id+'-acct')?.value || '';
+  const ref    = document.getElementById(id+'-ref')?.value || '—';
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `
+    <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 2</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('send',14,'white')} Pay Invoice</span></div>
+    <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div></div>
+    <div class="wiz-body">
+      <div class="wiz-question">Approve this payment?</div>
+      <div class="wiz-review">
+        <div class="wr-row"><span class="wr-key">Pay to</span><span class="wr-val">${escHtml(payee)}</span></div>
+        <div class="wr-row"><span class="wr-key">Amount</span><span class="wr-val" style="color:var(--blue);font-weight:700;">${escHtml(amount)}</span></div>
+        <div class="wr-row"><span class="wr-key">From account</span><span class="wr-val">${escHtml(acct)}</span></div>
+        <div class="wr-row"><span class="wr-key">Reference</span><span class="wr-val">${escHtml(ref)}</span></div>
+      </div>
+      <div class="wiz-actions">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="finalisePayInvoice('${id}','${escHtml(payee).replace(/'/g,"\\'")}','${escHtml(amount).replace(/'/g,"\\'")}')">✓ Approve Payment</button>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+function finalisePayInvoice(id, payee, amount) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `
+    <div class="wiz-header"><span class="wiz-step-txt">Confirmed</span><span class="wiz-title-txt">✓ Payment Submitted</span></div>
+    <div class="wiz-confirmed">
+      <div style="background:var(--green-light);border-radius:8px;padding:12px 14px;">
+        <p style="font-size:13px;color:#065F46;font-weight:500;">✅ Payment of <strong>${escHtml(amount)}</strong> to <strong>${escHtml(payee)}</strong> authorised. Expected settlement within 1–2 business days.</p>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+function startAddInvoice() {
+  navigate('copilot');
+  const id = 'wiz-addinv-' + Date.now();
+  const clientOpts = CLIENTS.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  const acctOpts = ['DBS •8842 · SGD', 'JPMorgan •2290 · USD', 'Barclays •3301 · GBP'].map(a => `<option>${a}</option>`).join('');
+  setTimeout(() => {
+    appendWizardMsg(`
+      <div class="wizard-card" id="${id}">
+        <div class="wiz-header"><span class="wiz-step-txt">New Invoice</span><span class="wiz-title-txt" style="display:flex;align-items:center;gap:6px;">${svg('doc',14,'white')} Add Invoice</span></div>
+        <div class="wiz-body">
+          <div class="wiz-form">
+            <div class="wf-group">
+              <label class="wf-label">Client</label>
+              <select class="wf-select" id="${id}-client"><option value="">Select client…</option>${clientOpts}<option value="__new">+ Add new client…</option></select>
+            </div>
+            <div class="wf-group">
+              <label class="wf-label">Invoice number</label>
+              <input class="wf-input" id="${id}-num" placeholder="e.g. #US-2026-0043">
+            </div>
+            <div class="wf-group" style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+              <div>
+                <label class="wf-label">Amount</label>
+                <input class="wf-input" id="${id}-amt" type="number" placeholder="0.00" min="0">
+              </div>
+              <div>
+                <label class="wf-label">Currency</label>
+                <select class="wf-select" id="${id}-ccy"><option>USD</option><option>SGD</option><option>GBP</option><option>EUR</option></select>
+              </div>
+            </div>
+            <div class="wf-group">
+              <label class="wf-label">Receive into account</label>
+              <select class="wf-select" id="${id}-acct">${acctOpts}</select>
+            </div>
+            <div class="wf-group">
+              <label class="wf-label">Due date</label>
+              <input class="wf-input" id="${id}-due" type="date">
+            </div>
+          </div>
+          <div class="wiz-actions">
+            <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+            <button class="wiz-btn-primary" onclick="saveNewInvoice('${id}')">Create Invoice</button>
+          </div>
+        </div>
+      </div>`);
+    scrollBottom();
+  }, 100);
+}
+
+function saveNewInvoice(id) {
+  const client = document.getElementById(id+'-client')?.value || '';
+  const num    = document.getElementById(id+'-num')?.value || '#NEW';
+  const amt    = parseFloat(document.getElementById(id+'-amt')?.value || 0);
+  const ccy    = document.getElementById(id+'-ccy')?.value || 'USD';
+  const acct   = document.getElementById(id+'-acct')?.value || '';
+  const due    = document.getElementById(id+'-due')?.value || '';
+  if (!client || !amt) {
+    alert('Please select a client and enter an amount.');
+    return;
+  }
+  const newInv = {
+    id: 'inv'+Date.now(), num, client, entity:'LTVentures Holdings', amount:`${ccy} ${amt.toLocaleString()}`,
+    amtNum: amt, currency: ccy, issued: new Date().toISOString().slice(0,10), due: due || new Date(Date.now()+30*86400000).toISOString().slice(0,10),
+    status:'pending', account: acct.split(' ·')[0]
+  };
+  INVOICES.unshift(newInv);
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = `
+    <div class="wiz-header"><span class="wiz-step-txt">Created</span><span class="wiz-title-txt">✓ Invoice Created</span></div>
+    <div class="wiz-confirmed">
+      <div style="background:var(--green-light);border-radius:8px;padding:12px 14px;">
+        <p style="font-size:13px;color:#065F46;font-weight:500;">✅ Invoice <strong>${escHtml(num)}</strong> for <strong>${ccy} ${amt.toLocaleString()}</strong> to <strong>${escHtml(client)}</strong> created and added to Banking.</p>
+      </div>
+    </div>`;
+  scrollBottom();
+}
+
+// ── RECEIVE FUNDS FLOW ────────────────────────
 
 function startReceiveFlow(preFrom, preCcy) {
   const id = 'wiz-recv-' + Date.now();
