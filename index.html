@@ -3,359 +3,726 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Unite. AI Copilot — LTVentures Holdings</title>
+<title>Unite. — LTVentures Holdings</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --blue: #2563EB;
-    --blue-light: #EFF6FF;
-    --blue-dark: #1D4ED8;
-    --dark: #0F172A;
-    --dark-2: #1E293B;
-    --gray-m: #64748B;
-    --gray-l: #94A3B8;
-    --gray-xl: #E2E8F0;
-    --white: #FFFFFF;
-    --green: #10B981;
-    --red: #EF4444;
-    --yellow: #F59E0B;
-    --sidebar-w: 260px;
-    --sb-bg: #F8FAFC;
-    --sb-border: #E2E8F0;
-    /* legacy aliases so nothing breaks */
-    --navy: #0F172A;
-    --navy-light: #1E293B;
-    --orange: #2563EB;
-    --cream: #EFF6FF;
-    --cream-dark: #DBEAFE;
+:root {
+  --blue: #2563EB; --blue-light: #EFF6FF; --blue-dark: #1D4ED8;
+  --dark: #0F172A; --dark-2: #1E293B;
+  --gray-m: #64748B; --gray-l: #94A3B8; --gray-xl: #E2E8F0;
+  --white: #FFFFFF;
+  --green: #10B981; --green-light: #D1FAE5;
+  --red: #EF4444;   --red-light: #FEE2E2;
+  --yellow: #F59E0B; --yellow-light: #FEF3C7;
+  --sb-bg: #F8FAFC; --sb-border: #E2E8F0;
+  --nav-w: 210px; --rp-w: 256px;
+}
+
+html { height: 100%; height: -webkit-fill-available; }
+body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-family: 'Inter', sans-serif; background: white; color: var(--dark); display: flex; flex-direction: column; }
+#app { display: flex; height: 100vh; height: 100dvh; flex-direction: column; }
+
+/* ── TOPBAR ─────────────────────────────────── */
+.topbar { height: 52px; background: white; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; padding: 0 20px; gap: 10px; flex-shrink: 0; z-index: 50; }
+.menu-btn { display: none; width: 32px; height: 32px; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; border-radius: 7px; flex-shrink: 0; }
+.menu-btn:hover { background: var(--sb-bg); }
+.menu-btn svg { width: 18px; height: 18px; stroke: var(--dark); fill: none; stroke-width: 2; }
+.topbar-logo { background: var(--blue); color: white; font-weight: 700; font-size: 14px; padding: 5px 12px; border-radius: 7px; letter-spacing: -.3px; flex-shrink: 0; }
+.topbar-sep { font-size: 14px; color: var(--gray-xl); font-weight: 300; }
+.topbar-page { font-size: 13px; font-weight: 600; color: var(--dark); }
+.topbar-client { font-size: 13px; color: var(--gray-m); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar-spacer { flex: 1; }
+.topbar-badge { background: var(--blue); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; flex-shrink: 0; }
+.topbar-live { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-l); flex-shrink: 0; cursor: pointer; }
+.topbar-live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+/* ── LAYOUT ──────────────────────────────────── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.3); z-index: 99; }
+.sidebar-overlay.open { display: block; }
+
+/* ── LEFT NAV ────────────────────────────────── */
+.nav-sidebar { width: var(--nav-w); background: white; border-right: 1px solid var(--sb-border); display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
+.nav-section-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .08em; text-transform: uppercase; padding: 16px 16px 4px; }
+.nav-items-wrap { flex: 1; padding: 8px 0; }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 13px; margin: 1px 8px; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--gray-m); cursor: pointer; transition: all .15s; user-select: none; }
+.nav-item:hover { background: var(--sb-bg); color: var(--dark); }
+.nav-item.active { background: var(--blue-light); color: var(--blue); font-weight: 600; }
+.nav-item .ni { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-item .nav-soon { font-size: 9px; color: var(--gray-l); margin-left: auto; background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 4px; padding: 1px 5px; white-space: nowrap; }
+.nav-item.active .nav-soon { background: var(--blue-light); border-color: transparent; color: var(--blue); }
+.nav-divider { height: 1px; background: var(--sb-border); margin: 8px 16px; }
+.nav-footer { padding: 12px 14px; border-top: 1px solid var(--sb-border); display: flex; align-items: center; gap: 9px; flex-shrink: 0; cursor: pointer; transition: background .15s; }
+.nav-footer:hover { background: var(--sb-bg); }
+.nf-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.nf-info { flex: 1; min-width: 0; }
+.nf-name { font-size: 11px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nf-sub { font-size: 10px; color: var(--gray-l); }
+
+/* ── MAIN CONTENT ───────────────────────────── */
+.main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; background: white; }
+.page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+.page.active { display: flex; }
+
+/* ── PAGE HEADER ────────────────────────────── */
+.page-header { padding: 16px 28px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; background: white; }
+.ph-left h1 { font-size: 17px; font-weight: 700; color: var(--dark); }
+.ph-left .ph-sub { font-size: 12px; color: var(--gray-m); margin-top: 1px; }
+.ph-btn { background: var(--blue); color: white; border: none; padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; }
+.ph-btn:hover { background: var(--blue-dark); }
+.ph-btn.ghost { background: white; color: var(--blue); border: 1.5px solid var(--blue); }
+.ph-btn.ghost:hover { background: var(--blue-light); }
+.page-body { flex: 1; overflow-y: auto; padding: 24px 28px; }
+.page-body::-webkit-scrollbar { width: 5px; }
+.page-body::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 3px; }
+.section-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.section-gap { margin-bottom: 28px; }
+
+/* ── GRIDS ──────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* ── DASHBOARD PAGE ─────────────────────────── */
+.entity-card-d { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all .15s; }
+.entity-card-d:hover { border-color: var(--blue); box-shadow: 0 2px 12px rgba(37,99,235,.08); transform: translateY(-1px); }
+.ecd-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ecd-flag { font-size: 22px; }
+.ecd-active { font-size: 10px; font-weight: 600; color: var(--green); background: var(--green-light); padding: 2px 7px; border-radius: 10px; }
+.ecd-name { font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+.ecd-juris { font-size: 11px; color: var(--gray-m); margin-bottom: 12px; }
+.ecd-stats { display: flex; gap: 14px; }
+.ecd-stat-label { font-size: 10px; color: var(--gray-l); margin-bottom: 2px; }
+.ecd-stat-val { font-size: 12px; font-weight: 600; color: var(--dark); }
+
+.kpi-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; }
+.kpi-label { font-size: 11px; color: var(--gray-m); margin-bottom: 6px; }
+.kpi-value { font-size: 24px; font-weight: 700; color: var(--dark); line-height: 1; }
+.kpi-change { font-size: 11px; margin-top: 5px; display: flex; align-items: center; gap: 4px; }
+.kpi-change.up { color: var(--green); }
+.kpi-change.neutral { color: var(--gray-m); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.data-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; overflow: hidden; }
+.dc-header { padding: 13px 16px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; }
+.dc-header h3 { font-size: 13px; font-weight: 600; color: var(--dark); }
+.dc-link { font-size: 11px; color: var(--blue); cursor: pointer; }
+.dc-body { padding: 4px 0; }
+.dl-row { display: flex; gap: 10px; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--sb-border); }
+.dl-row:last-child { border-bottom: none; }
+.dl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.dl-dot.urgent { background: var(--red); }
+.dl-dot.soon { background: var(--yellow); }
+.dl-dot.ok { background: var(--gray-xl); }
+.dl-date { font-size: 11px; font-weight: 600; color: var(--dark); width: 50px; flex-shrink: 0; }
+.dl-desc { font-size: 11px; color: var(--gray-m); flex: 1; }
+.dl-days { font-size: 10px; color: var(--gray-l); flex-shrink: 0; }
+
+.txn-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--sb-border); }
+.txn-row:last-child { border-bottom: none; }
+.txn-left .txn-desc { font-size: 12px; color: var(--dark); font-weight: 500; }
+.txn-left .txn-date { font-size: 10px; color: var(--gray-l); margin-top: 1px; }
+.txn-right { text-align: right; }
+.txn-right .txn-amt { font-size: 12px; font-weight: 600; }
+.txn-right .txn-amt.credit { color: var(--green); }
+.txn-right .txn-amt.debit { color: var(--dark); }
+.txn-right .txn-entity { font-size: 10px; color: var(--gray-l); margin-top: 1px; }
+
+/* ── BANKING PAGE ───────────────────────────── */
+.acct-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.acct-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; transition: all .15s; }
+.acct-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.acct-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.acct-bank { font-size: 12px; font-weight: 600; color: var(--dark); }
+.acct-flag { font-size: 20px; }
+.acct-balance { font-size: 24px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 3px; }
+.acct-currency { font-size: 11px; color: var(--gray-m); }
+.acct-no { font-size: 10px; color: var(--gray-l); margin-top: 12px; font-family: monospace; letter-spacing: .05em; }
+.acct-tag { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 600; color: var(--blue); background: var(--blue-light); padding: 2px 7px; border-radius: 6px; }
+
+.full-table-wrap { background: white; border: 1px solid var(--sb-border); border-radius: 10px; overflow: hidden; }
+.ftw-header { padding: 13px 18px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; justify-content: space-between; }
+.ftw-header h3 { font-size: 13px; font-weight: 600; color: var(--dark); }
+.filter-tabs { display: flex; gap: 4px; }
+.ftab { font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--sb-border); background: white; color: var(--gray-m); cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; }
+.ftab.active { background: var(--blue-light); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+.ftab:hover:not(.active) { background: var(--sb-bg); color: var(--dark); }
+table.data-table { width: 100%; border-collapse: collapse; }
+table.data-table th { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .06em; text-transform: uppercase; padding: 10px 18px; text-align: left; background: var(--sb-bg); border-bottom: 1px solid var(--sb-border); }
+table.data-table td { font-size: 12px; padding: 11px 18px; border-bottom: 1px solid var(--sb-border); color: var(--dark); }
+table.data-table tr:last-child td { border-bottom: none; }
+table.data-table tr:hover td { background: var(--sb-bg); }
+.td-credit { color: var(--green); font-weight: 600; }
+.td-debit { color: var(--dark); }
+.td-sub { font-size: 10px; color: var(--gray-l); margin-top: 1px; }
+
+/* ── COMPLIANCE PAGE ────────────────────────── */
+.comp-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cs-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 14px; }
+.cs-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.cs-icon.red { background: var(--red-light); }
+.cs-icon.yellow { background: var(--yellow-light); }
+.cs-icon.green { background: var(--green-light); }
+.cs-count { font-size: 24px; font-weight: 700; color: var(--dark); line-height: 1; }
+.cs-label { font-size: 11px; color: var(--gray-m); margin-top: 2px; }
+
+/* ── RIGHT PANEL ────────────────────────────── */
+.right-panel { width: var(--rp-w); background: white; border-left: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+.right-panel::-webkit-scrollbar { width: 4px; }
+.right-panel::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
+.rp-section { padding: 16px; border-bottom: 1px solid var(--sb-border); }
+.rp-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.rp-treasury { background: var(--blue); border-radius: 10px; padding: 14px; text-align: center; margin-bottom: 10px; }
+.rp-treasury .rp-amount { font-size: 22px; font-weight: 700; color: white; }
+.rp-treasury .rp-t-label { font-size: 10px; color: rgba(255,255,255,.6); margin-top: 2px; }
+.rp-bank-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.rp-bank-name { font-size: 11px; color: var(--gray-m); }
+.rp-bank-amt { font-size: 11px; font-weight: 600; color: var(--dark); }
+.rp-dl-row { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--sb-border); }
+.rp-dl-row:last-child { border-bottom: none; }
+.rp-dl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.rp-dl-dot.urgent { background: var(--red); }
+.rp-dl-dot.soon { background: var(--yellow); }
+.rp-dl-text { font-size: 11px; color: var(--gray-m); flex: 1; line-height: 1.4; }
+.rp-dl-text strong { color: var(--dark); }
+.rp-pending-row { background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
+.rp-pending-title { font-size: 11px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+.rp-pending-sub { font-size: 10px; color: var(--gray-m); }
+.rp-pending-amt { font-size: 12px; font-weight: 700; color: var(--blue); margin-top: 4px; }
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.qa-btn { background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 8px; padding: 10px 6px; text-align: center; font-size: 10px; font-weight: 500; color: var(--dark); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; line-height: 1.4; }
+.qa-btn:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.qa-btn .qi { display: block; font-size: 16px; margin-bottom: 3px; }
+
+/* ── CHAT PAGE ───────────────────────────────── */
+#page-copilot { background: white; }
+.chat-scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.chat-scroll::-webkit-scrollbar { width: 5px; }
+.chat-scroll::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 3px; }
+.messages-inner { max-width: 720px; width: 100%; margin: 0 auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.welcome { text-align: center; margin: auto; max-width: 500px; padding: 20px 0; }
+.welcome-icon { font-size: 32px; color: var(--blue); margin-bottom: 14px; }
+.welcome h2 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+.welcome p { font-size: 13px; color: var(--gray-m); line-height: 1.6; margin-bottom: 20px; }
+.suggestions { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+.suggestion-chip { background: white; border: 1.5px solid var(--sb-border); padding: 7px 13px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--dark); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
+.suggestion-chip:hover { border-color: var(--blue); background: var(--blue); color: white; }
+
+.msg { display: flex; gap: 10px; max-width: 100%; }
+.msg.user { flex-direction: row-reverse; margin-left: auto; max-width: 80%; }
+.msg-avatar { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.msg.user .msg-avatar { background: var(--blue); color: white; }
+.msg.assistant .msg-avatar { background: var(--blue); color: white; }
+.msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.65; }
+.msg.user .msg-bubble { background: var(--blue); color: white; border-bottom-right-radius: 4px; }
+.msg.assistant .msg-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); color: var(--dark); border-bottom-left-radius: 4px; }
+.msg-bubble h3 { font-size: 13px; font-weight: 700; margin: 10px 0 5px; color: var(--dark); }
+.msg-bubble h3:first-child { margin-top: 0; }
+.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p:last-child { margin-bottom: 0; }
+.msg-bubble ul { padding-left: 18px; margin: 6px 0; }
+.msg-bubble li { margin-bottom: 4px; }
+.msg-bubble strong { font-weight: 600; }
+.msg-bubble table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; border: 1px solid var(--sb-border); border-radius: 8px; overflow: hidden; }
+.msg-bubble th { background: var(--blue-light); padding: 7px 10px; text-align: left; font-weight: 600; font-size: 11px; color: var(--dark); }
+.msg-bubble td { padding: 7px 10px; border-bottom: 1px solid var(--sb-border); background: white; }
+.msg-bubble tr:last-child td { border-bottom: none; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; letter-spacing: .03em; }
+.badge.urgent { background: var(--red-light); color: #DC2626; }
+.badge.soon { background: var(--yellow-light); color: #D97706; }
+.badge.ok { background: var(--green-light); color: #059669; }
+.badge.active { background: var(--blue-light); color: var(--blue-dark); }
+
+.action-card { background: white; border: 1.5px solid var(--blue); border-radius: 12px; overflow: hidden; margin-top: 4px; }
+.action-card-header { background: var(--blue); padding: 10px 14px; }
+.action-card-header span { font-size: 12px; font-weight: 700; color: white; letter-spacing: .04em; text-transform: uppercase; }
+.action-card-body { padding: 14px; color: var(--dark); font-size: 13px; line-height: 1.6; }
+.action-card-body strong { font-weight: 700; }
+.action-card-footer { padding: 0 14px 14px; display: flex; gap: 8px; }
+.action-approve { flex: 1; padding: 9px; background: var(--green); color: white; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; }
+.action-approve:hover { background: #059669; }
+.action-cancel { padding: 9px 14px; background: var(--sb-bg); color: var(--gray-m); border: 1px solid var(--sb-border); border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
+.action-success { background: var(--green-light); border-radius: 8px; padding: 11px 14px; display: flex; align-items: center; gap: 10px; margin: 0 14px 14px; }
+.action-success p { font-size: 13px; color: #065F46; font-weight: 500; }
+
+.typing { display: flex; gap: 10px; align-items: flex-start; }
+.typing-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); padding: 12px 16px; border-radius: 14px; border-bottom-left-radius: 4px; display: flex; gap: 5px; align-items: center; }
+.typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-l); animation: typingBounce 1.2s infinite; }
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+
+.input-area-outer { border-top: 1px solid var(--sb-border); background: white; flex-shrink: 0; padding: 12px 20px 16px; }
+.input-area-inner { max-width: 720px; margin: 0 auto; }
+.input-wrap { display: flex; gap: 10px; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 14px; padding: 8px 8px 8px 16px; align-items: flex-end; transition: border-color .2s; }
+.input-wrap:focus-within { border-color: var(--blue); background: white; }
+#user-input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--dark); background: transparent; resize: none; max-height: 120px; min-height: 24px; line-height: 1.5; padding: 4px 0; }
+#user-input::placeholder { color: var(--gray-l); }
+.send-btn { width: 36px; height: 36px; border-radius: 9px; background: var(--blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+.send-btn:hover:not(:disabled) { background: var(--blue-dark); }
+.send-btn:disabled { background: var(--gray-l); cursor: not-allowed; }
+.send-btn svg { width: 16px; height: 16px; fill: white; }
+.input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 7px; }
+
+/* ── MOBILE ──────────────────────────────────── */
+@media (max-width: 960px) {
+  .right-panel { display: none; }
+}
+
+@media (max-width: 768px) {
+  .menu-btn { display: flex; }
+  .topbar-client, .topbar-sep { display: none; }
+  .topbar { padding: 0 12px; gap: 8px; }
+  .topbar-badge { font-size: 10px; padding: 3px 8px; }
+
+  .nav-sidebar {
+    position: fixed; top: 0; left: -100%; height: 100%; z-index: 100;
+    width: 260px; transition: left .28s cubic-bezier(.4,0,.2,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,.12);
   }
+  .nav-sidebar.open { left: 0; }
 
-  html { height: 100%; height: -webkit-fill-available; }
-  body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-family: 'Inter', sans-serif; background: #FFFFFF; color: var(--navy); display: flex; flex-direction: column; }
+  .layout { flex-direction: column; height: 100%; }
+  .main-content { width: 100%; flex: 1; min-height: 0; }
+  .page-body { padding: 16px; }
+  .page-header { padding: 14px 16px; }
+  .ph-left h1 { font-size: 15px; }
 
-  #app { display: flex; height: 100vh; height: 100dvh; flex-direction: column; }
+  .grid-2, .grid-3, .grid-4, .two-col, .acct-cards, .comp-summary { grid-template-columns: 1fr; }
 
-  /* Top Bar */
-  .topbar { height: 56px; background: white; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; padding: 0 24px; gap: 12px; flex-shrink: 0; }
-  .topbar-logo { background: var(--blue); color: white; font-weight: 700; font-size: 14px; padding: 6px 14px; border-radius: 7px; letter-spacing: -.2px; }
-  .topbar-divider { width: 1px; height: 20px; background: var(--sb-border); }
-  .topbar-title { font-size: 13px; font-weight: 500; color: var(--gray-m); }
-  .topbar-client { font-size: 14px; font-weight: 600; color: var(--dark); }
-  .topbar-badge { margin-left: auto; background: var(--blue); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; }
-  .topbar-reset { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-l); cursor: pointer; }
-  .topbar-reset .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .messages-inner { padding: 14px 12px; gap: 12px; }
+  .msg.user { max-width: 85%; }
+  .msg.assistant .msg-bubble { font-size: 13.5px; }
+  .msg-avatar { width: 28px; height: 28px; font-size: 10px; }
+  .msg.user .msg-avatar { display: none; }
+  .msg.user .msg-bubble { border-radius: 18px; border-bottom-right-radius: 4px; }
+  .msg.assistant .msg-bubble { border-radius: 18px; border-bottom-left-radius: 4px; }
 
-  /* Layout */
-  .layout { display: flex; flex: 1; overflow: hidden; }
-
-  /* Sidebar — light */
-  .sidebar { width: var(--sidebar-w); background: var(--sb-bg); border-right: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 4px; }
-
-  .sb-section { padding: 16px; border-bottom: 1px solid var(--sb-border); }
-  .sb-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
-
-  .entity-card { background: white; border: 1px solid var(--sb-border); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; cursor: pointer; transition: all .15s; }
-  .entity-card:hover { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 1px 4px rgba(37,99,235,.08); }
-  .entity-card-top { display: flex; align-items: center; gap: 8px; }
-  .entity-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .entity-dot.active { background: var(--green); }
-  .entity-name { font-size: 12px; font-weight: 600; color: var(--dark); flex: 1; }
-  .entity-flag { font-size: 14px; }
-  .entity-sub { font-size: 10px; color: var(--gray-l); margin-top: 3px; padding-left: 15px; }
-
-  .treasury-total { text-align: center; margin-bottom: 14px; background: var(--blue); border-radius: 10px; padding: 14px; }
-  .treasury-total .amount { font-size: 22px; font-weight: 700; color: white; }
-  .treasury-total .label { font-size: 10px; color: rgba(255,255,255,.5); margin-top: 2px; }
-  .bank-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
-  .bank-name { font-size: 11px; color: var(--gray-m); }
-  .bank-amt { font-size: 11px; font-weight: 600; color: var(--dark); }
-
-  .deadline-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
-  .deadline-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-  .deadline-dot.urgent { background: var(--red); }
-  .deadline-dot.soon { background: var(--yellow); }
-  .deadline-dot.ok { background: #D1D5DB; }
-  .deadline-text { font-size: 11px; color: var(--gray-m); line-height: 1.4; }
-  .deadline-text strong { color: var(--dark); font-weight: 600; }
-
-  /* Chat */
-  .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #FFFFFF; }
-  .messages { flex: 1; overflow-y: auto; padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; justify-content: flex-start; }
-  .messages::-webkit-scrollbar { width: 6px; }
-  .messages::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 3px; }
-
-  /* Welcome */
-  .welcome { max-width: 600px; margin: auto; text-align: center; padding: 20px 0 8px; }
-  .welcome-icon { font-size: 36px; margin-bottom: 16px; color: var(--blue); }
-  .welcome h2 { font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-  .welcome p { font-size: 14px; color: var(--gray-m); line-height: 1.6; margin-bottom: 24px; }
-  .suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-  .suggestion-chip { background: white; border: 1.5px solid var(--sb-border); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--dark); cursor: pointer; transition: all .15s; font-family: 'Inter', sans-serif; }
-  .suggestion-chip:hover { border-color: var(--blue); background: var(--blue); color: white; }
-
-  /* Messages */
-  .msg { display: flex; gap: 12px; max-width: 820px; }
-  .msg.user { flex-direction: row-reverse; margin-left: auto; }
-  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-top: 2px; }
-  .msg.user .msg-avatar { background: var(--blue); color: white; }
-  .msg.assistant .msg-avatar { background: var(--blue); color: white; }
-  .msg-bubble { max-width: calc(100% - 44px); padding: 14px 18px; border-radius: 16px; font-size: 14px; line-height: 1.65; }
-  .msg.user .msg-bubble { background: var(--blue); color: white; border-bottom-right-radius: 4px; }
-  .msg.assistant .msg-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); color: var(--dark); border-bottom-left-radius: 4px; }
-
-  .msg-bubble h3 { font-size: 13px; font-weight: 700; margin: 12px 0 6px; color: var(--dark); }
-  .msg-bubble h3:first-child { margin-top: 0; }
-  .msg-bubble p { margin-bottom: 8px; }
-  .msg-bubble p:last-child { margin-bottom: 0; }
-  .msg-bubble ul { padding-left: 18px; margin: 6px 0; }
-  .msg-bubble li { margin-bottom: 4px; }
-  .msg-bubble strong { font-weight: 600; }
-  .msg-bubble table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; border: 1px solid var(--sb-border); border-radius: 8px; overflow: hidden; }
-  .msg-bubble th { background: var(--blue-light); padding: 7px 10px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: .03em; color: var(--dark); }
-  .msg-bubble td { padding: 7px 10px; border-bottom: 1px solid var(--sb-border); background: white; }
-  .msg-bubble tr:last-child td { border-bottom: none; }
-
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; letter-spacing: .03em; }
-  .badge.urgent { background: #FEE2E2; color: #DC2626; }
-  .badge.soon { background: #FEF3C7; color: #D97706; }
-  .badge.ok { background: #D1FAE5; color: #059669; }
-  .badge.active { background: #DBEAFE; color: #1D4ED8; }
-
-  /* Action card — light version */
-  .action-card { background: white; border: 1.5px solid var(--blue); border-radius: 14px; overflow: hidden; margin-top: 4px; }
-  .action-card-header { background: var(--blue); padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
-  .action-card-header span { font-size: 12px; font-weight: 700; color: white; letter-spacing: .04em; text-transform: uppercase; }
-  .action-card-body { padding: 16px; color: var(--dark); font-size: 13px; line-height: 1.6; }
-  .action-card-body strong { color: var(--dark); font-weight: 700; }
-  .action-card-footer { padding: 0 16px 16px; display: flex; gap: 8px; }
-  .action-approve { flex: 1; padding: 10px; background: var(--green); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; }
-  .action-approve:hover { background: #16A34A; }
-  .action-cancel { padding: 10px 16px; background: var(--sb-bg); color: var(--gray-m); border: 1px solid var(--sb-border); border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; }
-  .action-cancel:hover { background: var(--cream); }
-  .action-success { background: #D1FAE5; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin: 0 16px 16px; }
-  .action-success p { font-size: 13px; color: #065F46; font-weight: 500; }
-
-  /* Typing */
-  .typing { display: flex; gap: 12px; align-items: flex-start; }
-  .typing-bubble { background: var(--sb-bg); border: 1px solid var(--sb-border); padding: 14px 18px; border-radius: 16px; border-bottom-left-radius: 4px; display: flex; gap: 5px; align-items: center; }
-  .typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gray-l); animation: typingBounce 1.2s infinite; }
-  .typing-dot:nth-child(2) { animation-delay: .2s; }
-  .typing-dot:nth-child(3) { animation-delay: .4s; }
-  @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
-
-  /* Input */
-  .input-area { padding: 16px 32px 20px; background: white; border-top: 1px solid var(--sb-border); flex-shrink: 0; }
-  .input-wrap { display: flex; gap: 10px; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 14px; padding: 8px 8px 8px 16px; align-items: flex-end; transition: border-color .2s; }
-  .input-wrap:focus-within { border-color: var(--blue); background: white; }
-  #user-input { flex: 1; border: none; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; color: var(--dark); background: transparent; resize: none; max-height: 120px; min-height: 24px; line-height: 1.5; padding: 4px 0; }
-  #user-input::placeholder { color: var(--gray-l); }
-  .send-btn { width: 36px; height: 36px; border-radius: 9px; background: var(--blue); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
-  .send-btn:hover:not(:disabled) { background: var(--blue-dark); }
-  .send-btn:disabled { background: var(--gray-l); cursor: not-allowed; }
-  .send-btn svg { width: 16px; height: 16px; fill: white; }
-  .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 8px; }
-
-  /* ── MENU BUTTON (hidden on desktop) ─── */
-  .menu-btn { display: none; width: 36px; height: 36px; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; border-radius: 8px; flex-shrink: 0; }
-  .menu-btn:hover { background: var(--sb-bg); }
-  .menu-btn svg { width: 20px; height: 20px; stroke: var(--navy); }
-
-  /* ── SIDEBAR OVERLAY (mobile backdrop) ─── */
-  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 99; }
-  .sidebar-overlay.open { display: block; }
-
-  /* ── MOBILE ───────────────────────────── */
-  @media (max-width: 768px) {
-    /* Show menu button */
-    .menu-btn { display: flex; }
-
-    /* Hide desktop topbar elements to save space */
-    .topbar-divider, .topbar-title { display: none; }
-    .topbar { padding: 0 12px; gap: 8px; }
-    .topbar-badge { font-size: 10px; padding: 3px 8px; }
-
-    /* Sidebar becomes a slide-in drawer */
-    .sidebar {
-      position: fixed; top: 0; left: -100%; height: 100%; z-index: 100;
-      width: 280px; transition: left .28s cubic-bezier(.4,0,.2,1);
-      box-shadow: 4px 0 24px rgba(27,42,74,.15);
-    }
-    .sidebar.open { left: 0; }
-
-    /* Chat fills full width */
-    .layout { flex-direction: column; height: 100%; }
-    .chat-area { width: 100%; flex: 1; min-height: 0; display: flex; flex-direction: column; }
-
-    /* Messenger-style message padding */
-    .messages { padding: 12px 12px 8px; gap: 6px; justify-content: center; }
-
-    /* Bubbles feel more like iMessage/WhatsApp */
-    .msg { max-width: 100%; }
-    .msg.user .msg-bubble { max-width: 78%; border-radius: 18px; border-bottom-right-radius: 4px; }
-    .msg.assistant .msg-bubble { max-width: 88%; border-radius: 18px; border-bottom-left-radius: 4px; font-size: 13.5px; }
-    .msg-avatar { width: 28px; height: 28px; font-size: 10px; }
-
-    /* Avatars hidden on mobile (like Telegram) */
-    .msg.user .msg-avatar { display: none; }
-
-    /* Input area — messenger style bottom bar */
-    .input-area {
-      padding: 10px 12px 10px;
-      padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 10px));
-      background: white;
-      border-top: 1.5px solid var(--sb-border);
-      box-shadow: 0 -4px 16px rgba(0,0,0,.08);
-      position: relative;
-      z-index: 10;
-    }
-    .input-wrap {
-      border-radius: 26px;
-      padding: 8px 8px 8px 16px;
-      border: 1.5px solid var(--sb-border);
-      background: var(--sb-bg);
-      min-height: 48px;
-      align-items: center;
-    }
-    .input-wrap:focus-within { border-color: var(--blue); background: white; }
-    #user-input { font-size: 15px; min-height: 28px; }
-    .send-btn { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
-    .input-hint { display: none; }
-
-    /* Welcome screen adjustments */
-    .welcome { padding: 16px 16px 8px; }
-    .welcome h2 { font-size: 18px; }
-    .suggestions { gap: 6px; }
-    .suggestion-chip { font-size: 11px; padding: 7px 12px; }
-
-    /* Action card adjustments */
-    .action-card-footer { flex-direction: column; }
+  .input-area-outer {
+    padding: 10px 12px;
+    padding-bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 10px));
+    box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+    position: relative; z-index: 10;
   }
+  .input-area-inner { max-width: 100%; }
+  .input-wrap { border-radius: 26px; padding: 8px 8px 8px 16px; min-height: 48px; align-items: center; }
+  #user-input { font-size: 15px; min-height: 28px; }
+  .send-btn { width: 40px; height: 40px; border-radius: 50%; }
+  .input-hint { display: none; }
 
-  /* ── VERY SMALL PHONES ─────────────────── */
-  @media (max-width: 380px) {
-    .msg.assistant .msg-bubble { max-width: 95%; }
-    .msg.user .msg-bubble { max-width: 88%; }
-  }
-
+  table.data-table { font-size: 11px; }
+  table.data-table th, table.data-table td { padding: 9px 12px; }
+  table.comp-table th, table.comp-table td { padding: 9px 12px; }
+}
 </style>
 </head>
 <body>
 
-
-<!-- Mobile sidebar backdrop -->
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
 <div id="app">
-  <!-- Top bar -->
+  <!-- Top Bar -->
   <div class="topbar">
-    <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">
-      <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="menu-btn" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="topbar-logo">Unite.</div>
-    <div class="topbar-divider"></div>
-    <div class="topbar-title">AI Copilot &nbsp;/&nbsp;</div>
-    <div class="topbar-client">LTVentures Holdings</div>
+    <div class="topbar-sep">/</div>
+    <div class="topbar-page" id="topbar-page">AI Copilot</div>
+    <div class="topbar-client">· LTVentures Holdings</div>
+    <div class="topbar-spacer"></div>
     <div class="topbar-badge">✦ AI COPILOT</div>
-    <div class="topbar-reset" onclick="resetConversation()" title="Reset conversation">
-      <div class="dot"></div> Live
-    </div>
+    <div class="topbar-live" onclick="resetConversation()"><div class="dot"></div> Live</div>
   </div>
 
   <div class="layout">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="sb-section">
-        <div class="sb-label">Entities</div>
-        <div class="entity-card" onclick="insertPrompt('Give me a status overview of all our entities')">
-          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures Holdings</div><div class="entity-flag">🇻🇬</div></div>
-          <div class="entity-sub">British Virgin Islands · Holding</div>
+
+    <!-- ── LEFT NAV ─────────────────── -->
+    <div class="nav-sidebar" id="nav-sidebar">
+      <div class="nav-items-wrap">
+        <div class="nav-section-label">Workspace</div>
+        <div class="nav-item active" id="nav-copilot" onclick="navigate('copilot')">
+          <span class="ni">💬</span> AI Copilot
         </div>
-        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our Singapore entity?')">
-          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures Singapore</div><div class="entity-flag">🇸🇬</div></div>
-          <div class="entity-sub">Singapore · Operating HQ</div>
+        <div class="nav-item" id="nav-dashboard" onclick="navigate('dashboard')">
+          <span class="ni">🏠</span> Dashboard
         </div>
-        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our UAE entity?')">
-          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures DMCC</div><div class="entity-flag">🇦🇪</div></div>
-          <div class="entity-sub">UAE (Dubai) · Operations</div>
+        <div class="nav-item" id="nav-banking" onclick="navigate('banking')">
+          <span class="ni">🏦</span> Banking
         </div>
-        <div class="entity-card" onclick="insertPrompt('What are the upcoming obligations for our UK entity?')">
-          <div class="entity-card-top"><div class="entity-dot active"></div><div class="entity-name">LTVentures UK</div><div class="entity-flag">🇬🇧</div></div>
-          <div class="entity-sub">England & Wales · Europe</div>
+        <div class="nav-item" id="nav-compliance" onclick="navigate('compliance')">
+          <span class="ni">📋</span> Compliance
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-section-label">Coming soon</div>
+        <div class="nav-item" style="opacity:.45; cursor:default;">
+          <span class="ni">🗂</span> Documents <span class="nav-soon">Soon</span>
+        </div>
+        <div class="nav-item" style="opacity:.45; cursor:default;">
+          <span class="ni">💰</span> Tax & Accounting <span class="nav-soon">Soon</span>
         </div>
       </div>
-
-      <div class="sb-section">
-        <div class="sb-label">Treasury</div>
-        <div class="treasury-total">
-          <div class="amount">$1,650,000</div>
-          <div class="label">Total across entities (USD)</div>
+      <div class="nav-footer">
+        <div class="nf-dot"></div>
+        <div class="nf-info">
+          <div class="nf-name">LTVentures Holdings</div>
+          <div class="nf-sub">4 entities · BVI holding</div>
         </div>
-        <div class="bank-row"><span class="bank-name">🇸🇬 DBS Singapore</span><span class="bank-amt">$836K</span></div>
-        <div class="bank-row"><span class="bank-name">🇦🇪 Emirates NBD</span><span class="bank-amt">$501K</span></div>
-        <div class="bank-row"><span class="bank-name">🇬🇧 Barclays UK</span><span class="bank-amt">$313K</span></div>
-      </div>
-
-      <div class="sb-section">
-        <div class="sb-label">Upcoming Deadlines</div>
-        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 28</strong> — UAE VAT Return · 40 days</div></div>
-        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 30</strong> — SG Annual Return · 42 days</div></div>
-        <div class="deadline-row"><div class="deadline-dot urgent"></div><div class="deadline-text"><strong>Apr 30</strong> — SG GST Filing Q1 · 42 days</div></div>
-        <div class="deadline-row"><div class="deadline-dot soon"></div><div class="deadline-text"><strong>May 31</strong> — BVI Annual Return · 73 days</div></div>
-        <div class="deadline-row"><div class="deadline-dot soon"></div><div class="deadline-text"><strong>Jun 15</strong> — UAE Trade License · 88 days</div></div>
-        <div class="deadline-row"><div class="deadline-dot ok"></div><div class="deadline-text"><strong>Oct 14</strong> — UK Confirmation Statement</div></div>
       </div>
     </div>
 
-    <!-- Chat -->
-    <div class="chat-area">
-      <div class="messages" id="messages">
-        <div class="welcome" id="welcome-msg">
-          <div class="welcome-icon">✦</div>
-          <h2>Good morning, Igor.</h2>
-          <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
-          <div class="suggestions">
-            <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
-            <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
-            <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 2025 tax estimate</div>
-            <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 financial summary</div>
-            <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay pending invoice</div>
-            <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore status</div>
+    <!-- ── MAIN CONTENT ──────────────── -->
+    <div class="main-content">
+
+      <!-- COPILOT PAGE -->
+      <div id="page-copilot" class="page active">
+        <div class="chat-scroll" id="chat-scroll">
+          <div class="messages-inner" id="messages">
+            <div class="welcome" id="welcome-msg">
+              <div class="welcome-icon">✦</div>
+              <h2>Good morning, Igor.</h2>
+              <p>I have full visibility across LTVentures Holdings — 4 entities, banking, compliance, and financials. What do you need?</p>
+              <div class="suggestions">
+                <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
+                <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 Tax estimate</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 summary</div>
+                <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay invoice</div>
+                <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-area-outer">
+          <div class="input-area-inner">
+            <div class="input-wrap">
+              <textarea id="user-input" rows="1"
+                placeholder="Ask anything about LTVentures Holdings…"
+                onkeydown="handleKey(event)"
+                oninput="autoResize(this)"></textarea>
+              <button class="send-btn" id="send-btn" onclick="sendMessage()">
+                <svg viewBox="0 0 24 24"><path d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>
+              </button>
+            </div>
+            <div class="input-hint">Unite AI Copilot · Powered by Claude · Demo — LTVentures Holdings</div>
           </div>
         </div>
       </div>
 
-      <div class="input-area">
-        <div class="input-wrap">
-          <textarea id="user-input" rows="1"
-            placeholder="Ask anything about LTVentures Holdings — or give an instruction to execute…"
-            onkeydown="handleKey(event)"
-            oninput="autoResize(this)"></textarea>
-          <button class="send-btn" id="send-btn" onclick="sendMessage()">
-            <svg viewBox="0 0 24 24"><path d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>
-          </button>
+      <!-- DASHBOARD PAGE -->
+      <div id="page-dashboard" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Dashboard</h1>
+            <div class="ph-sub">LTVentures Holdings · 4 active entities · As of March 2025</div>
+          </div>
+          <button class="ph-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')">Ask Copilot ✦</button>
         </div>
-        <div class="input-hint">Unite AI Copilot · Powered by Claude · Demo — LTVentures Holdings</div>
+        <div class="page-body">
+
+          <div class="section-label section-gap">Entities</div>
+          <div class="grid-2 section-gap">
+            <div class="entity-card-d" onclick="qaAction('What is the status and upcoming obligations for LTVentures Holdings BVI?')">
+              <div class="ecd-top"><div class="ecd-flag">🇻🇬</div><div class="ecd-active">● Active</div></div>
+              <div class="ecd-name">LTVentures Holdings Ltd</div>
+              <div class="ecd-juris">British Virgin Islands · Holding Company</div>
+              <div class="ecd-stats">
+                <div><div class="ecd-stat-label">Incorporated</div><div class="ecd-stat-val">Jan 2021</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">May 31</div></div>
+                <div><div class="ecd-stat-label">Reg. Agent</div><div class="ecd-stat-val">Maples Group</div></div>
+              </div>
+            </div>
+            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures Singapore?')">
+              <div class="ecd-top"><div class="ecd-flag">🇸🇬</div><div class="ecd-active">● Active</div></div>
+              <div class="ecd-name">LTVentures Singapore Pte Ltd</div>
+              <div class="ecd-juris">Singapore · Operating HQ (SEA)</div>
+              <div class="ecd-stats">
+                <div><div class="ecd-stat-label">UEN</div><div class="ecd-stat-val">202112345K</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Apr 30 ⚠</div></div>
+                <div><div class="ecd-stat-label">Directors</div><div class="ecd-stat-val">2</div></div>
+              </div>
+            </div>
+            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures DMCC UAE?')">
+              <div class="ecd-top"><div class="ecd-flag">🇦🇪</div><div class="ecd-active">● Active</div></div>
+              <div class="ecd-name">LTVentures DMCC</div>
+              <div class="ecd-juris">UAE — Dubai · Middle East & Africa</div>
+              <div class="ecd-stats">
+                <div><div class="ecd-stat-label">License</div><div class="ecd-stat-val">DMCC-123456</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Apr 28 ⚠</div></div>
+                <div><div class="ecd-stat-label">VAT Reg.</div><div class="ecd-stat-val">Yes</div></div>
+              </div>
+            </div>
+            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures UK?')">
+              <div class="ecd-top"><div class="ecd-flag">🇬🇧</div><div class="ecd-active">● Active</div></div>
+              <div class="ecd-name">LTVentures UK Ltd</div>
+              <div class="ecd-juris">England & Wales · European Operations</div>
+              <div class="ecd-stats">
+                <div><div class="ecd-stat-label">Co. No.</div><div class="ecd-stat-val">14789123</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Oct 14</div></div>
+                <div><div class="ecd-stat-label">Address</div><div class="ecd-stat-val">Fenchurch St</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-label">FY 2024 Performance</div>
+          <div class="grid-3 section-gap">
+            <div class="kpi-card">
+              <div class="kpi-label">Total Revenue</div>
+              <div class="kpi-value">$8.2M</div>
+              <div class="kpi-change up">↑ +42% year-over-year</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Net Income</div>
+              <div class="kpi-value">$2.45M</div>
+              <div class="kpi-change neutral">EBITDA margin 34%</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Total Treasury</div>
+              <div class="kpi-value">$1.65M</div>
+              <div class="kpi-change neutral">Across 3 bank accounts</div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="data-card">
+              <div class="dc-header">
+                <h3>Upcoming Deadlines</h3>
+                <span class="dc-link" onclick="navigate('compliance')">View all →</span>
+              </div>
+              <div class="dc-body">
+                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 28</div><div class="dl-desc">UAE VAT Return</div><div class="dl-days">40d</div></div>
+                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">SG Annual Return</div><div class="dl-days">42d</div></div>
+                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">SG GST Q1 Filing</div><div class="dl-days">42d</div></div>
+                <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">May 31</div><div class="dl-desc">BVI Annual Return</div><div class="dl-days">73d</div></div>
+                <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">Jun 15</div><div class="dl-desc">UAE Trade License</div><div class="dl-days">88d</div></div>
+              </div>
+            </div>
+            <div class="data-card">
+              <div class="dc-header">
+                <h3>Recent Transactions</h3>
+                <span class="dc-link" onclick="navigate('banking')">View all →</span>
+              </div>
+              <div class="dc-body">
+                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Apex Group — Invoice #SG-0312</div><div class="txn-date">Mar 15 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt credit">+SGD 114,200</div></div></div>
+                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Quarterly office rent</div><div class="txn-date">Mar 14 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt debit">−SGD 28,400</div></div></div>
+                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Nomad Capital — Invoice #UAE-0089</div><div class="txn-date">Mar 8 · Emirates NBD</div></div><div class="txn-right"><div class="txn-amt credit">+AED 154,400</div></div></div>
+                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Singapore payroll (March)</div><div class="txn-date">Mar 10 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt debit">−SGD 142,000</div></div></div>
+                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Baker McKenzie — Legal fees</div><div class="txn-date">Mar 12 · Barclays UK</div></div><div class="txn-right"><div class="txn-amt debit">−GBP 8,400</div></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BANKING PAGE -->
+      <div id="page-banking" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Banking</h1>
+            <div class="ph-sub">3 accounts · Total $1,650,000 USD · Updated Mar 19, 2025</div>
+          </div>
+          <button class="ph-btn" onclick="qaAction('Show me a full treasury overview and any pending payments')">Ask Copilot ✦</button>
+        </div>
+        <div class="page-body">
+
+          <div class="section-label section-gap">Accounts</div>
+          <div class="acct-cards section-gap">
+            <div class="acct-card">
+              <div class="acct-top"><div class="acct-bank">DBS Bank</div><div class="acct-flag">🇸🇬</div></div>
+              <div class="acct-balance">$836,000</div>
+              <div class="acct-currency">SGD 1,124,350 · Singapore Dollar</div>
+              <div class="acct-no">•••• •••• 8842</div>
+              <div class="acct-tag">SGD Current Account</div>
+            </div>
+            <div class="acct-card">
+              <div class="acct-top"><div class="acct-bank">Emirates NBD</div><div class="acct-flag">🇦🇪</div></div>
+              <div class="acct-balance">$501,000</div>
+              <div class="acct-currency">AED 1,842,000 · UAE Dirham</div>
+              <div class="acct-no">•••• •••• 4471</div>
+              <div class="acct-tag">AED Business Account</div>
+            </div>
+            <div class="acct-card">
+              <div class="acct-top"><div class="acct-bank">Barclays</div><div class="acct-flag">🇬🇧</div></div>
+              <div class="acct-balance">$313,000</div>
+              <div class="acct-currency">GBP 247,500 · British Pound</div>
+              <div class="acct-no">•••• •••• 3301</div>
+              <div class="acct-tag">GBP Business Account</div>
+            </div>
+          </div>
+
+          <div class="full-table-wrap">
+            <div class="ftw-header">
+              <h3>Transaction History</h3>
+              <div class="filter-tabs">
+                <div class="ftab active">All</div>
+                <div class="ftab">Credits</div>
+                <div class="ftab">Debits</div>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr><th>Date</th><th>Description</th><th>Entity</th><th>Account</th><th>Amount</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Mar 15</td><td><div>Apex Group — Invoice #SG-2025-0312</div><div class="td-sub">Revenue receipt</div></td><td>LTVentures SG</td><td>DBS •8842</td><td class="td-credit">+SGD 114,200</td></tr>
+                <tr><td>Mar 14</td><td><div>Quarterly office rent — 1 Raffles Place</div><div class="td-sub">Operating expense</div></td><td>LTVentures SG</td><td>DBS •8842</td><td class="td-debit">−SGD 28,400</td></tr>
+                <tr><td>Mar 12</td><td><div>Baker McKenzie — Legal fees</div><div class="td-sub">Professional services</div></td><td>LTVentures UK</td><td>Barclays •3301</td><td class="td-debit">−GBP 8,400</td></tr>
+                <tr><td>Mar 10</td><td><div>Singapore payroll — March 2025</div><div class="td-sub">Payroll</div></td><td>LTVentures SG</td><td>DBS •8842</td><td class="td-debit">−SGD 142,000</td></tr>
+                <tr><td>Mar 8</td><td><div>Nomad Capital — Invoice #UAE-2025-0089</div><div class="td-sub">Revenue receipt</div></td><td>LTVentures DMCC</td><td>Emirates •4471</td><td class="td-credit">+AED 154,400</td></tr>
+                <tr><td>Mar 7</td><td><div>DMCC office rent — March 2025</div><div class="td-sub">Operating expense</div></td><td>LTVentures DMCC</td><td>Emirates •4471</td><td class="td-debit">−AED 38,200</td></tr>
+                <tr><td>Mar 5</td><td><div>UAE payroll — March 2025</div><div class="td-sub">Payroll</div></td><td>LTVentures DMCC</td><td>Emirates •4471</td><td class="td-debit">−AED 52,100</td></tr>
+                <tr><td>Mar 3</td><td><div>UK payroll — March 2025</div><div class="td-sub">Payroll</div></td><td>LTVentures UK</td><td>Barclays •3301</td><td class="td-debit">−GBP 12,800</td></tr>
+                <tr><td>Feb 28</td><td><div>Meridian Partners — Invoice #UK-2025-0041</div><div class="td-sub">Revenue receipt</div></td><td>LTVentures UK</td><td>Barclays •3301</td><td class="td-credit">+GBP 84,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE PAGE -->
+      <div id="page-compliance" class="page">
+        <div class="page-header">
+          <div class="ph-left">
+            <h1>Compliance</h1>
+            <div class="ph-sub">9 upcoming deadlines · 3 urgent (within 45 days)</div>
+          </div>
+          <button class="ph-btn" onclick="qaAction('What are the most urgent compliance tasks and what do I need to prepare?')">Ask Copilot ✦</button>
+        </div>
+        <div class="page-body">
+
+          <div class="comp-summary section-gap">
+            <div class="cs-card">
+              <div class="cs-icon red">⚠️</div>
+              <div><div class="cs-count">3</div><div class="cs-label">Urgent — within 45 days</div></div>
+            </div>
+            <div class="cs-card">
+              <div class="cs-icon yellow">🕐</div>
+              <div><div class="cs-count">3</div><div class="cs-label">Upcoming — 46–90 days</div></div>
+            </div>
+            <div class="cs-card">
+              <div class="cs-icon green">✓</div>
+              <div><div class="cs-count">3</div><div class="cs-label">Scheduled — 90+ days</div></div>
+            </div>
+          </div>
+
+          <div class="full-table-wrap">
+            <div class="ftw-header">
+              <h3>All Deadlines</h3>
+              <div class="filter-tabs">
+                <div class="ftab active">All entities</div>
+                <div class="ftab">🇸🇬 Singapore</div>
+                <div class="ftab">🇦🇪 UAE</div>
+                <div class="ftab">🇬🇧 UK</div>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr><th>Deadline</th><th>Type</th><th>Entity</th><th>Days Left</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Apr 28, 2025</strong></td><td>VAT Return Q1</td><td>🇦🇪 LTVentures DMCC</td><td>40 days</td><td><span class="badge urgent">Urgent</span></td></tr>
+                <tr><td><strong>Apr 30, 2025</strong></td><td>Annual Return</td><td>🇸🇬 LTVentures Singapore</td><td>42 days</td><td><span class="badge urgent">Urgent</span></td></tr>
+                <tr><td><strong>Apr 30, 2025</strong></td><td>GST Filing Q1</td><td>🇸🇬 LTVentures Singapore</td><td>42 days</td><td><span class="badge urgent">Urgent</span></td></tr>
+                <tr><td><strong>May 31, 2025</strong></td><td>Annual Return</td><td>🇻🇬 LTVentures Holdings</td><td>73 days</td><td><span class="badge soon">Soon</span></td></tr>
+                <tr><td><strong>Jun 15, 2025</strong></td><td>Trade License Renewal</td><td>🇦🇪 LTVentures DMCC</td><td>88 days</td><td><span class="badge soon">Soon</span></td></tr>
+                <tr><td><strong>Jun 30, 2025</strong></td><td>AGM</td><td>🇸🇬 LTVentures Singapore</td><td>103 days</td><td><span class="badge soon">Soon</span></td></tr>
+                <tr><td><strong>Jun 30, 2025</strong></td><td>Economic Substance Report</td><td>🇻🇬 LTVentures Holdings</td><td>103 days</td><td><span class="badge ok">On Track</span></td></tr>
+                <tr><td><strong>Oct 14, 2025</strong></td><td>Confirmation Statement</td><td>🇬🇧 LTVentures UK</td><td>209 days</td><td><span class="badge ok">On Track</span></td></tr>
+                <tr><td><strong>Jan 31, 2026</strong></td><td>Corporation Tax Return</td><td>🇬🇧 LTVentures UK</td><td>318 days</td><td><span class="badge ok">On Track</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+
+    <!-- ── RIGHT PANEL ──────────────── -->
+    <div class="right-panel">
+      <div class="rp-section">
+        <div class="rp-label">Treasury</div>
+        <div class="rp-treasury">
+          <div class="rp-amount">$1,650,000</div>
+          <div class="rp-t-label">Total across entities (USD)</div>
+        </div>
+        <div class="rp-bank-row"><span class="rp-bank-name">🇸🇬 DBS Singapore</span><span class="rp-bank-amt">$836K</span></div>
+        <div class="rp-bank-row"><span class="rp-bank-name">🇦🇪 Emirates NBD</span><span class="rp-bank-amt">$501K</span></div>
+        <div class="rp-bank-row"><span class="rp-bank-name">🇬🇧 Barclays UK</span><span class="rp-bank-amt">$313K</span></div>
+      </div>
+      <div class="rp-section">
+        <div class="rp-label">Urgent Deadlines</div>
+        <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>Apr 28</strong> — UAE VAT Return</div></div>
+        <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>Apr 30</strong> — SG Annual Return</div></div>
+        <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>Apr 30</strong> — SG GST Q1 Filing</div></div>
+        <div class="rp-dl-row"><div class="rp-dl-dot soon"></div><div class="rp-dl-text"><strong>May 31</strong> — BVI Annual Return</div></div>
+      </div>
+      <div class="rp-section">
+        <div class="rp-label">Pending Action</div>
+        <div class="rp-pending-row">
+          <div class="rp-pending-title">Invoice — TechVentures FZ LLC</div>
+          <div class="rp-pending-sub">Due Apr 1, 2025 · UAE entity</div>
+          <div class="rp-pending-amt">AED 87,500 (~$23,800)</div>
+        </div>
+        <div class="rp-pending-row">
+          <div class="rp-pending-title">Signature required</div>
+          <div class="rp-pending-sub">SG director resolution · Q1 dividend</div>
+        </div>
+      </div>
+      <div class="rp-section">
+        <div class="rp-label">Quick Actions</div>
+        <div class="qa-grid">
+          <div class="qa-btn" onclick="qaAction('Show all upcoming compliance deadlines')"><span class="qi">📋</span>Deadlines</div>
+          <div class="qa-btn" onclick="qaAction('Give me a cash overview across all entities')"><span class="qi">💰</span>Cash overview</div>
+          <div class="qa-btn" onclick="qaAction('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')"><span class="qi">⚡</span>Pay invoice</div>
+          <div class="qa-btn" onclick="qaAction('Create a financial summary for Q4 2024')"><span class="qi">📊</span>Q4 summary</div>
+          <div class="qa-btn" onclick="qaAction('What is our expected tax exposure for 2025?')"><span class="qi">🧾</span>Tax estimate</div>
+          <div class="qa-btn" onclick="qaAction('What is the status of our Singapore entity?')"><span class="qi">🇸🇬</span>SG status</div>
+          <div class="qa-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')"><span class="qi">🏢</span>All entities</div>
+          <div class="qa-btn" onclick="qaAction('What was our full year 2024 performance?')"><span class="qi">📈</span>FY2024</div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- /layout -->
+</div><!-- /app -->
 
 <script>
-let history = [];
-let isLoading = false;
+// ── NAVIGATION ─────────────────────────────────
+const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Dashboard', banking: 'Banking', compliance: 'Compliance' };
 
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(n => n.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  const navEl  = document.getElementById('nav-' + page);
+  if (pageEl) pageEl.classList.add('active');
+  if (navEl)  navEl.classList.add('active');
+  document.getElementById('topbar-page').textContent = PAGE_TITLES[page] || page;
+  closeSidebar();
+}
+
+function qaAction(prompt) {
+  navigate('copilot');
+  insertPrompt(prompt);
+}
+
+// ── SIDEBAR ────────────────────────────────────
 function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('nav-sidebar').classList.toggle('open');
   document.getElementById('sidebar-overlay').classList.toggle('open');
 }
 function closeSidebar() {
-  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('nav-sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
 }
+
+// ── CHAT ───────────────────────────────────────
+let history = [];
+let isLoading = false;
 
 const SYSTEM = `You are the Unite AI Copilot — an intelligent agent for corporate operations, embedded directly inside the Unite platform. You are currently working with LTVentures Holdings.
 
@@ -374,19 +741,15 @@ Your role: answer any question about this client's entities, finances, complianc
    - Purpose: Main operating entity — Southeast Asia HQ
    - Directors: Alex Tan, Maria Rodriguez | Shareholders: LTVentures Holdings Ltd (100%)
    - Deadlines: Annual Return April 30, 2025 · AGM June 30, 2025 · GST Filing Q1 April 30, 2025
-   - Address: 1 Raffles Place, #20-61, Singapore 048616
 
 3. **LTVentures DMCC** (UAE — Dubai Multi Commodities Centre)
    - License No: DMCC-123456 | Incorporated: June 22, 2022 | Status: Active
-   - Purpose: Middle East & Africa operations
    - Deadlines: VAT Return April 28, 2025 · Trade License Renewal June 15, 2025
    - VAT Registration: TRN 100123456789012
 
 4. **LTVentures UK Ltd** (England & Wales)
    - Company No: 14789123 | Incorporated: September 12, 2023 | Status: Active
-   - Purpose: European operations and sales
    - Deadlines: Confirmation Statement October 14, 2025 · Corporation Tax Return January 31, 2026
-   - Address: 20 Fenchurch Street, London EC3M 3BY
 
 ### BANKING & TREASURY (as of March 19, 2025)
 - DBS Bank Singapore (SGD Current, acct ending 8842): SGD 1,124,350 ≈ USD 836,000
@@ -425,26 +788,26 @@ Revenue: $8,200,000 | Net income: $2,450,000 | Total assets: $5,800,000 | YoY gr
 - **Total: ~$417,000**
 
 ### COMPLIANCE DEADLINES
-1. Apr 28 — UAE VAT Return — URGENT (40 days)
-2. Apr 30 — Singapore Annual Return — URGENT (42 days)
-3. Apr 30 — Singapore GST Q1 — URGENT (42 days)
-4. May 31 — BVI Annual Return (73 days)
-5. Jun 15 — UAE Trade License Renewal (88 days)
-6. Jun 30 — Singapore AGM (103 days)
-7. Jun 30 — BVI Economic Substance Report (103 days)
-8. Oct 14 — UK Confirmation Statement (209 days)
-9. Jan 31, 2026 — UK Corporation Tax Return (318 days)
+1. Apr 28 — UAE VAT Return — URGENT
+2. Apr 30 — Singapore Annual Return — URGENT
+3. Apr 30 — Singapore GST Q1 — URGENT
+4. May 31 — BVI Annual Return
+5. Jun 15 — UAE Trade License Renewal
+6. Jun 30 — Singapore AGM
+7. Jun 30 — BVI Economic Substance Report
+8. Oct 14 — UK Confirmation Statement
+9. Jan 31, 2026 — UK Corporation Tax Return
 
 ---
 
 ## RESPONSE GUIDELINES
-**Tone**: Professional, clear, direct. You're a trusted advisor who knows this company inside out.
+**Tone**: Professional, clear, direct. You're a trusted advisor.
 **Formatting**: Use markdown tables for data. Bold key figures. Keep answers concise.
 
-**For ACTION requests** (pay invoice, file document, transfer funds, set up entity, etc.):
+**For ACTION requests** (pay invoice, file document, transfer funds, etc.):
 - Begin with exactly: "ACTION:"
 - Next line: "**Preparing:** [description]"
-- List specific details (amount, recipient, account, entity)
+- List specific details
 - End with: "This action is ready for your approval."
 
 **For questions**: Answer directly with exact figures from the data above.
@@ -493,19 +856,24 @@ async function sendMessage() {
 function resetConversation() {
   if (!confirm('Reset the conversation?')) return;
   history = [];
-  document.getElementById('messages').innerHTML = '';
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+  msgs.style.justifyContent = '';
   renderWelcome();
 }
 
 function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
 function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
-function insertPrompt(t) { const i = document.getElementById('user-input'); i.value = t; autoResize(i); i.focus(); closeSidebar(); }
+function insertPrompt(t) { const i = document.getElementById('user-input'); i.value = t; autoResize(i); i.focus(); }
 function setLoading(v) { isLoading = v; document.getElementById('send-btn').disabled = v; }
 function hideWelcome() {
   document.getElementById('welcome-msg')?.remove();
   document.getElementById('messages').style.justifyContent = 'flex-start';
 }
-function scrollBottom() { const m = document.getElementById('messages'); m.scrollTop = m.scrollHeight; }
+function scrollBottom() {
+  const s = document.getElementById('chat-scroll');
+  if (s) s.scrollTop = s.scrollHeight;
+}
 
 function renderWelcome() {
   document.getElementById('messages').innerHTML = `
@@ -516,10 +884,10 @@ function renderWelcome() {
       <div class="suggestions">
         <div class="suggestion-chip" onclick="insertPrompt('Show all upcoming compliance deadlines')">📋 Compliance deadlines</div>
         <div class="suggestion-chip" onclick="insertPrompt('Give me a cash overview across all entities')">💰 Cash overview</div>
-        <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 2025 tax estimate</div>
-        <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 financial summary</div>
-        <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay pending invoice</div>
-        <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore status</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is our expected tax exposure for 2025?')">🧾 Tax estimate</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Create a financial summary for Q4 2024')">📊 Q4 summary</div>
+        <div class="suggestion-chip" onclick="insertPrompt('Pay the pending invoice from TechVentures FZ LLC for AED 87,500')">⚡ Pay invoice</div>
+        <div class="suggestion-chip" onclick="insertPrompt('What is the status of our Singapore entity?')">🇸🇬 Singapore</div>
       </div>
     </div>`;
 }
@@ -568,7 +936,7 @@ function approveAction(id) {
 function cancelAction(id) {
   document.getElementById(id).innerHTML = `
     <div class="action-card-header" style="background:var(--gray-m)"><span>✕ Cancelled</span></div>
-    <div style="padding:12px 16px;color:rgba(255,255,255,.5);font-size:13px;">Action cancelled. No changes were made.</div>`;
+    <div style="padding:12px 14px;color:var(--gray-m);font-size:13px;">Action cancelled. No changes were made.</div>`;
 }
 
 let tc = 0;
@@ -577,7 +945,7 @@ function appendTyping() {
   const msgs = document.getElementById('messages');
   const div = document.createElement('div');
   div.id = id; div.className = 'typing';
-  div.innerHTML = `<div class="msg-avatar" style="background:var(--orange);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;">✦</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  div.innerHTML = `<div class="msg-avatar" style="background:var(--blue);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;">✦</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
   msgs.appendChild(div); scrollBottom(); return id;
 }
 function removeTyping(id) { document.getElementById(id)?.remove(); }
@@ -612,7 +980,7 @@ function renderBadge(t) {
   if (l.includes('urgent') || l.includes('overdue')) return `<span class="badge urgent">${t}</span>`;
   if (l.includes('soon')) return `<span class="badge soon">${t}</span>`;
   if (l.includes('active')) return `<span class="badge active">${t}</span>`;
-  if (l.includes('filed') || l.includes('complete')) return `<span class="badge ok">${t}</span>`;
+  if (l.includes('filed') || l.includes('complete') || l.includes('on track')) return `<span class="badge ok">${t}</span>`;
   return t;
 }
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
