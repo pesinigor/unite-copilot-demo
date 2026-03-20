@@ -753,6 +753,7 @@ body.cs-mode {
 .cs-client-table { background: white; border: 1px solid var(--sb-border); border-radius: 10px; overflow: hidden; }
 .cs-client-row   { display: grid; grid-template-columns: 2fr 1fr 1.2fr 0.8fr 1fr 90px; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--sb-border); gap: 12px; transition: background .1s; }
 .cs-client-row:last-child { border-bottom: none; }
+.cs-client-row:not(.header) { cursor: pointer; }
 .cs-client-row:hover { background: var(--sb-bg); }
 .cs-client-row.header { background: var(--sb-bg); font-size: 10px; font-weight: 700; color: var(--gray-l); text-transform: uppercase; letter-spacing: .07em; }
 .cs-client-row.header:hover { background: var(--sb-bg); }
@@ -850,8 +851,11 @@ body.cs-mode {
 
 @media (max-width: 768px) {
   .cs-stats, .csb-summary { grid-template-columns: 1fr 1fr; }
-  .cs-client-row { grid-template-columns: 1fr 1fr; }
+  /* On mobile show only client info + flags; whole row is tappable */
+  .cs-client-row { grid-template-columns: 1fr auto; }
   .cs-client-row > *:nth-child(n+3) { display: none; }
+  /* Chevron affordance on client name column */
+  .cs-client-row:not(.header) > *:first-child::after { content: '›'; font-size: 18px; color: var(--gray-l); margin-left: 6px; vertical-align: middle; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -4023,7 +4027,7 @@ function renderCSPortfolio() {
       ? `<span style="color:var(--red);font-weight:700;">${c.tasks} <small>(${c.overdue} overdue)</small></span>`
       : `${c.tasks}`;
     return `
-      <div class="cs-client-row">
+      <div class="cs-client-row" onclick="openClientView('${c.id}')">
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="width:32px;height:32px;border-radius:8px;background:${c.color}22;color:${c.color};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${c.initials}</div>
           <div>
@@ -4035,7 +4039,7 @@ function renderCSPortfolio() {
         <div><span class="cs-manager-tag"><span class="cs-manager-av" style="background:${c.color};">${c.managerInitials}</span>${escHtml(c.manager)}</span></div>
         <div><div class="cs-health ${c.health}"><div class="cs-health-dot"></div>${healthLabel}</div></div>
         <div style="font-size:12px;font-weight:600;color:var(--dark);">${c.billedYTD}</div>
-        <div><button class="cs-open-btn" onclick="openClientView('${c.id}')">Open →</button></div>
+        <div><button class="cs-open-btn" onclick="event.stopPropagation();openClientView('${c.id}')">Open →</button></div>
       </div>`;
   }).join('');
 }
