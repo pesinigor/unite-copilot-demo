@@ -501,6 +501,17 @@ table.data-table tr:hover td { background: var(--sb-bg); }
   table.data-table { font-size: 11px; }
   table.data-table th, table.data-table td { padding: 9px 12px; }
   table.comp-table th, table.comp-table td { padding: 9px 12px; }
+
+  /* Messages: stack thread list and conversation vertically on mobile */
+  .comms-layout { flex-direction: column; }
+  .comms-threads { width: 100%; border-right: none; border-bottom: 1px solid var(--sb-border); max-height: 280px; }
+  .comms-threads.thread-open { display: none; }
+  .comms-detail { flex: 1; min-height: 0; }
+  .comms-detail.thread-open { display: flex; flex-direction: column; flex: 1; }
+  .cd-back-mobile { display: flex; }
+  .cd-back-mobile { display: none; align-items: center; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--sb-border); font-size: 12px; font-weight: 600; color: var(--blue); cursor: pointer; background: white; flex-shrink: 0; }
+  .bk-action-bar { padding: 10px 16px; overflow-x: auto; }
+  .ed-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -1230,6 +1241,9 @@ function openThread(id) {
       </div>`;
   }).join('');
   const replyDisabled = t.status === 'resolved';
+  // Mobile: swap thread list for conversation view
+  document.getElementById('threads-list').parentElement.classList.add('thread-open');
+  document.getElementById('comms-detail').classList.add('thread-open');
   document.getElementById('comms-empty').style.display = 'none';
   const tv = document.getElementById('thread-view');
   tv.style.display = 'flex';
@@ -1237,6 +1251,10 @@ function openThread(id) {
   tv.style.overflow = 'hidden';
   tv.style.flex = '1';
   tv.innerHTML = `
+    <div class="cd-back-mobile" onclick="closeThreadMobile()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All conversations
+    </div>
     <div class="cd-header">
       <div class="cd-subject">${t.subject}</div>
       <div class="cd-meta">
@@ -1259,6 +1277,16 @@ function openThread(id) {
     const el = document.getElementById('cd-msgs-' + id);
     if (el) el.scrollTop = el.scrollHeight;
   }, 50);
+}
+
+function closeThreadMobile() {
+  activeThreadId = null;
+  document.getElementById('threads-list').parentElement.classList.remove('thread-open');
+  document.getElementById('comms-detail').classList.remove('thread-open');
+  const tv = document.getElementById('thread-view');
+  tv.style.display = 'none';
+  document.getElementById('comms-empty').style.display = 'flex';
+  renderThreadList();
 }
 
 function sendThreadReply(id) {
@@ -1398,6 +1426,9 @@ function navigate(page) {
   if (pageEl) pageEl.classList.add('active');
   if (navEl)  navEl.classList.add('active');
   document.getElementById('topbar-page').textContent = PAGE_TITLES[page] || page;
+  // Hide right panel on Messages (it has its own layout); restore otherwise
+  const rp = document.querySelector('.right-panel');
+  if (rp) rp.style.display = page === 'comms' ? 'none' : '';
   if (page === 'comms') renderThreadList();
   closeSidebar();
 }
