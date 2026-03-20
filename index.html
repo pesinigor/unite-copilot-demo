@@ -555,6 +555,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 /* ── MOBILE ──────────────────────────────────── */
 @media (max-width: 960px) {
   .right-panel { display: none; }
+  .cs-rp { display: none; }
 }
 
 @media (max-width: 768px) {
@@ -653,37 +654,31 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 /* ═══════════════════════════════════════════════
    ROLE TOGGLE
 ═══════════════════════════════════════════════ */
-.role-toggle { display: flex; background: rgba(255,255,255,.15); border-radius: 20px; padding: 3px; gap: 2px; margin-left: 4px; flex-shrink: 0; }
-.role-btn { padding: 4px 12px; border-radius: 16px; border: none; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all .2s; background: transparent; color: rgba(255,255,255,.75); white-space: nowrap; }
-.role-btn.active { background: white; color: var(--dark); }
+.role-toggle { display: flex; background: var(--sb-bg); border: 1.5px solid var(--sb-border); border-radius: 20px; padding: 3px; gap: 2px; margin-left: 8px; flex-shrink: 0; }
+.role-btn { padding: 5px 14px; border-radius: 16px; border: none; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all .2s; background: transparent; color: var(--gray-m); white-space: nowrap; }
+.role-btn.active { background: var(--blue); color: white; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
 
 /* ═══════════════════════════════════════════════
    CS PORTAL — COLOR OVERRIDE (body.cs-mode)
 ═══════════════════════════════════════════════ */
+/* CS mode: only accent color changes — layout/chrome stays identical to client mode */
 body.cs-mode {
   --blue:       #6366F1;
   --blue-dark:  #4F46E5;
   --blue-light: #EEF2FF;
   --blue-mid:   #818CF8;
 }
-body.cs-mode .topbar    { background: #4338CA; }
-body.cs-mode .nav-sidebar { background: #1E1B4B; border-right-color: #312E81; }
-body.cs-mode .nav-section-label { color: #818CF8; }
-body.cs-mode .nav-item  { color: #C7D2FE; }
-body.cs-mode .nav-item:hover { background: rgba(99,102,241,.18); color: white; }
-body.cs-mode .nav-item.active { background: rgba(99,102,241,.3); color: white; }
-body.cs-mode .nav-item.active .ni { color: #A5B4FC; }
-body.cs-mode .nav-footer { border-top-color: #312E81; }
-body.cs-mode .nf-name   { color: #E0E7FF; }
-body.cs-mode .nf-sub    { color: #818CF8; }
-body.cs-mode .nf-dot    { background: #6366F1; }
-body.cs-mode .nav-badge { background: #6366F1; }
-body.cs-mode .topbar-badge { background: #4F46E5; }
-body.cs-mode .topbar-logo  { color: white; }
 
 /* ═══════════════════════════════════════════════
    CS PORTAL — PAGE STYLES
 ═══════════════════════════════════════════════ */
+
+/* CS Copilot 2-column layout (chat + right panel, mirroring client copilot) */
+#page-cs-copilot.active { flex-direction: row; }
+.cscop-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.cs-rp { width: var(--rp-w); background: white; border-left: 1px solid var(--sb-border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+.cs-rp::-webkit-scrollbar { width: 4px; }
+.cs-rp::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
 
 /* Summary stat tiles */
 .cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -1301,19 +1296,89 @@ body.cs-mode .topbar-logo  { color: white; }
 
       <!-- CS: AI COPILOT -->
       <div id="page-cs-copilot" class="page">
-        <div class="cscop-wrap">
+
+        <!-- CS action bar — mirrors client copilot action bar -->
+        <div class="action-bar">
+          <span class="ab-label">Actions</span>
+          <button class="ab-btn" onclick="startAddClient()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Client</button>
+          <button class="ab-btn" onclick="csInsertPrompt('Send payment reminders to all clients with overdue invoices')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Reminder</button>
+          <button class="ab-btn" onclick="csInsertPrompt('Run a full KYC status check across all active clients and flag any outstanding items')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Run KYC Check</button>
+          <button class="ab-btn" onclick="csInsertPrompt('Show all compliance deadlines in the next 30 days across all clients')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Compliance</button>
+          <button class="ab-btn" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI declaring a dividend of USD 500,000')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Draft Document</button>
+          <button class="ab-btn" onclick="csInsertPrompt('Generate a billing summary for all clients this month — show total billed, outstanding, and overdue')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Billing Summary</button>
+          <div style="width:1px;background:var(--sb-border);height:18px;flex-shrink:0;"></div>
+          <button class="ab-btn" onclick="csInsertPrompt('Portfolio health check — summarise all 5 clients, flag risks and anything needing urgent attention')" style="color:var(--gray-m);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Portfolio Review</button>
+        </div>
+
+        <!-- Two-column: chat + right panel -->
+        <div class="cscop-main">
           <div class="cscop-scroll" id="cs-messages"></div>
-          <div class="cscop-input-bar">
-            <div class="cscop-input-row">
-              <textarea class="cscop-textarea" id="cs-chat-input" placeholder="Ask anything about your clients, or type a command…" rows="1"
-                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCSMessage();}"
-                oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
-              <button class="cscop-send-btn" id="cs-send-btn" onclick="sendCSMessage()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              </button>
+
+          <!-- Unified input bar — identical structure to client copilot -->
+          <div class="input-area-outer">
+            <div class="input-area-inner">
+              <div class="file-preview-wrap" id="cs-file-preview-wrap"></div>
+              <div class="input-wrap">
+                <button class="attach-btn" onclick="document.getElementById('cs-file-input').click()" title="Attach KYC docs, invoices, or client files">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </button>
+                <input type="file" id="cs-file-input" accept="image/*,.pdf,.xlsx,.docx" style="display:none" onchange="handleCSFileSelect(this)">
+                <textarea id="cs-chat-input" rows="1"
+                  placeholder="Ask anything about your clients, or type a command…"
+                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendCSMessage();}"
+                  oninput="autoResize(this)"></textarea>
+                <button class="send-btn" id="cs-send-btn" onclick="sendCSMessage()">
+                  <svg viewBox="0 0 24 24"><path d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>
+                </button>
+              </div>
+              <div class="input-hint">CS Portal Copilot · Powered by Claude · 5 clients · 16 entities</div>
             </div>
           </div>
         </div>
+
+        <!-- CS Right Panel — mirrors client right panel structure -->
+        <div class="cs-rp">
+          <div class="rp-section">
+            <div class="rp-label">Work Queue</div>
+            <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>8 tasks</strong> pending across 5 clients</div></div>
+            <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>3 overdue</strong> — action required</div></div>
+            <div class="rp-dl-row"><div class="rp-dl-dot soon"></div><div class="rp-dl-text">KYC review <strong>Apr 1</strong> — NexGen</div></div>
+          </div>
+          <div class="rp-section">
+            <div class="rp-label">Urgent Compliance</div>
+            <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>Apr 15</strong> — US Tax · LTVentures DE</div></div>
+            <div class="rp-dl-row"><div class="rp-dl-dot urgent"></div><div class="rp-dl-text"><strong>Apr 30</strong> — SG Annual Return · 3 clients</div></div>
+            <div class="rp-dl-row"><div class="rp-dl-dot soon"></div><div class="rp-dl-text"><strong>May 15</strong> — BVI renewals · 2 clients</div></div>
+          </div>
+          <div class="rp-section">
+            <div class="rp-label">Pending Actions</div>
+            <div class="rp-pending-row" style="cursor:pointer;" onclick="csInsertPrompt('Send a payment reminder to NexGen Fintech for overdue invoice INV-2026-0039 — USD 1,600 due March 15')">
+              <div class="rp-pending-title">Invoice overdue — NexGen Fintech</div>
+              <div class="rp-pending-sub">INV-2026-0039 · USD 1,600 · 5 days late</div>
+              <div class="rp-pending-amt" style="color:var(--blue);font-size:11px;">→ Send reminder</div>
+            </div>
+            <div class="rp-pending-row" style="cursor:pointer;" onclick="csInsertPrompt('Run a KYC check on a new director being added to Coastal Holdings HK — what documents do we need?')">
+              <div class="rp-pending-title">Director KYC — Coastal Holdings</div>
+              <div class="rp-pending-sub">New director added · docs outstanding</div>
+            </div>
+            <div class="rp-pending-row" style="cursor:pointer;" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI declaring an annual dividend of USD 500,000')">
+              <div class="rp-pending-title">Board resolution needed</div>
+              <div class="rp-pending-sub">LTVentures BVI · Q1 dividend approval</div>
+            </div>
+          </div>
+          <div class="rp-section">
+            <div class="rp-label">Quick Commands</div>
+            <div class="qa-grid">
+              <div class="qa-btn" onclick="csInsertPrompt('Send payment reminders to all clients with overdue invoices')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>Reminders</div>
+              <div class="qa-btn" onclick="csInsertPrompt('Run KYC status check across all active clients and flag any outstanding items')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>KYC</div>
+              <div class="qa-btn" onclick="csInsertPrompt('Show compliance deadlines in the next 30 days for all clients')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Deadlines</div>
+              <div class="qa-btn" onclick="csInsertPrompt('Generate billing summary for all clients this month')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Billing</div>
+              <div class="qa-btn" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI dividend')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Draft doc</div>
+              <div class="qa-btn" onclick="csInsertPrompt('Portfolio health check — flag any clients with risks or issues')"><span class="qi"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>Portfolio</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- CS: CLIENT PORTFOLIO -->
@@ -2500,6 +2565,63 @@ async function handleFileSelect(input) {
     console.error('File processing error:', err);
     alert('Could not process file: ' + err.message);
   }
+}
+
+// ── CS FILE ATTACHMENT ──────────────────────────────────────────────────────
+async function handleCSFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+  const isPDF  = file.type === 'application/pdf';
+  const isImg  = file.type.startsWith('image/');
+  const isDoc  = /\.(xlsx?|docx?)$/i.test(file.name);
+
+  const wrap = document.getElementById('cs-file-preview-wrap');
+
+  if (isImg || isPDF) {
+    try {
+      let base64, mediaType, previewUrl;
+      if (isImg) {
+        const r = await readFileAsBase64(file);
+        base64 = r.base64; mediaType = file.type; previewUrl = r.dataUrl;
+      } else {
+        // PDF.js render first page
+        const buf = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+        const page = await pdf.getPage(1);
+        const vp = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement('canvas');
+        canvas.width = vp.width; canvas.height = vp.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+        previewUrl = canvas.toDataURL('image/png');
+        base64 = previewUrl.split(',')[1]; mediaType = 'image/png';
+      }
+      csPendingAttachment = { base64, mediaType, name: file.name, previewUrl, isPDF };
+    } catch(e) { alert('Could not process file: ' + e.message); return; }
+  } else {
+    // xlsx / docx: just pass filename as text context
+    csPendingAttachment = { name: file.name, isDoc: true };
+  }
+  renderCSFilePreview();
+  const inp = document.getElementById('cs-chat-input');
+  if (!inp.value.trim()) inp.placeholder = `File attached — describe what you need…`;
+  inp.focus();
+}
+
+function renderCSFilePreview() {
+  const wrap = document.getElementById('cs-file-preview-wrap');
+  if (!csPendingAttachment) { wrap.innerHTML = ''; wrap.classList.remove('visible'); return; }
+  const { name } = csPendingAttachment;
+  const short = name.length > 28 ? name.slice(0, 25) + '…' : name;
+  wrap.innerHTML = `<div class="file-chip"><span class="file-chip-icon" style="background:var(--blue);border-radius:5px;padding:2px 5px;font-size:10px;color:white;font-weight:700;">📎</span><span class="file-chip-name">${short}</span><button class="file-chip-remove" onclick="clearCSAttachment()" title="Remove">×</button></div>`;
+  wrap.classList.add('visible');
+}
+
+function clearCSAttachment() {
+  csPendingAttachment = null;
+  document.getElementById('cs-file-input').value = '';
+  renderCSFilePreview();
+  document.getElementById('cs-chat-input').placeholder = 'Ask anything about your clients, or type a command…';
 }
 
 function readFileAsBase64(file) {
@@ -3971,9 +4093,10 @@ You help CS staff with:
 - For **analysis/advice**: respond conversationally, use markdown formatting.
 - Always be concise and professional. You are a senior CS expert speaking to staff.`;
 
-let csHistory    = [];
-let csIsLoading  = false;
-let csTc         = 0;
+let csHistory         = [];
+let csIsLoading       = false;
+let csTc              = 0;
+let csPendingAttachment = null;
 
 function renderCSWelcome() {
   const el = document.getElementById('cs-messages');
@@ -4016,9 +4139,11 @@ async function sendCSMessage() {
   if (csIsLoading) return;
   const inp = document.getElementById('cs-chat-input');
   const text = inp.value.trim();
-  if (!text) return;
+  const attach = csPendingAttachment;
+  if (!text && !attach) return;
   inp.value = '';
   inp.style.height = 'auto';
+  if (attach) clearCSAttachment();
 
   // Remove welcome if present
   const welcome = document.querySelector('#cs-messages .cscop-welcome');
@@ -4026,10 +4151,23 @@ async function sendCSMessage() {
 
   csIsLoading = true;
   document.getElementById('cs-send-btn').disabled = true;
-  appendCSUserMsg(text);
+  const displayText = text || (attach ? `[Attached: ${attach.name}]` : '');
+  appendCSUserMsg(displayText);
   const typId = appendCSTyping();
   try {
-    const reply = await callCSClaude(text);
+    // Build message content — include image/PDF data if present
+    let userContent;
+    if (attach && attach.base64) {
+      userContent = [
+        { type: 'image', source: { type: 'base64', media_type: attach.mediaType, data: attach.base64 } },
+        { type: 'text', text: text || `Please analyse this ${attach.isPDF ? 'document' : 'image'} in the context of client management.` }
+      ];
+    } else if (attach && attach.isDoc) {
+      userContent = (text || '') + `\n\n[Attached file: ${attach.name} — please reference this file context in your response]`;
+    } else {
+      userContent = text;
+    }
+    const reply = await callCSClaude(userContent);
     removeCSTyping(typId);
     appendCSAssistantMsg(reply);
   } catch(e) {
@@ -4041,8 +4179,8 @@ async function sendCSMessage() {
   scrollCSBottom();
 }
 
-async function callCSClaude(userText) {
-  csHistory.push({ role:'user', content: userText });
+async function callCSClaude(userContent) {
+  csHistory.push({ role:'user', content: userContent });
   const res = await fetch('/.netlify/functions/chat', {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ system: CS_SYSTEM, messages: csHistory })
