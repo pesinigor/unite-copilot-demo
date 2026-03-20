@@ -35,7 +35,7 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .topbar-page { font-size: 13px; font-weight: 600; color: var(--dark); }
 .topbar-client { font-size: 13px; color: var(--gray-m); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topbar-spacer { flex: 1; }
-.topbar-badge { background: var(--blue); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; flex-shrink: 0; }
+.topbar-badge { background: var(--blue); color: white; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; letter-spacing: .03em; flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
 .topbar-live { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--gray-l); flex-shrink: 0; cursor: pointer; }
 .topbar-live .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 
@@ -967,7 +967,7 @@ body.cs-mode {
     <div class="topbar-page" id="topbar-page">AI Copilot</div>
     <div class="topbar-client">· LTVentures Holdings</div>
     <div class="topbar-spacer"></div>
-    <div class="topbar-badge" id="topbar-badge" style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> AI COPILOT</div>
+    <div class="topbar-badge" id="topbar-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> AI COPILOT</div>
     <div class="role-toggle">
       <button class="role-btn active" id="role-btn-client" onclick="switchRole('client')">👤 Client</button>
       <button class="role-btn" id="role-btn-cs" onclick="switchRole('cs')">🏢 CS Portal</button>
