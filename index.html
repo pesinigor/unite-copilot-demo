@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Unite. — LTVentures Holdings</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -267,6 +268,21 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 .send-btn svg { width: 16px; height: 16px; fill: white; }
 .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 7px; }
 
+/* ── FILE ATTACH ────────────────────────────── */
+.attach-btn { width: 32px; height: 32px; border-radius: 8px; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-l); transition: all .15s; }
+.attach-btn:hover { background: var(--sb-bg); color: var(--blue); }
+.attach-btn svg { width: 17px; height: 17px; }
+.file-preview-wrap { padding: 6px 0 2px; display: none; }
+.file-preview-wrap.visible { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.file-chip { display: flex; align-items: center; gap: 7px; background: var(--blue-light); border: 1px solid #BFDBFE; border-radius: 9px; padding: 5px 9px; max-width: 280px; }
+.file-chip-thumb { width: 32px; height: 32px; border-radius: 5px; object-fit: cover; flex-shrink: 0; border: 1px solid #BFDBFE; }
+.file-chip-icon { width: 32px; height: 32px; border-radius: 5px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.file-chip-name { font-size: 12px; font-weight: 500; color: var(--blue-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.file-chip-remove { width: 18px; height: 18px; border-radius: 50%; background: none; border: none; cursor: pointer; color: var(--gray-m); display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; flex-shrink: 0; margin-left: 2px; }
+.file-chip-remove:hover { background: #DBEAFE; color: var(--blue-dark); }
+.user-img-preview { max-width: 220px; max-height: 140px; border-radius: 10px; display: block; margin-top: 6px; border: 1px solid var(--sb-border); }
+.user-pdf-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--blue-light); border: 1px solid #BFDBFE; border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: 500; color: var(--blue-dark); margin-top: 6px; }
+
 /* ── ICON HELPERS ───────────────────────────── */
 .ni { display:inline-flex; align-items:center; justify-content:center; width:18px; flex-shrink:0; }
 .qi { display:flex; align-items:center; justify-content:center; margin:0 auto 4px; }
@@ -466,7 +482,12 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         </div>
         <div class="input-area-outer">
           <div class="input-area-inner">
+            <div class="file-preview-wrap" id="file-preview-wrap"></div>
             <div class="input-wrap">
+              <button class="attach-btn" onclick="document.getElementById('file-input').click()" title="Attach invoice or image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+              <input type="file" id="file-input" accept="image/*,.pdf" style="display:none" onchange="handleFileSelect(this)">
               <textarea id="user-input" rows="1"
                 placeholder="Ask anything about LTVentures Holdings…"
                 onkeydown="handleKey(event)"
@@ -915,7 +936,9 @@ Revenue: $8,200,000 | Net income: $2,450,000 | Total assets: $5,800,000 | YoY gr
 - End with: "This action is ready for your approval."
 
 **For questions**: Answer directly with exact figures from the data above.
-**Today's date**: March 19, 2025.`;
+**Today's date**: March 19, 2025.
+
+**When an invoice or document image is attached**: Extract all key fields in a clean structured format — vendor name and address, invoice number, date, due date, payment terms, line items with amounts, subtotal, tax, total, currency, and payment instructions. Then suggest the matching LTVentures entity for payment and flag any anomalies (unusual amounts, missing details, overdue status).`;
 
 async function callClaude(userText) {
   history.push({ role: 'user', content: userText });
@@ -934,24 +957,186 @@ async function callClaude(userText) {
   return reply;
 }
 
+async function callClaudeWithFile(userText, attachment) {
+  // Build a content array message with the image + text
+  const userContent = [
+    { type: 'image', source: { type: 'base64', media_type: attachment.mediaType, data: attachment.base64 } },
+    { type: 'text', text: userText }
+  ];
+  history.push({ role: 'user', content: userContent });
+  const res = await fetch('/.netlify/functions/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system: SYSTEM, messages: history })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Error ${res.status}`);
+  }
+  const data = await res.json();
+  const reply = data.content;
+  history.push({ role: 'assistant', content: reply });
+  return reply;
+}
+
+function appendUserMsgWithFile(text, attachment) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  const previewHtml = attachment.isPDF
+    ? `<div class="user-pdf-badge">${svg('calc',12,'#1D4ED8')} ${attachment.name}</div>`
+    : `<img class="user-img-preview" src="${attachment.previewUrl}" alt="attached image">`;
+  div.innerHTML = `<div class="msg-bubble">${previewHtml}<div style="margin-top:6px;">${escapeHtml(text)}</div></div><div class="msg-avatar" style="background:var(--blue);color:white;font-size:11px;font-weight:700;">IG</div>`;
+  msgs.appendChild(div);
+  scrollBottom();
+}
+
+function escapeHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── FILE ATTACHMENT ────────────────────────────
+let pendingAttachment = null; // { base64, mediaType, name, previewUrl, isPDF }
+
+// Configure PDF.js worker
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+async function handleFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = ''; // reset so same file can be re-selected
+
+  const isPDF = file.type === 'application/pdf';
+  const isImage = file.type.startsWith('image/');
+  if (!isPDF && !isImage) {
+    alert('Please attach an image (JPG, PNG, etc.) or a PDF file.');
+    return;
+  }
+
+  try {
+    let base64, mediaType, previewUrl;
+
+    if (isImage) {
+      const result = await readFileAsBase64(file);
+      base64 = result.base64;
+      mediaType = file.type;
+      previewUrl = result.dataUrl;
+    } else {
+      // PDF → render first 2 pages as PNG via PDF.js
+      const arrayBuf = await file.arrayBuffer();
+      const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuf }).promise;
+      const numPages = Math.min(pdfDoc.numPages, 2);
+      const canvases = [];
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale: 2 }); // 2× for clarity
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        canvases.push(canvas);
+      }
+      // Stitch pages vertically into one canvas
+      const totalHeight = canvases.reduce((sum, c) => sum + c.height, 0);
+      const merged = document.createElement('canvas');
+      merged.width = canvases[0].width;
+      merged.height = totalHeight;
+      const ctx = merged.getContext('2d');
+      let y = 0;
+      for (const c of canvases) { ctx.drawImage(c, 0, y); y += c.height; }
+      const dataUrl = merged.toDataURL('image/png');
+      base64 = dataUrl.split(',')[1];
+      mediaType = 'image/png';
+      previewUrl = dataUrl;
+    }
+
+    pendingAttachment = { base64, mediaType, name: file.name, previewUrl, isPDF };
+    renderFilePreview();
+    // Auto-focus input and suggest a prompt if empty
+    const inp = document.getElementById('user-input');
+    if (!inp.value.trim()) inp.placeholder = 'e.g. "Extract invoice details" or just press send…';
+    inp.focus();
+  } catch (err) {
+    console.error('File processing error:', err);
+    alert('Could not process file: ' + err.message);
+  }
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const dataUrl = e.target.result;
+      resolve({ dataUrl, base64: dataUrl.split(',')[1] });
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderFilePreview() {
+  const wrap = document.getElementById('file-preview-wrap');
+  if (!pendingAttachment) { wrap.innerHTML = ''; wrap.classList.remove('visible'); return; }
+  const { name, previewUrl, isPDF } = pendingAttachment;
+  const shortName = name.length > 28 ? name.slice(0, 25) + '…' : name;
+  const iconHtml = isPDF
+    ? `<div class="file-chip-icon">${svg('calc', 14, 'white')}</div>`
+    : `<img class="file-chip-thumb" src="${previewUrl}" alt="preview">`;
+  wrap.innerHTML = `
+    <div class="file-chip">
+      ${iconHtml}
+      <span class="file-chip-name">${shortName}</span>
+      <button class="file-chip-remove" onclick="clearAttachment()" title="Remove">×</button>
+    </div>`;
+  wrap.classList.add('visible');
+}
+
+function clearAttachment() {
+  pendingAttachment = null;
+  const wrap = document.getElementById('file-preview-wrap');
+  wrap.innerHTML = '';
+  wrap.classList.remove('visible');
+  document.getElementById('user-input').placeholder = 'Ask anything about LTVentures Holdings…';
+}
+
 async function sendMessage() {
   if (isLoading) return;
   const input = document.getElementById('user-input');
   const text = input.value.trim();
-  if (!text) return;
+  const attachment = pendingAttachment;
+
+  if (!text && !attachment) return;
   hideWelcome();
   input.value = '';
   input.style.height = 'auto';
+  input.placeholder = 'Ask anything about LTVentures Holdings…';
+  clearAttachment();
   setLoading(true);
-  appendUserMsg(text);
-  const typingId = appendTyping();
-  try {
-    const reply = await callClaude(text);
-    removeTyping(typingId);
-    appendAssistantMsg(reply);
-  } catch (e) {
-    removeTyping(typingId);
-    appendAssistantMsg(`Something went wrong: ${e.message}`);
+
+  // Render user message (with image preview if any)
+  if (attachment) {
+    const userText = text || 'Please extract and summarise the invoice details.';
+    appendUserMsgWithFile(userText, attachment);
+    const typingId = appendTyping();
+    try {
+      const reply = await callClaudeWithFile(userText, attachment);
+      removeTyping(typingId);
+      appendAssistantMsg(reply);
+    } catch (e) {
+      removeTyping(typingId);
+      appendAssistantMsg(`Something went wrong: ${e.message}`);
+    }
+  } else {
+    appendUserMsg(text);
+    const typingId = appendTyping();
+    try {
+      const reply = await callClaude(text);
+      removeTyping(typingId);
+      appendAssistantMsg(reply);
+    } catch (e) {
+      removeTyping(typingId);
+      appendAssistantMsg(`Something went wrong: ${e.message}`);
+    }
   }
   setLoading(false);
   scrollBottom();
