@@ -853,7 +853,8 @@ body.cs-mode {
    CS COPILOT PAGE
 ═══════════════════════════════════════════════ */
 .cscop-wrap     { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
-.cscop-scroll   { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+/* CS messages scroll — same structure as .chat-scroll; individual messages get their own padding */
+.cscop-scroll   { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
 .cscop-scroll::-webkit-scrollbar { width: 4px; }
 .cscop-scroll::-webkit-scrollbar-thumb { background: var(--gray-xl); border-radius: 4px; }
 .cscop-input-bar { padding: 12px 16px; border-top: 1px solid var(--sb-border); background: white; flex-shrink: 0; }
@@ -2387,7 +2388,7 @@ function navigate(page) {
   if (page === 'docs')           renderDocs();
   if (page === 'banking')        renderInvoices();
   // CS page renderers (defined later in the file; safe to call after DOMContentLoaded)
-  if (page === 'cs-copilot')    { if (typeof renderCSWelcome    === 'function') renderCSWelcome(); }
+  if (page === 'cs-copilot')    { if (typeof renderCSWelcome === 'function' && !csHistory.length) renderCSWelcome(); }
   if (page === 'cs-portfolio')  { if (typeof renderCSPortfolio  === 'function') renderCSPortfolio(); }
   // cs-client: rendered explicitly by openClientView before navigate() is called
   if (page === 'cs-queue')      { if (typeof renderWorkQueue    === 'function') renderWorkQueue(); }
@@ -4399,34 +4400,18 @@ function renderCSWelcome() {
   const el = document.getElementById('cs-messages');
   if (!el) return;
   el.innerHTML = `
-    <div class="cscop-welcome">
-      <div class="cscop-welcome-icon">🏢</div>
-      <h2>CS Portal — AI Copilot</h2>
-      <p>I have full visibility across <strong>5 clients and 16 entities</strong>. I can draft communications, run KYC checks, generate board resolutions, prepare interim financials, and flag anything that needs urgent attention.</p>
-      <div class="cscop-chips">
-        <div class="cscop-chip" onclick="csInsertPrompt('Send a payment reminder to NexGen Fintech for overdue invoice INV-2026-0039 — USD 1,600 due March 15')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Send payment reminder → NexGen
-        </div>
-        <div class="cscop-chip" onclick="csInsertPrompt('Run a KYC check on a new director being added to Coastal Holdings HK — Michael Tan, Singapore citizen, DOB 1978-06-12. What documents do we need and what checks should we run?')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          KYC check → new director
-        </div>
-        <div class="cscop-chip" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI declaring an annual dividend of USD 500,000 to the sole shareholder LTVentures Holdings')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Board resolution → BVI dividend
-        </div>
-        <div class="cscop-chip" onclick="csInsertPrompt('Give me a full client status report for this week — which clients have overdue tasks, which have outstanding invoices, and what are the top 3 priorities for the team?')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Weekly status report
-        </div>
-        <div class="cscop-chip" onclick="csInsertPrompt('Create an interim financial statement summary for LTVentures SG for Q1 2026 — revenue USD 256,200, expenses USD 178,800. Use standard format.')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Interim FS → LTVentures SG
-        </div>
-        <div class="cscop-chip" onclick="csInsertPrompt('Draft an incorporation checklist for a new Singapore Pte Ltd for Pinnacle Global Partners — what documents, steps and timeline?')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          Incorporation checklist → SG
+    <div class="messages-inner" id="cs-msgs-inner">
+      <div class="welcome" id="cs-welcome-msg">
+        <div class="welcome-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="var(--blue)" stroke="var(--blue)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></div>
+        <h2>Good morning, Igor.</h2>
+        <p>I have full visibility across <strong>5 clients and 16 entities</strong>. I can draft communications, run KYC checks, generate board resolutions, prepare interim financials, and flag anything that needs urgent attention.</p>
+        <div class="suggestions">
+          <div class="suggestion-chip" onclick="csInsertPrompt('Send a payment reminder to NexGen Fintech for overdue invoice INV-2026-0039 — USD 1,600 due March 15')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Payment reminder → NexGen</div>
+          <div class="suggestion-chip" onclick="csInsertPrompt('Run a KYC check on a new director being added to Coastal Holdings HK — Michael Tan, Singapore citizen, DOB 1978-06-12. What documents do we need and what checks should we run?')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> KYC check → new director</div>
+          <div class="suggestion-chip" onclick="csInsertPrompt('Draft a board resolution for LTVentures BVI declaring an annual dividend of USD 500,000 to the sole shareholder LTVentures Holdings')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Board resolution → BVI dividend</div>
+          <div class="suggestion-chip" onclick="csInsertPrompt('Give me a full client status report for this week — which clients have overdue tasks, which have outstanding invoices, and what are the top 3 priorities for the team?')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Weekly status report</div>
+          <div class="suggestion-chip" onclick="csInsertPrompt('Create an interim financial statement summary for LTVentures SG for Q1 2026 — revenue USD 256,200, expenses USD 178,800. Use standard format.')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Interim FS → LTVentures SG</div>
+          <div class="suggestion-chip" onclick="csInsertPrompt('Draft an incorporation checklist for a new Singapore Pte Ltd for Pinnacle Global Partners — what documents, steps and timeline?')" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Incorporation checklist → SG</div>
         </div>
       </div>
     </div>`;
@@ -4442,9 +4427,14 @@ async function sendCSMessage() {
   inp.style.height = 'auto';
   if (attach) clearCSAttachment();
 
-  // Remove welcome if present
-  const welcome = document.querySelector('#cs-messages .cscop-welcome');
+  // Remove welcome if present; ensure messages-inner wrapper exists
+  const welcome = document.getElementById('cs-welcome-msg');
   if (welcome) welcome.remove();
+  if (!document.getElementById('cs-msgs-inner')) {
+    const wrap = document.createElement('div');
+    wrap.className = 'messages-inner'; wrap.id = 'cs-msgs-inner';
+    document.getElementById('cs-messages').appendChild(wrap);
+  }
 
   csIsLoading = true;
   document.getElementById('cs-send-btn').disabled = true;
@@ -4490,7 +4480,7 @@ async function callCSClaude(userContent) {
 }
 
 function appendCSUserMsg(text) {
-  const el = document.getElementById('cs-messages');
+  const el = document.getElementById('cs-msgs-inner') || document.getElementById('cs-messages');
   const div = document.createElement('div');
   div.className = 'cscop-msg user';
   div.innerHTML = `<div class="cscop-av" style="background:var(--blue);color:white;">IG</div><div class="cscop-bubble">${escHtml(text)}</div>`;
@@ -4498,7 +4488,7 @@ function appendCSUserMsg(text) {
 }
 
 function appendCSAssistantMsg(raw) {
-  const el = document.getElementById('cs-messages');
+  const el = document.getElementById('cs-msgs-inner') || document.getElementById('cs-messages');
   const div = document.createElement('div');
   div.className = 'cscop-msg assistant';
 
@@ -4547,7 +4537,7 @@ function appendCSAssistantMsg(raw) {
 
 function appendCSTyping() {
   const id = 'cstyp-' + (++csTc);
-  const el = document.getElementById('cs-messages');
+  const el = document.getElementById('cs-msgs-inner') || document.getElementById('cs-messages');
   const div = document.createElement('div');
   div.id = id; div.className = 'cscop-typing';
   div.innerHTML = `<div class="cscop-av" style="background:var(--blue);color:white;">${svg('sparkles',13,'white')}</div><div class="typing-bubble"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
