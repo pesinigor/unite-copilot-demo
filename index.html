@@ -119,7 +119,45 @@ body { height: 100%; min-height: -webkit-fill-available; overflow: hidden; font-
 .dl-dot.ok { background: var(--gray-xl); }
 .dl-date { font-size: 11px; font-weight: 600; color: var(--dark); width: 50px; flex-shrink: 0; }
 .dl-desc { font-size: 11px; color: var(--gray-m); flex: 1; }
-.dl-days { font-size: 10px; color: var(--gray-l); flex-shrink: 0; }
+.dl-entity { font-size: 10px; color: var(--gray-l); background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 5px; padding: 1px 6px; white-space: nowrap; flex-shrink: 0; }
+.dl-days { font-size: 10px; color: var(--gray-l); flex-shrink: 0; width: 28px; text-align: right; }
+
+/* ── ENTITY DETAIL ──────────────────────────── */
+.ed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--blue); cursor: pointer; padding: 4px 0; margin-bottom: 18px; background: none; border: none; font-family: 'Inter', sans-serif; }
+.ed-back:hover { opacity: .75; }
+.ed-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.ed-flag-big { font-size: 40px; line-height: 1; }
+.ed-hero-name { font-size: 20px; font-weight: 700; color: var(--dark); }
+.ed-hero-juris { font-size: 13px; color: var(--gray-m); margin-top: 2px; }
+.ed-hero-badge { font-size: 10px; font-weight: 600; color: var(--green); background: var(--green-light); padding: 3px 9px; border-radius: 10px; display: inline-block; margin-top: 5px; }
+.ed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.ed-section-card { background: white; border: 1px solid var(--sb-border); border-radius: 10px; padding: 18px; }
+.ed-section-card.full { grid-column: 1 / -1; }
+.ed-section-title { font-size: 11px; font-weight: 700; color: var(--gray-m); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+.ed-info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--sb-bg); gap: 12px; }
+.ed-info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.ed-info-key { font-size: 11px; color: var(--gray-l); flex-shrink: 0; width: 110px; }
+.ed-info-val { font-size: 12px; font-weight: 500; color: var(--dark); text-align: right; }
+.ed-director-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--sb-bg); }
+.ed-director-row:last-child { border-bottom: none; }
+.ed-dir-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ed-dir-name { font-size: 12px; font-weight: 600; color: var(--dark); }
+.ed-dir-role { font-size: 11px; color: var(--gray-m); }
+.ed-dir-since { font-size: 10px; color: var(--gray-l); margin-left: auto; flex-shrink: 0; }
+.ed-comp-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--sb-bg); }
+.ed-comp-row:last-child { border-bottom: none; }
+.ed-comp-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ed-comp-date { font-size: 11px; font-weight: 600; color: var(--dark); width: 90px; flex-shrink: 0; }
+.ed-comp-item { font-size: 12px; color: var(--gray-m); flex: 1; }
+.ed-comp-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; }
+.ed-comp-badge.urgent { background: var(--red-light); color: var(--red); }
+.ed-comp-badge.upcoming { background: var(--yellow-light); color: #92400E; }
+.ed-comp-badge.ok { background: var(--green-light); color: #065F46; }
+.ed-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.ed-act-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .15s; border: 1.5px solid var(--sb-border); background: white; color: var(--dark); }
+.ed-act-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.ed-act-btn.primary { background: var(--blue); color: white; border-color: transparent; }
+.ed-act-btn.primary:hover { background: var(--blue-dark); }
 
 .txn-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--sb-border); }
 .txn-row:last-child { border-bottom: none; }
@@ -442,7 +480,7 @@ table.data-table tr:hover td { background: var(--sb-bg); }
           <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> AI Copilot
         </div>
         <div class="nav-item" id="nav-dashboard" onclick="navigate('dashboard')">
-          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span> Dashboard
+          <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></span> Entities
         </div>
         <div class="nav-item" id="nav-banking" onclick="navigate('banking')">
           <span class="ni"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span> Banking
@@ -524,20 +562,21 @@ table.data-table tr:hover td { background: var(--sb-bg); }
         </div>
       </div>
 
-      <!-- DASHBOARD PAGE -->
+      <!-- ENTITIES PAGE -->
       <div id="page-dashboard" class="page">
-        <div class="page-header">
+        <div class="page-header" id="entities-header">
           <div class="ph-left">
-            <h1>Dashboard</h1>
-            <div class="ph-sub">LTVentures Holdings · 4 active entities · As of March 2025</div>
+            <h1>Entities</h1>
+            <div class="ph-sub">LTVentures Holdings · 4 active entities · <span id="entities-date"></span></div>
           </div>
           <button class="ph-btn" onclick="qaAction('Give me a full status report on LTVentures Holdings')" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3 4 6l-3 1 3 1 1 3 1-3 3-1-3-1Z"/><path d="M19 13l-.667 2L17 16l1.333.667L19 19l.667-1.333L21 17l-1.333-.667Z"/></svg>Ask Copilot</button>
         </div>
-        <div class="page-body">
 
-          <div class="section-label section-gap">Entities</div>
+        <!-- Entity list view -->
+        <div class="page-body" id="entities-list">
+          <div class="section-label section-gap">All Entities</div>
           <div class="grid-2 section-gap">
-            <div class="entity-card-d" onclick="qaAction('What is the status and upcoming obligations for LTVentures Holdings BVI?')">
+            <div class="entity-card-d" onclick="showEntityDetail('bvi')">
               <div class="ecd-top"><div class="ecd-flag">🇻🇬</div><div class="ecd-active">● Active</div></div>
               <div class="ecd-name">LTVentures Holdings Ltd</div>
               <div class="ecd-juris">British Virgin Islands · Holding Company</div>
@@ -547,86 +586,58 @@ table.data-table tr:hover td { background: var(--sb-bg); }
                 <div><div class="ecd-stat-label">Reg. Agent</div><div class="ecd-stat-val">Maples Group</div></div>
               </div>
             </div>
-            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures Singapore?')">
+            <div class="entity-card-d" onclick="showEntityDetail('sg')">
               <div class="ecd-top"><div class="ecd-flag">🇸🇬</div><div class="ecd-active">● Active</div></div>
               <div class="ecd-name">LTVentures Singapore Pte Ltd</div>
               <div class="ecd-juris">Singapore · Operating HQ (SEA)</div>
               <div class="ecd-stats">
                 <div><div class="ecd-stat-label">UEN</div><div class="ecd-stat-val">202112345K</div></div>
-                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Apr 30 ⚠</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val" style="color:var(--red);">Apr 30 ⚠</div></div>
                 <div><div class="ecd-stat-label">Directors</div><div class="ecd-stat-val">2</div></div>
               </div>
             </div>
-            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures DMCC UAE?')">
+            <div class="entity-card-d" onclick="showEntityDetail('uae')">
               <div class="ecd-top"><div class="ecd-flag">🇦🇪</div><div class="ecd-active">● Active</div></div>
               <div class="ecd-name">LTVentures DMCC</div>
               <div class="ecd-juris">UAE — Dubai · Middle East & Africa</div>
               <div class="ecd-stats">
-                <div><div class="ecd-stat-label">License</div><div class="ecd-stat-val">DMCC-123456</div></div>
-                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Apr 28 ⚠</div></div>
+                <div><div class="ecd-stat-label">License No.</div><div class="ecd-stat-val">DMCC-123456</div></div>
+                <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val" style="color:var(--red);">Apr 28 ⚠</div></div>
                 <div><div class="ecd-stat-label">VAT Reg.</div><div class="ecd-stat-val">Yes</div></div>
               </div>
             </div>
-            <div class="entity-card-d" onclick="qaAction('What are the upcoming obligations for LTVentures UK?')">
+            <div class="entity-card-d" onclick="showEntityDetail('uk')">
               <div class="ecd-top"><div class="ecd-flag">🇬🇧</div><div class="ecd-active">● Active</div></div>
               <div class="ecd-name">LTVentures UK Ltd</div>
               <div class="ecd-juris">England & Wales · European Operations</div>
               <div class="ecd-stats">
                 <div><div class="ecd-stat-label">Co. No.</div><div class="ecd-stat-val">14789123</div></div>
                 <div><div class="ecd-stat-label">Next deadline</div><div class="ecd-stat-val">Oct 14</div></div>
-                <div><div class="ecd-stat-label">Address</div><div class="ecd-stat-val">Fenchurch St</div></div>
+                <div><div class="ecd-stat-label">Directors</div><div class="ecd-stat-val">2</div></div>
               </div>
             </div>
           </div>
 
-          <div class="section-label">FY 2024 Performance</div>
-          <div class="grid-3 section-gap">
-            <div class="kpi-card">
-              <div class="kpi-label">Total Revenue</div>
-              <div class="kpi-value">$8.2M</div>
-              <div class="kpi-change up">↑ +42% year-over-year</div>
+          <div class="section-label" style="margin-bottom:12px;">Compliance Overview</div>
+          <div class="data-card section-gap">
+            <div class="dc-header">
+              <h3>Upcoming Deadlines</h3>
+              <span class="dc-link" onclick="navigate('compliance')">View all →</span>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Net Income</div>
-              <div class="kpi-value">$2.45M</div>
-              <div class="kpi-change neutral">EBITDA margin 34%</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Total Treasury</div>
-              <div class="kpi-value">$1.65M</div>
-              <div class="kpi-change neutral">Across 3 bank accounts</div>
+            <div class="dc-body">
+              <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 28</div><div class="dl-desc">UAE VAT Return Q1</div><div class="dl-entity">LTVentures DMCC</div><div class="dl-days">39d</div></div>
+              <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">Annual Return (ACRA)</div><div class="dl-entity">LTVentures SG</div><div class="dl-days">41d</div></div>
+              <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">GST Q1 Filing</div><div class="dl-entity">LTVentures SG</div><div class="dl-days">41d</div></div>
+              <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">May 31</div><div class="dl-desc">Annual Return</div><div class="dl-entity">LTVentures BVI</div><div class="dl-days">72d</div></div>
+              <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">Jun 15</div><div class="dl-desc">Trade License Renewal</div><div class="dl-entity">LTVentures DMCC</div><div class="dl-days">87d</div></div>
+              <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">Jun 30</div><div class="dl-desc">AGM</div><div class="dl-entity">LTVentures SG</div><div class="dl-days">102d</div></div>
             </div>
           </div>
+        </div>
 
-          <div class="two-col">
-            <div class="data-card">
-              <div class="dc-header">
-                <h3>Upcoming Deadlines</h3>
-                <span class="dc-link" onclick="navigate('compliance')">View all →</span>
-              </div>
-              <div class="dc-body">
-                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 28</div><div class="dl-desc">UAE VAT Return</div><div class="dl-days">40d</div></div>
-                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">SG Annual Return</div><div class="dl-days">42d</div></div>
-                <div class="dl-row"><div class="dl-dot urgent"></div><div class="dl-date">Apr 30</div><div class="dl-desc">SG GST Q1 Filing</div><div class="dl-days">42d</div></div>
-                <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">May 31</div><div class="dl-desc">BVI Annual Return</div><div class="dl-days">73d</div></div>
-                <div class="dl-row"><div class="dl-dot soon"></div><div class="dl-date">Jun 15</div><div class="dl-desc">UAE Trade License</div><div class="dl-days">88d</div></div>
-              </div>
-            </div>
-            <div class="data-card">
-              <div class="dc-header">
-                <h3>Recent Transactions</h3>
-                <span class="dc-link" onclick="navigate('banking')">View all →</span>
-              </div>
-              <div class="dc-body">
-                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Apex Group — Invoice #SG-0312</div><div class="txn-date">Mar 15 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt credit">+SGD 114,200</div></div></div>
-                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Quarterly office rent</div><div class="txn-date">Mar 14 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt debit">−SGD 28,400</div></div></div>
-                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Nomad Capital — Invoice #UAE-0089</div><div class="txn-date">Mar 8 · Emirates NBD</div></div><div class="txn-right"><div class="txn-amt credit">+AED 154,400</div></div></div>
-                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Singapore payroll (March)</div><div class="txn-date">Mar 10 · DBS Singapore</div></div><div class="txn-right"><div class="txn-amt debit">−SGD 142,000</div></div></div>
-                <div class="txn-row"><div class="txn-left"><div class="txn-desc">Baker McKenzie — Legal fees</div><div class="txn-date">Mar 12 · Barclays UK</div></div><div class="txn-right"><div class="txn-amt debit">−GBP 8,400</div></div></div>
-              </div>
-            </div>
-          </div>
-
+        <!-- Entity detail view (hidden by default) -->
+        <div class="page-body" id="entity-detail" style="display:none;">
+          <div id="entity-detail-content"></div>
         </div>
       </div>
 
@@ -902,8 +913,148 @@ function svg(name, size=16, color='currentColor') {
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0;">${IC[name]||''}</svg>`;
 }
 
+// ── ENTITIES DATA ───────────────────────────────
+const ENTITY_DATA = {
+  bvi: {
+    name: 'LTVentures Holdings Ltd', flag: '🇻🇬',
+    jurisdiction: 'British Virgin Islands', type: 'Holding Company',
+    incorporated: 'January 2021', regNo: 'BVI-2021-04521',
+    regAgent: 'Maples Group', vatReg: 'N/A',
+    address: 'Maples Corporate Services Ltd, PO Box 309, Ugland House, Grand Cayman, KY1-1104, Cayman Islands',
+    directors: [
+      { name: 'Igor Pesin',       initials: 'IP', role: 'Director', since: 'Jan 2021' },
+      { name: 'Elena Morozova',   initials: 'EM', role: 'Director', since: 'Mar 2022' },
+    ],
+    compliance: [
+      { date: 'May 31, 2026',  item: 'Annual Return',             status: 'upcoming' },
+      { date: 'Dec 31, 2026',  item: 'Economic Substance Report', status: 'ok' },
+    ]
+  },
+  sg: {
+    name: 'LTVentures Singapore Pte Ltd', flag: '🇸🇬',
+    jurisdiction: 'Singapore', type: 'Operating HQ — South East Asia',
+    incorporated: 'March 2021', regNo: 'UEN: 202112345K',
+    regAgent: 'ACRA', vatReg: 'GST Reg. M90123456X',
+    address: '1 Raffles Place, #20-61, One Raffles Place Tower 1, Singapore 048616',
+    directors: [
+      { name: 'Igor Pesin',  initials: 'IP', role: 'Director', since: 'Mar 2021' },
+      { name: 'Wei Chen',    initials: 'WC', role: 'Director', since: 'Jun 2022' },
+    ],
+    compliance: [
+      { date: 'Apr 30, 2026',  item: 'Annual Return (ACRA)',  status: 'urgent' },
+      { date: 'Apr 30, 2026',  item: 'GST Q1 Filing',         status: 'urgent' },
+      { date: 'Jun 30, 2026',  item: 'AGM',                   status: 'upcoming' },
+      { date: 'Nov 30, 2026',  item: 'Corporate Tax YA2025',  status: 'ok' },
+    ]
+  },
+  uae: {
+    name: 'LTVentures DMCC', flag: '🇦🇪',
+    jurisdiction: 'UAE — Dubai (DMCC Free Zone)', type: 'Middle East & Africa Hub',
+    incorporated: 'September 2021', regNo: 'DMCC-123456',
+    regAgent: 'DMCC Authority', vatReg: 'TRN: 100234567890003',
+    address: 'Unit 1507, Mazaya Business Avenue AA1, JLT Cluster A, Dubai, UAE',
+    directors: [
+      { name: 'Igor Pesin',       initials: 'IP', role: 'Director / Manager', since: 'Sep 2021' },
+      { name: 'Khalid Al-Rashid', initials: 'KA', role: 'Director',           since: 'Nov 2021' },
+    ],
+    compliance: [
+      { date: 'Apr 28, 2026',  item: 'VAT Return Q1',           status: 'urgent' },
+      { date: 'Jun 15, 2026',  item: 'Trade License Renewal',   status: 'upcoming' },
+      { date: 'Sep 30, 2026',  item: 'ESR Notification',        status: 'ok' },
+      { date: 'Dec 31, 2026',  item: 'Annual Audit Submission', status: 'ok' },
+    ]
+  },
+  uk: {
+    name: 'LTVentures UK Ltd', flag: '🇬🇧',
+    jurisdiction: 'England & Wales', type: 'European Operations',
+    incorporated: 'June 2021', regNo: 'Company No. 14789123',
+    regAgent: 'Companies House', vatReg: 'VAT: GB 345 6789 01',
+    address: '12 Fenchurch Avenue, London EC3M 5BN, United Kingdom',
+    directors: [
+      { name: 'Igor Pesin',    initials: 'IP', role: 'Director', since: 'Jun 2021' },
+      { name: 'James Whitmore',initials: 'JW', role: 'Director', since: 'Jan 2023' },
+    ],
+    compliance: [
+      { date: 'Oct 14, 2026',  item: 'Confirmation Statement', status: 'ok' },
+      { date: 'Jan 31, 2027',  item: 'Corporation Tax Return', status: 'ok' },
+    ]
+  },
+};
+
+function showEntityDetail(key) {
+  const e = ENTITY_DATA[key];
+  if (!e) return;
+  const statusColor = { urgent: 'var(--red)', upcoming: 'var(--yellow)', ok: 'var(--gray-xl)' };
+  const directorsHtml = e.directors.map(d => `
+    <div class="ed-director-row">
+      <div class="ed-dir-avatar">${d.initials}</div>
+      <div><div class="ed-dir-name">${d.name}</div><div class="ed-dir-role">${d.role}</div></div>
+      <div class="ed-dir-since">Since ${d.since}</div>
+    </div>`).join('');
+  const complianceHtml = e.compliance.map(c => `
+    <div class="ed-comp-row">
+      <div class="ed-comp-dot" style="background:${statusColor[c.status]};"></div>
+      <div class="ed-comp-date">${c.date}</div>
+      <div class="ed-comp-item">${c.item}</div>
+      <div class="ed-comp-badge ${c.status}">${c.status.charAt(0).toUpperCase()+c.status.slice(1)}</div>
+    </div>`).join('');
+  document.getElementById('entity-detail-content').innerHTML = `
+    <button class="ed-back" onclick="hideEntityDetail()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      All Entities
+    </button>
+    <div class="ed-hero">
+      <div class="ed-flag-big">${e.flag}</div>
+      <div>
+        <div class="ed-hero-name">${e.name}</div>
+        <div class="ed-hero-juris">${e.jurisdiction} · ${e.type}</div>
+        <span class="ed-hero-badge">● Active</span>
+      </div>
+    </div>
+    <div class="ed-actions">
+      <button class="ed-act-btn primary" onclick="startFlow('send')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Money</button>
+      <button class="ed-act-btn" onclick="startFlow('director')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> Add Director</button>
+      <button class="ed-act-btn" onclick="qaAction('What are the upcoming obligations and status for ${e.name}?')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg> Ask Copilot</button>
+    </div>
+    <div class="ed-grid">
+      <div class="ed-section-card">
+        <div class="ed-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Registration</div>
+        <div class="ed-info-row"><span class="ed-info-key">Incorporated</span><span class="ed-info-val">${e.incorporated}</span></div>
+        <div class="ed-info-row"><span class="ed-info-key">Reg. Number</span><span class="ed-info-val">${e.regNo}</span></div>
+        <div class="ed-info-row"><span class="ed-info-key">Reg. Agent</span><span class="ed-info-val">${e.regAgent}</span></div>
+        <div class="ed-info-row"><span class="ed-info-key">Tax / VAT</span><span class="ed-info-val">${e.vatReg}</span></div>
+      </div>
+      <div class="ed-section-card">
+        <div class="ed-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Registered Address</div>
+        <div style="font-size:12px;color:var(--dark);line-height:1.6;">${e.address}</div>
+      </div>
+      <div class="ed-section-card">
+        <div class="ed-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Directors</div>
+        ${directorsHtml}
+      </div>
+      <div class="ed-section-card">
+        <div class="ed-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Compliance</div>
+        ${complianceHtml}
+      </div>
+    </div>`;
+  document.getElementById('entities-list').style.display = 'none';
+  document.getElementById('entity-detail').style.display = 'block';
+  document.getElementById('entities-header').querySelector('h1').textContent = e.name;
+  document.getElementById('entities-header').querySelector('.ph-sub').textContent = e.jurisdiction + ' · ' + e.type;
+  window.scrollTo(0,0);
+}
+
+function hideEntityDetail() {
+  document.getElementById('entity-detail').style.display = 'none';
+  document.getElementById('entities-list').style.display = 'block';
+  document.getElementById('entities-header').querySelector('h1').textContent = 'Entities';
+  const dateEl = document.getElementById('entities-date');
+  document.getElementById('entities-header').querySelector('.ph-sub').innerHTML =
+    'LTVentures Holdings · 4 active entities · <span id="entities-date">' + (dateEl ? dateEl.textContent : '') + '</span>';
+}
+
 // ── NAVIGATION ─────────────────────────────────
-const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Dashboard', banking: 'Banking', compliance: 'Compliance' };
+const PAGE_TITLES = { copilot: 'AI Copilot', dashboard: 'Entities', banking: 'Banking', compliance: 'Compliance' };
 
 function navigate(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1976,6 +2127,16 @@ function startDividendFlow() {
       </div>
     </div>`);
 }
+
+// ── INIT ────────────────────────────────────────
+(function init() {
+  // Set dynamic date on Entities page
+  const el = document.getElementById('entities-date');
+  if (el) {
+    const now = new Date();
+    el.textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+})();
 </script>
 </body>
 </html>
