@@ -267,6 +267,58 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 .send-btn svg { width: 16px; height: 16px; fill: white; }
 .input-hint { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 7px; }
 
+/* ── ACTION BAR ─────────────────────────────── */
+.action-bar { padding: 9px 16px; border-bottom: 1px solid var(--sb-border); display: flex; align-items: center; gap: 8px; background: var(--sb-bg); overflow-x: auto; flex-shrink: 0; }
+.action-bar::-webkit-scrollbar { display: none; }
+.ab-label { font-size: 10px; font-weight: 600; color: var(--gray-l); letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; padding-right: 4px; }
+.ab-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: white; border: 1.5px solid var(--sb-border); border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--dark); cursor: pointer; white-space: nowrap; transition: all .15s; font-family: 'Inter', sans-serif; flex-shrink: 0; }
+.ab-btn:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+/* ── WIZARD ──────────────────────────────────── */
+.wizard-card { border: 1.5px solid var(--blue); border-radius: 14px; overflow: hidden; min-width: 280px; }
+.wiz-header { background: var(--blue); padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; }
+.wiz-step-txt { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.65); letter-spacing: .06em; text-transform: uppercase; }
+.wiz-title-txt { font-size: 13px; font-weight: 700; color: white; }
+.wiz-progress { display: flex; gap: 4px; padding: 8px 16px; background: var(--blue-light); border-bottom: 1px solid var(--sb-border); }
+.wiz-ps { height: 3px; border-radius: 2px; flex: 1; background: var(--gray-xl); transition: background .35s; }
+.wiz-ps.done { background: var(--blue); }
+.wiz-body { padding: 16px; background: white; }
+.wiz-question { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 14px; }
+.wiz-opts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 2px; }
+.wiz-opts-col { display: grid; grid-template-columns: 1fr; gap: 7px; margin-bottom: 2px; }
+.wiz-opt { background: white; border: 1.5px solid var(--sb-border); border-radius: 10px; padding: 11px 7px; text-align: center; cursor: pointer; transition: all .15s; }
+.wiz-opt:hover { border-color: var(--blue); background: var(--blue-light); }
+.wiz-opt.selected { border-color: var(--blue); background: var(--blue); }
+.wiz-opt .wf { font-size: 22px; display: block; margin-bottom: 4px; }
+.wiz-opt .wl { font-size: 11px; font-weight: 500; color: var(--dark); line-height: 1.3; }
+.wiz-opt.selected .wl { color: white; }
+.wiz-opt-row { display: flex; align-items: center; gap: 10px; background: white; border: 1.5px solid var(--sb-border); border-radius: 9px; padding: 11px 14px; cursor: pointer; transition: all .15s; }
+.wiz-opt-row:hover { border-color: var(--blue); background: var(--blue-light); }
+.wiz-opt-row.selected { border-color: var(--blue); background: var(--blue); }
+.wiz-opt-row .wl { font-size: 13px; font-weight: 500; color: var(--dark); }
+.wiz-opt-row.selected .wl { color: white; }
+.wiz-opt-row .ws { font-size: 11px; color: var(--gray-m); margin-top: 1px; }
+.wiz-opt-row.selected .ws { color: rgba(255,255,255,.7); }
+.wiz-input-group { margin-bottom: 11px; }
+.wiz-input-label { font-size: 10px; font-weight: 600; color: var(--gray-m); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .05em; }
+.wiz-input { width: 100%; border: 1.5px solid var(--sb-border); border-radius: 8px; padding: 9px 12px; font-size: 13px; font-family: 'Inter', sans-serif; color: var(--dark); outline: none; transition: border-color .2s; background: white; }
+.wiz-input:focus { border-color: var(--blue); }
+.wiz-estimate-box { background: var(--blue-light); border: 1px solid #BFDBFE; border-radius: 9px; padding: 12px 14px; margin: 12px 0 4px; }
+.wiz-estimate-box p { font-size: 12px; color: var(--dark-2); line-height: 1.7; }
+.wiz-estimate-box strong { color: var(--blue); }
+.wiz-summary-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--sb-border); gap: 12px; }
+.wiz-summary-row:last-child { border-bottom: none; }
+.wiz-sr-key { font-size: 11px; color: var(--gray-m); flex-shrink: 0; }
+.wiz-sr-val { font-size: 12px; font-weight: 600; color: var(--dark); text-align: right; }
+.wiz-note { font-size: 11px; color: var(--gray-l); text-align: center; margin-top: 10px; }
+.wiz-footer { padding: 12px 16px; display: flex; gap: 8px; background: white; border-top: 1px solid var(--sb-border); }
+.wiz-btn-primary { flex: 1; padding: 10px; background: var(--blue); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background .15s; }
+.wiz-btn-primary:hover { background: var(--blue-dark); }
+.wiz-btn-primary:disabled { background: var(--gray-l); cursor: default; }
+.wiz-btn-secondary { padding: 10px 14px; background: white; color: var(--gray-m); border: 1px solid var(--sb-border); border-radius: 8px; font-size: 13px; cursor: pointer; font-family: 'Inter', sans-serif; }
+.wiz-btn-secondary:hover { background: var(--sb-bg); }
+.wiz-confirmed { padding: 14px 16px; background: white; }
+
 /* ── MOBILE ──────────────────────────────────── */
 @media (max-width: 960px) {
   .right-panel { display: none; }
@@ -379,6 +431,17 @@ table.data-table tr:hover td { background: var(--sb-bg); }
 
       <!-- COPILOT PAGE -->
       <div id="page-copilot" class="page active">
+
+        <!-- Action shortcuts bar -->
+        <div class="action-bar">
+          <span class="ab-label">Actions</span>
+          <button class="ab-btn" onclick="startFlow('entity')">🏢 New Entity</button>
+          <button class="ab-btn" onclick="startFlow('payment')">💸 Pay Invoice</button>
+          <button class="ab-btn" onclick="startFlow('director')">👤 Add Director</button>
+          <button class="ab-btn" onclick="startFlow('account')">🏦 Open Account</button>
+          <button class="ab-btn" onclick="startFlow('dividend')">📤 Declare Dividend</button>
+        </div>
+
         <div class="chat-scroll" id="chat-scroll">
           <div class="messages-inner" id="messages">
             <div class="welcome" id="welcome-msg">
@@ -984,6 +1047,335 @@ function renderBadge(t) {
   return t;
 }
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── ACTION FLOWS ──────────────────────────────
+const wizState = {};
+
+function startFlow(type) {
+  navigate('copilot');
+  hideWelcome();
+  document.getElementById('messages').style.justifyContent = 'flex-start';
+  if (type === 'entity')   startEntityFlow();
+  else if (type === 'payment')  startPaymentFlow();
+  else if (type === 'director') startDirectorFlow();
+  else if (type === 'account')  startAccountFlow();
+  else if (type === 'dividend') startDividendFlow();
+}
+
+function appendWizardMsg(html) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg assistant';
+  div.innerHTML = `<div class="msg-avatar">✦</div><div class="msg-bubble" style="padding:0;background:transparent;border:none;max-width:420px;">${html}</div>`;
+  msgs.appendChild(div);
+  scrollBottom();
+}
+
+function confirmWizard(id, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let msg = '';
+  if (type === 'entity') {
+    const s = wizState.entity || {};
+    const time = ENTITY_ESTIMATES[s.jurisdiction]?.time || '5–7 days';
+    msg = `Incorporation request for <strong>${escHtml(s.name||'new entity')}</strong> in <strong>${s.jurisdiction}</strong> submitted. Unite will coordinate the process end-to-end. Est. timeline: ${time}.`;
+  } else if (type === 'payment') {
+    const payee = document.getElementById('pay-payee')?.value || 'TechVentures FZ LLC';
+    const amount = document.getElementById('pay-amount')?.value || 'AED 87,500';
+    msg = `Payment of <strong>${escHtml(amount)}</strong> to <strong>${escHtml(payee)}</strong> authorised. Expected settlement within 1–2 business days.`;
+  } else if (type === 'director') {
+    const name = document.getElementById('dir-name')?.value || 'director';
+    const entity = document.getElementById('dir-entity')?.value || 'entity';
+    msg = `Director appointment request for <strong>${escHtml(name)}</strong> at <strong>${escHtml(entity)}</strong> submitted. Board resolution will be prepared and sent for signature.`;
+  } else if (type === 'account') {
+    const bank = document.getElementById('acct-bank')?.value || 'the selected bank';
+    const entity = document.getElementById('acct-entity')?.value || 'entity';
+    msg = `Bank account opening request at <strong>${escHtml(bank)}</strong> for <strong>${escHtml(entity)}</strong> submitted. Your relationship manager will be in touch within 2 business days.`;
+  } else if (type === 'dividend') {
+    const amount = document.getElementById('div-amount')?.value || 'the declared amount';
+    const entity = document.getElementById('div-entity')?.value || 'entity';
+    msg = `Dividend declaration of <strong>${escHtml(amount)}</strong> from <strong>${escHtml(entity)}</strong> submitted for board approval. Resolutions will be prepared and sent for signatures.`;
+  }
+  el.innerHTML = `
+    <div class="wiz-header"><span class="wiz-step-txt">Confirmed</span><span class="wiz-title-txt">✓ Request Submitted</span></div>
+    <div class="wiz-confirmed">
+      <div style="background:var(--green-light);border-radius:8px;padding:12px 14px;">
+        <p style="font-size:13px;color:#065F46;font-weight:500;">✅ ${msg}</p>
+      </div>
+    </div>`;
+}
+
+function cancelWizard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = `
+    <div class="wiz-header" style="background:var(--gray-m)"><span class="wiz-step-txt">Cancelled</span><span class="wiz-title-txt">✕ Request Cancelled</span></div>
+    <div class="wiz-confirmed"><p style="font-size:13px;color:var(--gray-m);">No changes were made.</p></div>`;
+}
+
+// ── ENTITY CREATION FLOW (4 steps) ───────────
+const ENTITY_TYPES = {
+  'Singapore':       [['Private Limited (Pte. Ltd.)', 'Most common, 1+ shareholders'],['Branch Office','Extension of a foreign parent'],['Representative Office','Non-trading liaison']],
+  'UAE (DMCC)':      [['Free Zone Company (FZCO)','2+ shareholders, DMCC licensed'],['Sole Establishment','Single owner, full control']],
+  'UK':              [['Private Limited (Ltd)','Standard, 1+ shareholders'],['Limited Liability Partnership','For professional firms'],['UK Branch','Foreign co. branch registration']],
+  'BVI':             [['Business Company (BC)','Most popular, flexible structure'],['Limited Partnership','For fund / investment vehicles']],
+  'Netherlands':     [['Private Limited (B.V.)','Standard Dutch entity'],['Netherlands Branch','Foreign co. branch']],
+  'Cayman Islands':  [['Exempted Company','Classic offshore structure'],['Limited Liability Company','Hybrid flexibility']],
+};
+const ENTITY_ESTIMATES = {
+  'Singapore':      { time: '5–7 business days', cost: 'USD 1,800–2,500',  agent: 'ACRA (online)' },
+  'UAE (DMCC)':     { time: '3–5 business days', cost: 'USD 3,500–5,000',  agent: 'DMCC Authority' },
+  'UK':             { time: '1–3 business days', cost: 'USD 800–1,200',    agent: 'Companies House' },
+  'BVI':            { time: '3–5 business days', cost: 'USD 2,200–3,000',  agent: 'Maples Group' },
+  'Netherlands':    { time: '7–10 business days', cost: 'USD 2,500–4,000', agent: 'Dutch KvK' },
+  'Cayman Islands': { time: '5–7 business days', cost: 'USD 4,000–6,000',  agent: 'Cayman Registry' },
+};
+
+function startEntityFlow() {
+  wizState.entity = {};
+  const jurisdictions = [['🇸🇬','Singapore'],['🇦🇪','UAE (DMCC)'],['🇬🇧','UK'],['🇻🇬','BVI'],['🇳🇱','Netherlands'],['🇰🇾','Cayman Islands']];
+  appendWizardMsg(`
+    <div class="wizard-card" id="wiz-e1">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 1 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps"></div><div class="wiz-ps"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Which jurisdiction?</div>
+        <div class="wiz-opts-grid" id="wiz-jur-grid">
+          ${jurisdictions.map(([f,n]) => `<div class="wiz-opt" onclick="entityPickJ('${n}',this)"><span class="wf">${f}</span><span class="wl">${n}</span></div>`).join('')}
+        </div>
+      </div>
+      <div class="wiz-footer"><button class="wiz-btn-primary" id="wiz-j-next" disabled onclick="entityStep2()">Next →</button></div>
+    </div>`);
+}
+
+function entityPickJ(name, el) {
+  document.querySelectorAll('#wiz-jur-grid .wiz-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  wizState.entity.jurisdiction = name;
+  document.getElementById('wiz-j-next').disabled = false;
+}
+
+function entityStep2() {
+  const j = wizState.entity.jurisdiction;
+  const types = ENTITY_TYPES[j] || [['Limited Company','Standard structure']];
+  appendWizardMsg(`
+    <div class="wizard-card" id="wiz-e2">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 2 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Entity type in ${escHtml(j)}?</div>
+        <div class="wiz-opts-col" id="wiz-type-grid">
+          ${types.map(([label, sub]) => `<div class="wiz-opt-row" onclick="entityPickT('${escHtml(label)}',this)"><div><div class="wl">${escHtml(label)}</div><div class="ws">${escHtml(sub)}</div></div></div>`).join('')}
+        </div>
+      </div>
+      <div class="wiz-footer"><button class="wiz-btn-primary" id="wiz-t-next" disabled onclick="entityStep3()">Next →</button></div>
+    </div>`);
+}
+
+function entityPickT(label, el) {
+  document.querySelectorAll('#wiz-type-grid .wiz-opt-row').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  wizState.entity.typeLabel = label;
+  document.getElementById('wiz-t-next').disabled = false;
+}
+
+function entityStep3() {
+  const j = wizState.entity.jurisdiction;
+  appendWizardMsg(`
+    <div class="wizard-card" id="wiz-e3">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 3 of 4</span><span class="wiz-title-txt">🏢 Create New Entity</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Entity details</div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Proposed Name</div>
+          <input class="wiz-input" id="wiz-ename" placeholder="e.g. LTVentures ${j.split(' ')[0]} Ltd" oninput="checkE3()"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Primary Business Activity</div>
+          <input class="wiz-input" id="wiz-activity" placeholder="e.g. Technology consulting, investment holding…" oninput="checkE3()"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Shareholder</div>
+          <input class="wiz-input" id="wiz-shareholder" value="LTVentures Holdings Ltd (100%)"></div>
+      </div>
+      <div class="wiz-footer"><button class="wiz-btn-primary" id="wiz-d-next" disabled onclick="entityStep4()">Review →</button></div>
+    </div>`);
+}
+
+function checkE3() {
+  const ok = document.getElementById('wiz-ename')?.value.trim() && document.getElementById('wiz-activity')?.value.trim();
+  if (document.getElementById('wiz-d-next')) document.getElementById('wiz-d-next').disabled = !ok;
+}
+
+function entityStep4() {
+  const s = wizState.entity;
+  s.name = document.getElementById('wiz-ename').value.trim();
+  s.activity = document.getElementById('wiz-activity').value.trim();
+  s.shareholder = document.getElementById('wiz-shareholder').value.trim();
+  const est = ENTITY_ESTIMATES[s.jurisdiction] || { time: '5–10 days', cost: 'USD 2,000–4,000', agent: 'Local Registry' };
+  const id = 'wiz-e4-' + Date.now();
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Step 4 of 4</span><span class="wiz-title-txt">🏢 Review & Confirm</span></div>
+      <div class="wiz-progress"><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div><div class="wiz-ps done"></div></div>
+      <div class="wiz-body">
+        <div class="wiz-summary-row"><span class="wiz-sr-key">Name</span><span class="wiz-sr-val">${escHtml(s.name)}</span></div>
+        <div class="wiz-summary-row"><span class="wiz-sr-key">Jurisdiction</span><span class="wiz-sr-val">${escHtml(s.jurisdiction)}</span></div>
+        <div class="wiz-summary-row"><span class="wiz-sr-key">Type</span><span class="wiz-sr-val">${escHtml(s.typeLabel)}</span></div>
+        <div class="wiz-summary-row"><span class="wiz-sr-key">Activity</span><span class="wiz-sr-val">${escHtml(s.activity)}</span></div>
+        <div class="wiz-summary-row"><span class="wiz-sr-key">Shareholder</span><span class="wiz-sr-val">${escHtml(s.shareholder)}</span></div>
+        <div class="wiz-estimate-box">
+          <p>⏱ <strong>Timeline:</strong> ${est.time}</p>
+          <p>💰 <strong>Estimated cost:</strong> ${est.cost}</p>
+          <p>🏛 <strong>Filed with:</strong> ${est.agent}</p>
+        </div>
+        <div class="wiz-note">Unite will handle incorporation end-to-end and keep you updated at every step.</div>
+      </div>
+      <div class="wiz-footer">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="confirmWizard('${id}','entity')">✓ Submit Request</button>
+      </div>
+    </div>`);
+}
+
+// ── PAYMENT FLOW ──────────────────────────────
+function startPaymentFlow() {
+  const id = 'wiz-pay-' + Date.now();
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">💸 Authorise Payment</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Review payment details</div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Payee</div>
+          <input class="wiz-input" id="pay-payee" value="TechVentures FZ LLC"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Amount</div>
+          <input class="wiz-input" id="pay-amount" value="AED 87,500"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">From Account</div>
+          <select class="wiz-input">
+            <option>Emirates NBD — AED •4471 (LTVentures DMCC)</option>
+            <option>DBS Singapore — SGD •8842 (LTVentures SG)</option>
+            <option>Barclays UK — GBP •3301 (LTVentures UK)</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Reference</div>
+          <input class="wiz-input" value="Invoice #UAE-2025-TV-087500"></div>
+        <div class="wiz-estimate-box">
+          <p>📅 <strong>Due date:</strong> April 1, 2025 · 12 days remaining</p>
+          <p>💳 <strong>Balance after payment:</strong> AED 1,754,500 (~$478,000)</p>
+        </div>
+      </div>
+      <div class="wiz-footer">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="confirmWizard('${id}','payment')">✓ Approve Payment</button>
+      </div>
+    </div>`);
+}
+
+// ── ADD DIRECTOR FLOW ─────────────────────────
+function startDirectorFlow() {
+  const id = 'wiz-dir-' + Date.now();
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">👤 Add Director</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question">New director details</div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Full Legal Name</div>
+          <input class="wiz-input" id="dir-name" placeholder="e.g. Sarah Johnson"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Entity</div>
+          <select class="wiz-input" id="dir-entity">
+            <option>LTVentures Singapore Pte Ltd</option>
+            <option>LTVentures DMCC</option>
+            <option>LTVentures UK Ltd</option>
+            <option>LTVentures Holdings Ltd (BVI)</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Nationality</div>
+          <input class="wiz-input" id="dir-nat" placeholder="e.g. British, Singaporean…"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Passport / ID Number</div>
+          <input class="wiz-input" placeholder="Will be verified during KYC"></div>
+        <div class="wiz-estimate-box">
+          <p>📋 <strong>Required documents:</strong> Passport copy, proof of address, director consent form</p>
+          <p>⏱ <strong>Processing time:</strong> 2–5 business days after KYC approval</p>
+        </div>
+      </div>
+      <div class="wiz-footer">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="confirmWizard('${id}','director')">✓ Submit Request</button>
+      </div>
+    </div>`);
+}
+
+// ── OPEN BANK ACCOUNT FLOW ────────────────────
+function startAccountFlow() {
+  const id = 'wiz-acct-' + Date.now();
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">🏦 Open Bank Account</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Account details</div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Entity</div>
+          <select class="wiz-input" id="acct-entity">
+            <option>LTVentures Singapore Pte Ltd</option>
+            <option>LTVentures DMCC</option>
+            <option>LTVentures UK Ltd</option>
+            <option>LTVentures Holdings Ltd (BVI)</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Preferred Bank</div>
+          <select class="wiz-input" id="acct-bank">
+            <option>DBS Bank (Singapore)</option>
+            <option>OCBC (Singapore)</option>
+            <option>Emirates NBD (UAE)</option>
+            <option>ADCB (UAE)</option>
+            <option>Barclays (UK)</option>
+            <option>HSBC (UK)</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Account Currency</div>
+          <select class="wiz-input">
+            <option>USD — US Dollar</option>
+            <option>SGD — Singapore Dollar</option>
+            <option>AED — UAE Dirham</option>
+            <option>GBP — British Pound</option>
+            <option>EUR — Euro</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Purpose</div>
+          <input class="wiz-input" placeholder="e.g. Operating account, payroll, collections…"></div>
+        <div class="wiz-estimate-box">
+          <p>⏱ <strong>Typical opening time:</strong> 5–15 business days</p>
+          <p>📋 <strong>Docs required:</strong> Corporate cert, M&A, director/shareholder IDs</p>
+        </div>
+      </div>
+      <div class="wiz-footer">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="confirmWizard('${id}','account')">✓ Submit Request</button>
+      </div>
+    </div>`);
+}
+
+// ── DECLARE DIVIDEND FLOW ─────────────────────
+function startDividendFlow() {
+  const id = 'wiz-div-' + Date.now();
+  appendWizardMsg(`
+    <div class="wizard-card" id="${id}">
+      <div class="wiz-header"><span class="wiz-step-txt">Action</span><span class="wiz-title-txt">📤 Declare Dividend</span></div>
+      <div class="wiz-body">
+        <div class="wiz-question">Dividend details</div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Declaring Entity</div>
+          <select class="wiz-input" id="div-entity">
+            <option>LTVentures Singapore Pte Ltd</option>
+            <option>LTVentures DMCC</option>
+            <option>LTVentures UK Ltd</option>
+          </select></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Dividend Amount</div>
+          <input class="wiz-input" id="div-amount" placeholder="e.g. SGD 250,000"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Payment Date</div>
+          <input class="wiz-input" type="date" id="div-date"></div>
+        <div class="wiz-input-group"><div class="wiz-input-label">Recipient</div>
+          <input class="wiz-input" value="LTVentures Holdings Ltd (100% shareholder)"></div>
+        <div class="wiz-estimate-box">
+          <p>📋 <strong>Required:</strong> Board resolution + director signatures</p>
+          <p>⏱ <strong>Note:</strong> Awaiting SG director resolution — can include Q1 dividend here</p>
+        </div>
+      </div>
+      <div class="wiz-footer">
+        <button class="wiz-btn-secondary" onclick="cancelWizard('${id}')">Cancel</button>
+        <button class="wiz-btn-primary" onclick="confirmWizard('${id}','dividend')">✓ Submit for Approval</button>
+      </div>
+    </div>`);
+}
 </script>
 </body>
 </html>
