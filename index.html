@@ -1041,13 +1041,17 @@ body.cs-mode .cs-filter-tab.active { background: var(--blue); border-color: var(
 /* ── Warm surface pass: kill pure white across panels & cards ─────────── */
 /* Structural panels */
 .right-panel         { background: var(--page-bg); }
+.cs-rp               { background: var(--page-bg); }
 #page-copilot        { background: var(--page-bg); }
 .comms-detail        { background: var(--page-bg); }
+.comms-threads       { background: var(--page-bg); }
 .cd-reply            { background: var(--page-bg); border-top-color: var(--sb-border); }
 .bk-action-bar       { background: var(--page-bg); }
 .wiz-body            { background: var(--page-bg); }
 .wiz-footer          { background: var(--page-bg); }
 .cscop-scroll        { background: var(--page-bg); }
+.cscop-input-bar     { background: var(--page-bg); }
+.cd-back-mobile      { background: var(--page-bg); }
 
 /* Cards & surfaces */
 .entity-card-d       { background: var(--surface); }
@@ -1063,6 +1067,25 @@ body.cs-mode .cs-filter-tab.active { background: var(--blue); border-color: var(
 .rp-section          { background: var(--page-bg); }
 .rp-pending-row      { background: var(--sb-bg); }
 
+/* CS portal cards & rows */
+.cs-stat             { background: var(--surface); }
+.cs-client-table     { background: var(--surface); }
+.wq-item             { background: var(--surface); }
+.wq-empty            { background: var(--surface); }
+.csc-row             { background: var(--surface); }
+.csb-card            { background: var(--surface); }
+.csb-row             { background: var(--surface); }
+
+/* Copilot output & chat bubbles */
+.action-card         { background: var(--surface); }
+.cscop-bubble        { background: var(--surface); }
+.suggestion-chip     { background: var(--surface); }
+
+/* Wizard options */
+.wiz-opt             { background: var(--surface); }
+.wiz-opt-row         { background: var(--surface); }
+.wiz-confirmed       { background: var(--surface); }
+
 /* Nav active: warm surface, not pure white */
 .nav-item.active     { background: var(--surface); }
 
@@ -1070,19 +1093,27 @@ body.cs-mode .cs-filter-tab.active { background: var(--blue); border-color: var(
 table.data-table td  { background: var(--surface); }
 table.data-table tr:hover td { background: var(--sb-bg); }
 
-/* Ghost buttons: warm surface */
+/* Ghost buttons & tabs: warm surface */
 .ed-act-btn          { background: var(--surface); }
 .acct-act-btn        { background: var(--surface); }
+.acct-modal-act-btn.ghost { background: var(--surface); }
 .bkab-btn.ghost      { background: var(--surface); }
 .inv-act-btn.view    { background: var(--surface); }
+.inv-tab             { background: var(--surface); }
 .wiz-btn-secondary   { background: var(--surface); }
+.wq-tab              { background: var(--surface); }
 .ftab                { background: var(--surface); }
 .ab-btn              { background: var(--surface); }
+.cs-filter-tab       { background: var(--surface); }
+.onb-btn-back        { background: var(--surface); }
+.cscop-export-btn    { background: var(--surface); }
 
 /* Input & form fields: white (intentional elevation from surface) */
 .input-wrap          { background: white; }
 .wiz-input           { background: white; }
 .rpt-select, .rpt-input { background: white; }
+.onb-input, .onb-select { background: white; }
+.wq-client-filter    { background: white; }
 
 /* Msg bubble table cells */
 .msg-bubble td       { background: var(--surface); }
