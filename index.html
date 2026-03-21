@@ -2575,7 +2575,10 @@ async function callClaude(userText) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Error ${res.status}`);
+    const msg = res.status === 504
+      ? 'Response timed out — try asking for one thing at a time (e.g. the letter first, then the checklist separately).'
+      : (err.error || `Error ${res.status}`);
+    throw new Error(msg);
   }
   const data = await res.json();
   const reply = data.content;
@@ -4767,7 +4770,7 @@ async function callCSClaude(userContent) {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ system: CS_SYSTEM, messages: csHistory })
   });
-  if (!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.error||`Error ${res.status}`); }
+  if (!res.ok) { const e = await res.json().catch(()=>({})); const msg = res.status===504 ? 'Response timed out — try asking for one thing at a time (e.g. the letter first, then the checklist separately).' : (e.error||`Error ${res.status}`); throw new Error(msg); }
   const data = await res.json();
   const reply = data.content;
   csHistory.push({ role:'assistant', content: reply });
