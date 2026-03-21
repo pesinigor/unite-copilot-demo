@@ -771,14 +771,14 @@ body.cs-mode {
 .cs-flags        { display: flex; gap: 2px; font-size: 14px; }
 .cs-manager-tag  { display: inline-flex; align-items: center; gap: 5px; background: var(--sb-bg); border: 1px solid var(--sb-border); border-radius: 20px; padding: 3px 9px; font-size: 11px; font-weight: 500; color: var(--dark); }
 .cs-manager-av   { width: 18px; height: 18px; border-radius: 50%; background: var(--blue); color: white; font-size: 8px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.cs-health       { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; }
-.cs-health-dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cs-health       { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 20px; }
+.cs-health-dot   { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.cs-health.good  { background: var(--green-light); color: #065F46; }
 .cs-health.good  .cs-health-dot { background: var(--green); }
-.cs-health.good  { color: var(--green); }
+.cs-health.warn  { background: var(--yellow-light); color: #92400E; }
 .cs-health.warn  .cs-health-dot { background: #D97706; }
-.cs-health.warn  { color: #D97706; }
+.cs-health.bad   { background: var(--red-light); color: #991B1B; }
 .cs-health.bad   .cs-health-dot { background: var(--red); }
-.cs-health.bad   { color: var(--red); }
 .cs-open-btn     { padding: 5px 12px; border-radius: 7px; font-size: 11px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--blue-light); color: var(--blue); border: none; transition: all .15s; }
 .cs-open-btn:hover { background: var(--blue); color: white; }
 
@@ -4542,9 +4542,9 @@ function renderCSBilling() {
     const pen = CS_BILLING.filter(b=>b.status==='pending').length;
     const ov  = CS_BILLING.filter(b=>b.status==='overdue').length;
     summary.innerHTML = `
-      <div class="csb-card"><div class="csb-card-num" style="color:var(--green);">USD 22,500</div><div class="csb-card-label">Revenue received · Mar 2026</div></div>
-      <div class="csb-card"><div class="csb-card-num" style="color:#D97706;">USD 8,600</div><div class="csb-card-label">${pen} invoice${pen!==1?'s':''} pending · awaiting payment</div></div>
-      <div class="csb-card"><div class="csb-card-num" style="color:var(--red);">USD 1,600</div><div class="csb-card-label">${ov} invoice${ov!==1?'s':''} overdue · follow-up needed</div></div>`;
+      <div class="csb-card"><div class="csb-card-num">USD 22,500</div><div class="csb-card-label"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:5px;vertical-align:middle;"></span>Revenue received · Mar 2026</div></div>
+      <div class="csb-card"><div class="csb-card-num">USD 8,600</div><div class="csb-card-label"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#D97706;margin-right:5px;vertical-align:middle;"></span>${pen} invoice${pen!==1?'s':''} pending · awaiting payment</div></div>
+      <div class="csb-card"><div class="csb-card-num">USD 1,600</div><div class="csb-card-label"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:5px;vertical-align:middle;"></span>${ov} invoice${ov!==1?'s':''} overdue · follow-up needed</div></div>`;
   }
   const list = document.getElementById('csb-list');
   if (!list) return;
