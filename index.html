@@ -19,6 +19,7 @@
   --yellow: #F59E0B; --yellow-light: #FEF3C7;
   --sb-bg: #EDE9E3; --sb-border: #D8D4CF;
   --page-bg: #F5F2ED;
+  --surface: #FDFAF7;
   --nav-w: 210px; --rp-w: 256px;
 }
 
@@ -1036,6 +1037,55 @@ body.cs-mode .cs-filter-tab.active { background: var(--blue); border-color: var(
 @media (max-width: 768px) {
   .nav-sidebar { background: var(--page-bg); }
 }
+
+/* ── Warm surface pass: kill pure white across panels & cards ─────────── */
+/* Structural panels */
+.right-panel         { background: var(--page-bg); }
+#page-copilot        { background: var(--page-bg); }
+.comms-detail        { background: var(--page-bg); }
+.cd-reply            { background: var(--page-bg); border-top-color: var(--sb-border); }
+.bk-action-bar       { background: var(--page-bg); }
+.wiz-body            { background: var(--page-bg); }
+.wiz-footer          { background: var(--page-bg); }
+.cscop-scroll        { background: var(--page-bg); }
+
+/* Cards & surfaces */
+.entity-card-d       { background: var(--surface); }
+.kpi-card            { background: var(--surface); }
+.data-card           { background: var(--surface); }
+.ed-section-card     { background: var(--surface); }
+.acct-card           { background: var(--surface); }
+.cs-card             { background: var(--surface); }
+.client-card         { background: var(--surface); }
+.inv-item            { background: var(--surface); }
+.inv-empty           { background: var(--surface); }
+.full-table-wrap     { background: var(--surface); }
+.rp-section          { background: var(--page-bg); }
+.rp-pending-row      { background: var(--sb-bg); }
+
+/* Nav active: warm surface, not pure white */
+.nav-item.active     { background: var(--surface); }
+
+/* Table cells: warm surface */
+table.data-table td  { background: var(--surface); }
+table.data-table tr:hover td { background: var(--sb-bg); }
+
+/* Ghost buttons: warm surface */
+.ed-act-btn          { background: var(--surface); }
+.acct-act-btn        { background: var(--surface); }
+.bkab-btn.ghost      { background: var(--surface); }
+.inv-act-btn.view    { background: var(--surface); }
+.wiz-btn-secondary   { background: var(--surface); }
+.ftab                { background: var(--surface); }
+.ab-btn              { background: var(--surface); }
+
+/* Input & form fields: white (intentional elevation from surface) */
+.input-wrap          { background: white; }
+.wiz-input           { background: white; }
+.rpt-select, .rpt-input { background: white; }
+
+/* Msg bubble table cells */
+.msg-bubble td       { background: var(--surface); }
 </style>
 </head>
 <body>
