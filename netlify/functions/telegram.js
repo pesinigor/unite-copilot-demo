@@ -64,15 +64,26 @@ exports.handler = async (event) => {
   catch { return { statusCode: 200, body: 'OK' }; }
 
   const msg = body.message || body.edited_message;
-  if (!msg || !msg.text) return { statusCode: 200, body: 'OK' };
+  if (!msg) return { statusCode: 200, body: 'OK' };
 
-  const chatId    = String(msg.chat.id);
-  const isGroup   = msg.chat.type === 'group' || msg.chat.type === 'supergroup';
+  const chatId      = String(msg.chat.id);
+  const isGroup     = msg.chat.type === 'group' || msg.chat.type === 'supergroup';
   const botUsername = process.env.TELEGRAM_BOT_USERNAME || '';
 
-  // Strip @BotName suffix from commands in groups (e.g. /start@UniteAICopilotBot → /start)
-  // Also strip @mention prefix so users can say "@UniteAICopilotBot what's due?"
-  let userText = msg.text.trim();
+  // Files (documents, photos, etc.) carry text in msg.caption, not msg.text
+  const hasFile = !!(msg.document || msg.photo || msg.audio || msg.video || msg.voice);
+  const rawText = msg.text || msg.caption || '';
+  if (!rawText && !hasFile) return { statusCode: 200, body: 'OK' };
+
+  // Strip @BotName suffix from commands in groups (e.g. /start@BotName → /start)
+  let userText = rawText.trim();
+  // If a file was sent, append a note so Claude knows
+  if (hasFile) {
+    const fileType = msg.document ? 'document/PDF' : msg.photo ? 'photo' : msg.audio ? 'audio' : 'file';
+    userText = userText
+      ? `${userText} [User also attached a ${fileType} — you cannot read its contents, but acknowledge it and respond to their request]`
+      : `[User sent a ${fileType} with no caption — acknowledge you received it but explain you can't read file contents yet]`;
+  }
   if (botUsername) {
     userText = userText.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim();
   }
