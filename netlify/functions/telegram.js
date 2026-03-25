@@ -77,12 +77,6 @@ exports.handler = async (event) => {
     userText = userText.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim();
   }
 
-  // In groups, only respond if the bot is mentioned OR the message is a command
-  if (isGroup && botUsername) {
-    const mentioned = msg.text.includes(`@${botUsername}`);
-    const isCommand = userText.startsWith('/');
-    if (!mentioned && !isCommand) return { statusCode: 200, body: 'OK' };
-  }
 
   // /start command
   if (userText.startsWith('/start')) {
