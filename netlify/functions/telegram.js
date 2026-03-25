@@ -1,4 +1,5 @@
 // Unite AI Copilot — Telegram Bot
+const pdfParse = require('pdf-parse');
 // Webhook: https://unitechat11.netlify.app/.netlify/functions/telegram
 //
 // Setup:
@@ -77,12 +78,47 @@ exports.handler = async (event) => {
 
   // Strip @BotName suffix from commands in groups (e.g. /start@BotName → /start)
   let userText = rawText.trim();
-  // If a file was sent, append a note so Claude knows
-  if (hasFile) {
-    const fileType = msg.document ? 'document/PDF' : msg.photo ? 'photo' : msg.audio ? 'audio' : 'file';
-    userText = userText
-      ? `${userText} [User also attached a ${fileType} — you cannot read its contents, but acknowledge it and respond to their request]`
-      : `[User sent a ${fileType} with no caption — acknowledge you received it but explain you can't read file contents yet]`;
+
+  // If a PDF document was sent — download and extract text, pass to Claude
+  if (msg.document) {
+    const mime = msg.document.mime_type || '';
+    if (mime === 'application/pdf') {
+      try {
+        const token = process.env.TELEGRAM_BOT_TOKEN;
+        // Step 1: get the file download path from Telegram
+        const fileInfoResp = await fetch(
+          `https://api.telegram.org/bot${token}/getFile?file_id=${msg.document.file_id}`
+        );
+        const fileInfo = await fileInfoResp.json();
+        const filePath = fileInfo.result?.file_path;
+
+        if (filePath) {
+          // Step 2: download the PDF bytes
+          const pdfResp = await fetch(
+            `https://api.telegram.org/file/bot${token}/${filePath}`
+          );
+          const pdfBuffer = Buffer.from(await pdfResp.arrayBuffer());
+
+          // Step 3: extract text
+          const parsed = await pdfParse(pdfBuffer);
+          const pdfText = parsed.text.trim().slice(0, 4000); // cap at 4000 chars
+
+          userText = userText
+            ? `${userText}\n\n[PDF content extracted — ${msg.document.file_name || 'document'}]:\n${pdfText}`
+            : `Please review this document (${msg.document.file_name || 'PDF'}):\n\n${pdfText}`;
+        }
+      } catch (err) {
+        console.error('PDF parse error:', err);
+        userText = userText
+          ? `${userText} [PDF attached but could not be read — ask user for key details]`
+          : `[User sent a PDF that could not be read — acknowledge and ask for key details manually]`;
+      }
+    } else {
+      // Non-PDF file
+      userText = userText
+        ? `${userText} [User also attached a file: ${msg.document.file_name || mime} — you cannot read it, acknowledge and respond to their request]`
+        : `[User sent a file (${msg.document.file_name || mime}) with no message — acknowledge and ask what they need]`;
+    }
   }
   if (botUsername) {
     userText = userText.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim();
