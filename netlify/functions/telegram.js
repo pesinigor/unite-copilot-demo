@@ -66,17 +66,32 @@ exports.handler = async (event) => {
   const msg = body.message || body.edited_message;
   if (!msg || !msg.text) return { statusCode: 200, body: 'OK' };
 
-  const chatId   = String(msg.chat.id);
-  const userText = msg.text.trim();
+  const chatId    = String(msg.chat.id);
+  const isGroup   = msg.chat.type === 'group' || msg.chat.type === 'supergroup';
+  const botUsername = process.env.TELEGRAM_BOT_USERNAME || '';
+
+  // Strip @BotName suffix from commands in groups (e.g. /start@UniteAICopilotBot → /start)
+  // Also strip @mention prefix so users can say "@UniteAICopilotBot what's due?"
+  let userText = msg.text.trim();
+  if (botUsername) {
+    userText = userText.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim();
+  }
+
+  // In groups, only respond if the bot is mentioned OR the message is a command
+  if (isGroup && botUsername) {
+    const mentioned = msg.text.includes(`@${botUsername}`);
+    const isCommand = userText.startsWith('/');
+    if (!mentioned && !isCommand) return { statusCode: 200, body: 'OK' };
+  }
 
   // /start command
-  if (userText === '/start') {
+  if (userText.startsWith('/start')) {
     await sendTelegram(chatId, `Hey! I'm your Unite AI Copilot 👋\n\nI know your entities, deadlines, and banking across LTVentures. Just ask me anything — "what's due this month?", "how much cash do we have?", "draft a reminder for the Delaware filing".\n\nWhat do you need?`);
     return { statusCode: 200, body: 'OK' };
   }
 
   // /clear command — reset history
-  if (userText === '/clear') {
+  if (userText.startsWith('/clear')) {
     histories[chatId] = [];
     await sendTelegram(chatId, 'Fresh start ✅');
     return { statusCode: 200, body: 'OK' };
